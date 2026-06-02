@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Dinner With Friends — Character Study Guide</title>
+<title>Dinner With Friends — The Studio</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -22,7 +22,7 @@
   .cover {
     background: #1c2b1e;
     color: #e8e0d0;
-    padding: 48px 20px 40px;
+    padding: 48px 20px 0;
     position: relative;
     overflow: hidden;
   }
@@ -34,6 +34,7 @@
     width: 240px; height: 240px;
     border-radius: 50%;
     border: 1px solid rgba(232,224,208,0.12);
+    pointer-events: none;
   }
 
   .cover-eyebrow {
@@ -85,11 +86,48 @@
 
   .cover-meta-item .value { color: #d4c8b4; }
 
-  /* ── MAIN ── */
-  .main {
-    padding: 0 16px 64px;
+  /* ── TABS ── */
+  .tab-bar {
+    display: flex;
+    margin-top: 28px;
+    border-bottom: none;
+    gap: 2px;
+    position: relative;
+    z-index: 1;
   }
 
+  .tab-btn {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    padding: 12px 20px 13px;
+    border: none;
+    border-radius: 6px 6px 0 0;
+    cursor: pointer;
+    background: rgba(255,255,255,0.07);
+    color: #8fa880;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+
+  .tab-btn:hover {
+    background: rgba(255,255,255,0.12);
+    color: #c4b8a4;
+  }
+
+  .tab-btn.active {
+    background: #faf8f4;
+    color: #1c2b1e;
+    font-weight: 500;
+  }
+
+  /* ── TAB PANELS ── */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── MAIN (character guide panel) ── */
+  .main { padding: 0 16px 64px; }
   .section { padding-top: 44px; }
 
   .section-label {
@@ -131,11 +169,7 @@
 
   p { margin-bottom: 14px; color: #2e2e2e; }
 
-  .divider {
-    border: none;
-    border-top: 1px solid #d8d0c4;
-    margin: 32px 0;
-  }
+  .divider { border: none; border-top: 1px solid #d8d0c4; margin: 32px 0; }
 
   /* ── CHARACTER CARDS ── */
   .character-card {
@@ -186,7 +220,6 @@
 
   .character-card.gabe .essence-block { background: #eef3ec; }
 
-  /* Trait grid: stacks on mobile */
   .trait-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -201,10 +234,7 @@
     padding: 12px 14px;
   }
 
-  .character-card.gabe .trait-item {
-    background: #f5f8f4;
-    border-color: #d4dfd2;
-  }
+  .character-card.gabe .trait-item { background: #f5f8f4; border-color: #d4dfd2; }
 
   .trait-label {
     font-size: 9px;
@@ -216,14 +246,8 @@
   }
 
   .character-card.gabe .trait-label { color: #7a9470; }
+  .trait-value { font-size: 14px; color: #2e2e2e; line-height: 1.55; }
 
-  .trait-value {
-    font-size: 14px;
-    color: #2e2e2e;
-    line-height: 1.55;
-  }
-
-  /* ── CALLOUTS ── */
   .callout {
     border-left: 3px solid #8fa880;
     padding: 12px 16px;
@@ -232,21 +256,11 @@
     border-radius: 0 4px 4px 0;
   }
 
-  .callout.amber {
-    border-left-color: #b08050;
-    background: #faf6f0;
-  }
-
+  .callout.amber { border-left-color: #b08050; background: #faf6f0; }
   .callout p { font-size: 14px; margin: 0; color: #3a3228; }
   .callout strong { color: #1c2b1e; }
 
-  /* ── TWO-COLUMN → single on mobile ── */
-  .two-column {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-    margin: 16px 0;
-  }
+  .two-column { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 16px 0; }
 
   .column-block {
     background: #fff;
@@ -285,21 +299,9 @@
     font-size: 12px;
   }
 
-  /* ── SCENE BREAKDOWN ── */
-  .scene-breakdown {
-    border: 1px solid #ddd6cc;
-    border-radius: 4px;
-    overflow: hidden;
-    margin: 16px 0;
-  }
+  .scene-breakdown { border: 1px solid #ddd6cc; border-radius: 4px; overflow: hidden; margin: 16px 0; }
 
-  /* Stack label above content on mobile */
-  .scene-row {
-    display: grid;
-    grid-template-columns: 1fr;
-    border-bottom: 1px solid #ece6de;
-  }
-
+  .scene-row { display: grid; grid-template-columns: 1fr; border-bottom: 1px solid #ece6de; }
   .scene-row:last-child { border-bottom: none; }
 
   .scene-label {
@@ -314,28 +316,11 @@
     border-bottom: 1px solid #ece6de;
   }
 
-  .scene-content {
-    padding: 12px 14px;
-    font-size: 14px;
-    color: #2e2e2e;
-    line-height: 1.65;
-    background: #fff;
-  }
+  .scene-content { padding: 12px 14px; font-size: 14px; color: #2e2e2e; line-height: 1.65; background: #fff; }
 
-  /* ── METHODOLOGY GRID ── */
-  .methodology-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-    margin: 16px 0;
-  }
+  .methodology-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 16px 0; }
 
-  .method-card {
-    background: #fff;
-    border: 1px solid #ddd6cc;
-    border-radius: 4px;
-    padding: 16px 18px;
-  }
+  .method-card { background: #fff; border: 1px solid #ddd6cc; border-radius: 4px; padding: 16px 18px; }
 
   .method-card h4 {
     font-family: 'Source Serif 4', serif;
@@ -348,7 +333,6 @@
 
   .method-card p { font-size: 14px; margin: 0; color: #3a3228; line-height: 1.65; }
 
-  /* ── TOGETHER SECTION ── */
   .together-section {
     background: #1c2b1e;
     color: #e8e0d0;
@@ -370,14 +354,9 @@
     margin-bottom: 8px;
   }
 
-  .together-section .callout {
-    background: rgba(232,224,208,0.07);
-    border-left-color: #8fa880;
-  }
-
+  .together-section .callout { background: rgba(232,224,208,0.07); border-left-color: #8fa880; }
   .together-section .callout p { color: #c4b8a4; }
 
-  /* ── CHECKLISTS ── */
   .checklist { list-style: none; padding: 0; margin: 14px 0; }
 
   .checklist li {
@@ -400,12 +379,238 @@
     top: 9px;
   }
 
-  .together-section .checklist li {
-    color: #c4b8a4;
-    border-bottom-color: rgba(232,224,208,0.1);
+  .together-section .checklist li { color: #c4b8a4; border-bottom-color: rgba(232,224,208,0.1); }
+  .together-section .checklist li::before { color: #6a8060; }
+
+  /* ══════════════════════════════════════
+     CALENDAR PANEL
+  ══════════════════════════════════════ */
+  .cal-wrap { padding: 28px 16px 64px; }
+
+  .cal-header {
+    margin-bottom: 24px;
   }
 
-  .together-section .checklist li::before { color: #6a8060; }
+  .cal-header h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: #1c2b1e;
+    margin-bottom: 4px;
+  }
+
+  .cal-header p {
+    font-size: 13px;
+    color: #9a8a7a;
+    margin: 0;
+  }
+
+  /* Filters */
+  .filters {
+    background: #fff;
+    border: 1px solid #ddd6cc;
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: flex-end;
+  }
+
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 120px;
+    flex: 1;
+  }
+
+  .filter-group label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #9a8a7a;
+  }
+
+  .filter-group select,
+  .filter-group input[type="date"] {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 13px;
+    color: #2e2e2e;
+    background: #faf8f4;
+    border: 1px solid #ddd6cc;
+    border-radius: 4px;
+    padding: 7px 10px;
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .filter-group select:focus,
+  .filter-group input[type="date"]:focus {
+    outline: 2px solid #8fa880;
+    outline-offset: 1px;
+  }
+
+  .filter-reset {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    background: none;
+    border: 1px solid #ddd6cc;
+    border-radius: 4px;
+    color: #9a8a7a;
+    padding: 7px 14px;
+    cursor: pointer;
+    align-self: flex-end;
+    white-space: nowrap;
+    transition: border-color 0.15s, color 0.15s;
+  }
+
+  .filter-reset:hover { border-color: #8fa880; color: #4a7a56; }
+
+  /* Active filter pills */
+  .filter-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 16px;
+    min-height: 0;
+  }
+
+  .pill {
+    font-size: 11px;
+    background: #eef3ec;
+    color: #3a6040;
+    border: 1px solid #c4d8be;
+    border-radius: 20px;
+    padding: 3px 10px 3px 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .pill-x {
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 1;
+    color: #7a9470;
+    padding: 0 2px;
+  }
+
+  /* Results count */
+  .results-meta {
+    font-size: 12px;
+    color: #9a8a7a;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* Event cards */
+  .event-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .event-card {
+    background: #fff;
+    border: 1px solid #ddd6cc;
+    border-radius: 6px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 6px 1fr;
+  }
+
+  .event-stripe { width: 6px; }
+
+  .event-stripe.rehearsal { background: #4a7a56; }
+  .event-stripe.performance { background: #8b6650; }
+  .event-stripe.fitting { background: #6a7aaa; }
+  .event-stripe.tableread { background: #b08050; }
+  .event-stripe.techdress { background: #7a5080; }
+
+  .event-body { padding: 14px 16px; }
+
+  .event-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .event-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1c2b1e;
+    line-height: 1.3;
+  }
+
+  .event-type-badge {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 3px 8px;
+    border-radius: 3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .badge-rehearsal { background: #eef3ec; color: #3a6040; }
+  .badge-performance { background: #f3ede8; color: #6a3820; }
+  .badge-fitting { background: #eceef8; color: #3a4070; }
+  .badge-tableread { background: #f5ede0; color: #7a4a10; }
+  .badge-techdress { background: #f0eaf5; color: #5a3070; }
+
+  .event-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .event-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    color: #6a6050;
+  }
+
+  .event-meta-item svg { flex-shrink: 0; opacity: 0.6; }
+
+  .event-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+  }
+
+  .event-tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    border: 1px solid #e4ddd5;
+    color: #7a6a58;
+    background: #faf8f4;
+  }
+
+  .event-tag.gabe { border-color: #b8d4be; color: #3a6040; background: #f0f6f0; }
+  .event-tag.karen { border-color: #d4b8a8; color: #6a3820; background: #f8f0ec; }
+  .event-tag.both { border-color: #c4bcd0; color: #3a306a; background: #f4f2f8; }
+
+  .no-events {
+    text-align: center;
+    padding: 48px 20px;
+    color: #9a8a7a;
+    font-style: italic;
+    font-size: 15px;
+    background: #fff;
+    border: 1px solid #ddd6cc;
+    border-radius: 6px;
+  }
 
   /* ── FOOTER ── */
   footer {
@@ -420,9 +625,10 @@
 
   /* ── TABLET AND UP ── */
   @media (min-width: 540px) {
-    .cover { padding: 56px 32px 44px; }
+    .cover { padding: 56px 32px 0; }
     .cover h1 { font-size: 48px; }
     .main { padding: 0 24px 72px; }
+    .cal-wrap { padding: 32px 24px 72px; }
     .trait-grid { grid-template-columns: 1fr 1fr; }
     .two-column { grid-template-columns: 1fr 1fr; }
     .methodology-grid { grid-template-columns: 1fr 1fr; }
@@ -430,12 +636,13 @@
     .scene-label { border-bottom: none; border-right: 1px solid #ece6de; display: flex; align-items: center; }
     .character-card { padding: 26px 28px; }
     .character-card-header { flex-direction: row; align-items: baseline; gap: 14px; }
+    .filter-group { min-width: 140px; }
   }
 
   @media (min-width: 820px) {
-    .cover { padding: 72px 60px 56px; }
+    .cover { padding: 72px 60px 0; }
     .cover h1 { font-size: 52px; }
-    .main { max-width: 820px; margin: 0 auto; padding: 0 40px 80px; }
+    .main, .cal-wrap { max-width: 820px; margin: 0 auto; padding-left: 40px; padding-right: 40px; }
     .character-card { padding: 32px 36px; }
     h2 { font-size: 30px; }
     .together-section { padding: 40px 36px; }
@@ -466,20 +673,26 @@
       <span class="value">Humana Festival, 1998</span>
     </div>
   </div>
+
+  <!-- TAB BAR -->
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('guide')">Character Guide</button>
+    <button class="tab-btn" onclick="switchTab('calendar')">📅 Calendar</button>
+  </div>
 </div>
 
+<!-- ══════════════════════════════════════
+     TAB: CHARACTER GUIDE
+══════════════════════════════════════ -->
+<div id="panel-guide" class="tab-panel active">
 <div class="main">
 
   <div class="section">
     <div class="section-label">The World of the Play</div>
     <h2>What Margulies Is Actually Writing About</h2>
-
     <p>On the surface, <em>Dinner With Friends</em> is about a divorce — Tom is leaving Beth, and the shockwave travels through their closest friends, Gabe and Karen. But that's the plot. The <em>play</em> is about something quieter and more unsettling: what happens to a couple when the couple right next to them falls apart, and suddenly every assumption they've been living on comes into question.</p>
-
     <p>Margulies is a precise, compassionate writer. He doesn't take sides. He gives every character their moment of justification and their moment of ugliness. His great structural move in this play is the flashback — we watch the younger versions of all four people, and that knowledge deepens everything in the present-day scenes. We know what was there. We feel the distance between then and now.</p>
-
     <p>The food is not incidental. Gabe and Karen are food writers. Their world is organized around the preparing, sharing, and discussing of meals. Food in this play is the language of intimacy, of care, of stability. When the other couple stops being part of that world, something irreplaceable is lost.</p>
-
     <div class="callout">
       <p><strong>Director's note from critics:</strong> Multiple productions have observed that Margulies uses overlapping dialogue not just as a comic device but as a structural metaphor — when Gabe and Karen speak in sync, it signals their closeness. When that synchrony breaks down, pay attention. The play is happening in the silences and the missed beats as much as in the lines.</p>
     </div>
@@ -489,43 +702,24 @@
 
   <div class="section">
     <div class="section-label">Character Study — Role One</div>
-
     <div class="character-card gabe">
       <div class="character-card-header">
         <div class="character-name">Gabe</div>
         <div class="character-role">Food Writer · Husband · Tom's College Friend</div>
       </div>
-
       <div class="essence-block">
         Gabe is the play's conscience — thoughtful, empathetic, but not quite as armored as he believes. He processes the world through observation and articulation. His great skill and his great limitation are the same thing: he understands people deeply, but understanding isn't the same as knowing what to do with what you understand.
       </div>
-
       <h3 class="subhead">The Essentials</h3>
       <p>Gabe went to college with Tom. Their friendship predates both marriages. He's not simply Karen's husband who is also friends with the other couple — his connection to Tom is its own relationship, with its own history, its own unspoken things. When Tom blows up his marriage, Gabe loses a version of himself, not just a friend.</p>
-
       <p>He and Karen are food writers, which means the material world — texture, taste, sourcing, preparation — is how they engage with life. This isn't pretension; it's their native language. When Gabe talks about the eggplant in Italy, he means it. The enthusiasm is real. The tragedy of Act One, Scene One is that Beth can't receive it — she's too far gone in her own grief — and Gabe slowly, painfully registers this.</p>
-
       <div class="trait-grid">
-        <div class="trait-item">
-          <span class="trait-label">Core Need</span>
-          <span class="trait-value">To make sense of the world. To find a narrative that holds.</span>
-        </div>
-        <div class="trait-item">
-          <span class="trait-label">Primary Fear</span>
-          <span class="trait-value">That what happened to Tom and Beth could happen to him and Karen — and that he might not see it coming.</span>
-        </div>
-        <div class="trait-item">
-          <span class="trait-label">Dominant Quality</span>
-          <span class="trait-value">Articulate empathy. He's the one who names what's happening, often before others can.</span>
-        </div>
-        <div class="trait-item">
-          <span class="trait-label">Blind Spot</span>
-          <span class="trait-value">His comfort in his own life can shade into complacency — and sometimes into judgment of those less settled than himself.</span>
-        </div>
+        <div class="trait-item"><span class="trait-label">Core Need</span><span class="trait-value">To make sense of the world. To find a narrative that holds.</span></div>
+        <div class="trait-item"><span class="trait-label">Primary Fear</span><span class="trait-value">That what happened to Tom and Beth could happen to him and Karen — and that he might not see it coming.</span></div>
+        <div class="trait-item"><span class="trait-label">Dominant Quality</span><span class="trait-value">Articulate empathy. He's the one who names what's happening, often before others can.</span></div>
+        <div class="trait-item"><span class="trait-label">Blind Spot</span><span class="trait-value">His comfort in his own life can shade into complacency — and sometimes into judgment of those less settled than himself.</span></div>
       </div>
-
       <h3>The Scene-By-Scene Arc</h3>
-
       <div class="scene-breakdown">
         <div class="scene-row">
           <div class="scene-label">Act 1, Scene 1 — Present Day</div>
@@ -548,14 +742,11 @@
           <div class="scene-content">Gabe and Karen in bed, taking stock. The final scene. They've come through something. Are they okay? The play asks the question without fully answering it. Gabe's last moments should hold both genuine warmth and unresolved anxiety — the question of what endures isn't settled, only deferred.</div>
         </div>
       </div>
-
       <h3>The Big Monologue: What It Needs</h3>
       <p>The Act 2 speech about aging is Gabe's great moment, and it's easy to play it as merely funny or merely sad. The truth is it's both simultaneously. What Gabe is expressing is grief — not for a marriage, but for time itself, for the version of himself that felt infinite. The Variety review of the Geffen production noted that Daniel Stern invested the speech with "almost unbearable heartache," describing it as "universal fears of aging" expressed with rare emotional honesty.</p>
-
       <div class="callout">
         <p><strong>The key unlock:</strong> Gabe is not talking <em>to</em> Tom in this speech, not really. He's talking to something larger — to life, to the way things change without asking permission. Tom is just the occasion for it.</p>
       </div>
-
       <h3 class="subhead">Questions to Bring to Table Work</h3>
       <ul class="checklist">
         <li>What is the happiest Gabe has ever been? Where does that version of him live in his body?</li>
@@ -565,7 +756,6 @@
         <li>Does Gabe ever feel trapped by Karen's intensity? If yes, when does that surface?</li>
         <li>What does he believe about marriage that this play is testing?</li>
       </ul>
-
       <h3 class="subhead">What Other Actors & Directors Have Said</h3>
       <p>A Newport Theatre Arts Center production noted the value of playing Gabe as having "sensitive antennae for his wife's strengths and weaknesses" — meaning he reads Karen constantly, often more accurately than she reads herself. That attunement is the core of the relationship. He finishes her thoughts not because he's performing closeness, but because he genuinely anticipates her.</p>
       <p>Daniel Stern's Geffen performance was reviewed as capturing "a tragic aspect of friendship: you sometimes lose all feeling for friends you expected to love forever." That grief — the grief of affection cooling, of a life chapter ending — runs through all of Act 2 for Gabe.</p>
@@ -574,43 +764,24 @@
 
   <div class="section">
     <div class="section-label">Character Study — Role Two</div>
-
     <div class="character-card karen">
       <div class="character-card-header">
         <div class="character-name">Karen</div>
         <div class="character-role">Food Writer · Wife · Beth's Close Friend</div>
       </div>
-
       <div class="essence-block">
         Karen is the most complicated figure in this play, and the one most often misread. She can appear controlling, judgmental, even unsympathetic — but that reading misses everything Margulies has built underneath her. She is a woman who has constructed her life with enormous care and enormous investment, and when that construction is threatened, her reactions are fierce because the stakes are genuinely high.
       </div>
-
       <h3 class="subhead">The Essentials</h3>
       <p>Karen set up Tom and Beth. She introduced them. In a real sense, their marriage is partly her creation — which means its destruction is partly her loss too. Her anger at Tom in Act 2 is more intense than Gabe's, and it's easy to play that as mere protectiveness toward Beth. But dig deeper: Karen is furious in part because Tom's defection feels like a repudiation of her judgment, her values, her vision of how people should live.</p>
-
       <p>The Variety review of the Geffen production found that Rita Wilson's Karen made the audience "care deeply about her even when she tries too hard to control her friends and her husband." That tension — between genuine warmth and controlling energy — is the engine of the character. Karen is not cold. She is hot. Everything matters too much.</p>
-
       <div class="trait-grid">
-        <div class="trait-item">
-          <span class="trait-label">Core Need</span>
-          <span class="trait-value">For the world — and her place in it — to make sense and to hold.</span>
-        </div>
-        <div class="trait-item">
-          <span class="trait-label">Primary Fear</span>
-          <span class="trait-value">That the life she has chosen and built could be an illusion — or could simply end.</span>
-        </div>
-        <div class="trait-item">
-          <span class="trait-label">Dominant Quality</span>
-          <span class="trait-value">Passionate conviction. She believes things. She acts on what she believes.</span>
-        </div>
-        <div class="trait-item">
-          <span class="trait-label">Blind Spot</span>
-          <span class="trait-value">Her certainty about what's right can make her unable to hear others — especially Beth's changing needs.</span>
-        </div>
+        <div class="trait-item"><span class="trait-label">Core Need</span><span class="trait-value">For the world — and her place in it — to make sense and to hold.</span></div>
+        <div class="trait-item"><span class="trait-label">Primary Fear</span><span class="trait-value">That the life she has chosen and built could be an illusion — or could simply end.</span></div>
+        <div class="trait-item"><span class="trait-label">Dominant Quality</span><span class="trait-value">Passionate conviction. She believes things. She acts on what she believes.</span></div>
+        <div class="trait-item"><span class="trait-label">Blind Spot</span><span class="trait-value">Her certainty about what's right can make her unable to hear others — especially Beth's changing needs.</span></div>
       </div>
-
       <h3>The Scene-By-Scene Arc</h3>
-
       <div class="scene-breakdown">
         <div class="scene-row">
           <div class="scene-label">Act 1, Scene 1 — Present Day</div>
@@ -629,14 +800,11 @@
           <div class="scene-content">Gabe and Karen in bed. The famous line — "You do something like this, I'm telling you right now, you are outta here" — is played for a laugh and lands as one, but its nakedness is what makes the scene profound. Under the joke is genuine terror. She means it. And she doesn't entirely know if she means it about Gabe or about herself.</div>
         </div>
       </div>
-
       <h3>The Line "You Do Something Like This..." — A Note</h3>
       <p>This is the line every Karen tends to lean on. And it should land. But the danger is playing only the comedy of it, or only the fear. The critics who found it most effective found it in the moment just before the laugh — the instant where Karen's absolute sincerity is visible, before the lightness catches it. She's not performing toughness. She is genuinely issuing a warning. To Gabe. To fate. To herself.</p>
-
       <div class="callout amber">
         <p><strong>The controlling note, reframed:</strong> Directors and critics have repeatedly flagged Karen's controlling energy. But the better question isn't "how controlling is she?" — it's "what is she so afraid of losing?" That fear is what shapes every instance of control. Play the fear, not the result.</p>
       </div>
-
       <h3 class="subhead">Questions to Bring to Table Work</h3>
       <ul class="checklist">
         <li>What does Karen most love about her life? What does she love about Gabe?</li>
@@ -646,7 +814,6 @@
         <li>What specifically about Tom's behavior enrages her? Is it the infidelity, the abandonment, or something more personal?</li>
         <li>What does she dream the future holds? And does she let herself believe it?</li>
       </ul>
-
       <h3 class="subhead">What Other Actors & Directors Have Said</h3>
       <p>A Newport Theatre Arts Center review described the best Karen performances as showing "brittle skittishness" that "nicely masks some unknowable residual anger." That residual anger is a key note — Karen is not simply happy and then frightened. There is something in her from before this story starts that the divorce activates. What that something is, Christina and her director get to decide.</p>
       <p>Rita Wilson (Geffen Playhouse) was praised for her "radiantly warm, vulnerable quality" that made audiences invest in Karen even when she overreached. The warmth is not a mask over the control — they coexist, and the character is most alive when both are visible at once.</p>
@@ -656,17 +823,13 @@
   <div class="together-section">
     <h2>Gabe & Karen — The Couple</h2>
     <p>Here is the great gift of this production: you two are actually married. That matters enormously. The task for most actors playing this couple is to manufacture twelve years of intimacy. You arrive with it. Use it. Trust it. The familiarity of your real relationship is the raw material of your performance.</p>
-
     <h3>What the Play Requires of the Couple</h3>
     <p>The original production was compared to "Olympic skaters executing an improvised routine with practiced ease." That's the target. Gabe and Karen should feel so familiar with each other that they can finish thoughts, anticipate reactions, communicate in half-sentences. But Margulies is also insisting that this ease has a shadow side: they can talk together so fluently that they never quite talk to each other.</p>
-
     <div class="callout">
       <p>The overlapping dialogue Margulies writes isn't just stylistic. It's the play's central paradox in action: these two people are in perfect rhythm with each other and yet something remains permanently unspoken between them.</p>
     </div>
-
     <h3>The Threat the Play Poses to Them</h3>
     <p>Tom and Beth's divorce doesn't just upset Gabe and Karen emotionally. It removes the mirror they've been using to reassure themselves. For years, the two couples have been each other's reference points for what marriage is. When one set of mirrors shatters, Gabe and Karen have to look at each other without the comparison — and what they see is unsettling in ways neither fully articulates.</p>
-
     <h3>Questions to Explore Together in Early Rehearsal</h3>
     <ul class="checklist">
       <li>What is the best memory you (as these characters) share? Where were you?</li>
@@ -681,31 +844,15 @@
   <div class="section">
     <div class="section-label">Craft & Approach</div>
     <h2>Tools for the Room</h2>
-
     <p>This is a naturalistic play with classical structure. The work is interior — objectives, obstacles, and subtext doing more heavy lifting than physical or vocal stylization. That said, here are the methodologies most directly applicable:</p>
-
     <div class="methodology-grid">
-      <div class="method-card">
-        <h4>Meisner — Listening</h4>
-        <p>The overlapping dialogue demands genuine moment-to-moment response. Don't prepare your next line — wait for what your partner gives you. Margulies' rhythms only work if the actors are actually reacting in real time.</p>
-      </div>
-      <div class="method-card">
-        <h4>Stanislavski — Objectives</h4>
-        <p>Every scene needs a clear, active objective. Not "to be sad" but "to make Gabe understand what I'm feeling." Not "to be angry" but "to make Tom feel the consequences of what he's done." Transitive verbs always.</p>
-      </div>
-      <div class="method-card">
-        <h4>Given Circumstances</h4>
-        <p>Twelve years of shared history. Children. Mortgages. Work partnerships. Italy still on their skin. Each scene has a specific where and when — fully populate it. The more concrete the circumstances, the freer the acting.</p>
-      </div>
-      <div class="method-card">
-        <h4>Subtext</h4>
-        <p>Almost nothing in this play is said directly. The most important content lives beneath the lines. Build each exchange with a clear sense of what is not being said — and why. Margulies has written subtext-heavy dialogue; trust it.</p>
-      </div>
+      <div class="method-card"><h4>Meisner — Listening</h4><p>The overlapping dialogue demands genuine moment-to-moment response. Don't prepare your next line — wait for what your partner gives you. Margulies' rhythms only work if the actors are actually reacting in real time.</p></div>
+      <div class="method-card"><h4>Stanislavski — Objectives</h4><p>Every scene needs a clear, active objective. Not "to be sad" but "to make Gabe understand what I'm feeling." Not "to be angry" but "to make Tom feel the consequences of what he's done." Transitive verbs always.</p></div>
+      <div class="method-card"><h4>Given Circumstances</h4><p>Twelve years of shared history. Children. Mortgages. Work partnerships. Italy still on their skin. Each scene has a specific where and when — fully populate it. The more concrete the circumstances, the freer the acting.</p></div>
+      <div class="method-card"><h4>Subtext</h4><p>Almost nothing in this play is said directly. The most important content lives beneath the lines. Build each exchange with a clear sense of what is not being said — and why. Margulies has written subtext-heavy dialogue; trust it.</p></div>
     </div>
-
     <h3>A Note on the Food</h3>
     <p>Don't underestimate the actual food work. Productions that treat the food as a prop miss a dimension of the play. Gabe and Karen's relationship to food — the way they describe it, share it, prepare it — is their emotional vocabulary. When you're talking about the polenta cake or the eggplant in Rome, you're also talking about pleasure, abundance, intimacy, and the good life you've built. Make it real. Make it specific. Make it delicious.</p>
-
     <div class="callout">
       <p><strong>One reviewer wrote:</strong> "Food is the play's constant subject, both literal and metaphorical. Even as the characters come to grips with the failure of one of their marriages, they talk about food with the passion of sex." That's the target temperature for those early scenes.</p>
     </div>
@@ -714,7 +861,6 @@
   <div class="section">
     <div class="section-label">Quick Reference</div>
     <h2>Play Structure at a Glance</h2>
-
     <div class="two-column">
       <div class="column-block">
         <h4>Act One — Present Day + Flashback</h4>
@@ -735,7 +881,6 @@
         </ul>
       </div>
     </div>
-
     <div class="two-column">
       <div class="column-block">
         <h4>Key Tags — Gabe</h4>
@@ -763,13 +908,10 @@
   <div class="section">
     <div class="section-label">For Tomorrow</div>
     <h2>First Table Read — What to Listen For</h2>
-
     <p>Arrive curious, not decided. The table read is not a performance — it's an act of listening. The play will begin telling you things you didn't know before you heard it aloud. Let it. Some of your instincts from reading will be confirmed. Others will surprise you. Both are useful information.</p>
-
     <div class="callout amber">
       <p><strong>What to bring tomorrow:</strong> A pencil (not a pen). Questions, not answers. Genuine curiosity about the other two characters — Tom and Beth are half of what gives Gabe and Karen their meaning. Listen to them as generously as you listen to yourselves.</p>
     </div>
-
     <h3 class="subhead">Specific Things to Notice in the First Read</h3>
     <ul class="checklist">
       <li>Where does the overlapping dialogue feel natural between you — and where does it feel forced? Both are signals.</li>
@@ -779,18 +921,373 @@
       <li>When are Gabe and Karen most in sync — and when does that synchrony crack?</li>
       <li>What does the play feel like as a whole? What's the temperature of it?</li>
     </ul>
-
     <p>You're about to spend several weeks inside one of the best American plays of the last thirty years. It won the Pulitzer because it tells the truth about something that matters — the fragility and resilience of long-term love, the grief of lost friendship, the way we use comfort to avoid what we're afraid of. The work is worthy of everything you bring to it.</p>
-
     <p>Enjoy the table read. You've got good material, and you're approaching it with care. That's everything.</p>
   </div>
 
+</div><!-- /main -->
+</div><!-- /panel-guide -->
+
+
+<!-- ══════════════════════════════════════
+     TAB: CALENDAR
+══════════════════════════════════════ -->
+<div id="panel-calendar" class="tab-panel">
+<div class="cal-wrap">
+
+  <div class="cal-header">
+    <h2>Rehearsal &amp; Show Calendar</h2>
+    <p>Blue Ridge Community Theatre · <em>Dinner With Friends</em></p>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filters">
+    <div class="filter-group">
+      <label for="f-type">Type</label>
+      <select id="f-type" onchange="applyFilters()">
+        <option value="">All Types</option>
+        <option value="tableread">Table Read</option>
+        <option value="rehearsal">Rehearsal</option>
+        <option value="fitting">Fitting</option>
+        <option value="techdress">Tech / Dress</option>
+        <option value="performance">Performance</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label for="f-character">Character</label>
+      <select id="f-character" onchange="applyFilters()">
+        <option value="">All Characters</option>
+        <option value="gabe">Gabe</option>
+        <option value="karen">Karen</option>
+        <option value="both">Full Cast</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label for="f-act">Act</label>
+      <select id="f-act" onchange="applyFilters()">
+        <option value="">All Acts</option>
+        <option value="Act 1">Act 1</option>
+        <option value="Act 2">Act 2</option>
+        <option value="Full Play">Full Play</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label for="f-scene">Scene</label>
+      <select id="f-scene" onchange="applyFilters()">
+        <option value="">All Scenes</option>
+        <option value="Scene 1">Scene 1</option>
+        <option value="Scene 2">Scene 2</option>
+        <option value="Scene 3">Scene 3</option>
+        <option value="Scene 4">Scene 4</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label for="f-from">From</label>
+      <input type="date" id="f-from" onchange="applyFilters()">
+    </div>
+    <div class="filter-group">
+      <label for="f-to">To</label>
+      <input type="date" id="f-to" onchange="applyFilters()">
+    </div>
+    <button class="filter-reset" onclick="resetFilters()">Clear</button>
+  </div>
+
+  <!-- ACTIVE FILTER PILLS -->
+  <div class="filter-pills" id="filter-pills"></div>
+
+  <!-- RESULTS META -->
+  <div class="results-meta" id="results-meta"></div>
+
+  <!-- EVENT LIST -->
+  <div class="event-list" id="event-list"></div>
+
 </div>
+</div><!-- /panel-calendar -->
 
 <footer>
   Dinner With Friends · Blue Ridge Community Theatre<br>
   Character Study Guide · Prepared for First Table Read
 </footer>
+
+<script>
+// ══════════════════════════════════════
+// CALENDAR DATA
+// Add, edit, or remove events here.
+// Date format: "YYYY-MM-DD"
+// type: "tableread" | "rehearsal" | "fitting" | "techdress" | "performance"
+// characters: array — "gabe", "karen", "both" (use "both" for full cast)
+// act: "Act 1" | "Act 2" | "Full Play" | ""
+// scenes: array of "Scene 1", "Scene 2", etc. — or empty []
+// ══════════════════════════════════════
+const EVENTS = [
+  {
+    id: 1,
+    title: "First Table Read",
+    date: "2026-06-03",
+    time: "7:00 PM",
+    type: "tableread",
+    characters: ["both"],
+    act: "Full Play",
+    scenes: [],
+    location: "Blue Ridge Community Theatre",
+    notes: "Full cast. Bring pencils, not pens."
+  },
+  {
+    id: 2,
+    title: "Rehearsal — Act 1, Scenes 1 & 2",
+    date: "2026-06-10",
+    time: "7:00 PM",
+    type: "rehearsal",
+    characters: ["gabe", "karen"],
+    act: "Act 1",
+    scenes: ["Scene 1", "Scene 2"],
+    location: "Blue Ridge Community Theatre",
+    notes: ""
+  },
+  {
+    id: 3,
+    title: "Rehearsal — Act 1, Scene 3 (Flashback)",
+    date: "2026-06-12",
+    time: "7:00 PM",
+    type: "rehearsal",
+    characters: ["both"],
+    act: "Act 1",
+    scenes: ["Scene 3"],
+    location: "Blue Ridge Community Theatre",
+    notes: "Full cast for Martha's Vineyard flashback."
+  },
+  {
+    id: 4,
+    title: "Costume Fitting",
+    date: "2026-06-14",
+    time: "2:00 PM",
+    type: "fitting",
+    characters: ["gabe", "karen"],
+    act: "",
+    scenes: [],
+    location: "Blue Ridge Community Theatre",
+    notes: ""
+  },
+  {
+    id: 5,
+    title: "Rehearsal — Act 2, Scenes 1 & 2",
+    date: "2026-06-17",
+    time: "7:00 PM",
+    type: "rehearsal",
+    characters: ["gabe", "karen"],
+    act: "Act 2",
+    scenes: ["Scene 1", "Scene 2"],
+    location: "Blue Ridge Community Theatre",
+    notes: "Gabe's aging monologue. Come warmed up."
+  },
+  {
+    id: 6,
+    title: "Rehearsal — Full Run-Through",
+    date: "2026-06-24",
+    time: "7:00 PM",
+    type: "rehearsal",
+    characters: ["both"],
+    act: "Full Play",
+    scenes: [],
+    location: "Blue Ridge Community Theatre",
+    notes: "First full run. No stops."
+  },
+  {
+    id: 7,
+    title: "Tech Rehearsal",
+    date: "2026-07-01",
+    time: "6:00 PM",
+    type: "techdress",
+    characters: ["both"],
+    act: "Full Play",
+    scenes: [],
+    location: "Blue Ridge Community Theatre",
+    notes: "Expect a long night. Bring snacks."
+  },
+  {
+    id: 8,
+    title: "Dress Rehearsal",
+    date: "2026-07-02",
+    time: "7:00 PM",
+    type: "techdress",
+    characters: ["both"],
+    act: "Full Play",
+    scenes: [],
+    location: "Blue Ridge Community Theatre",
+    notes: "Full costume & makeup. Treat as performance."
+  },
+  {
+    id: 9,
+    title: "Opening Night",
+    date: "2026-07-03",
+    time: "7:30 PM",
+    type: "performance",
+    characters: ["both"],
+    act: "Full Play",
+    scenes: [],
+    location: "Blue Ridge Community Theatre",
+    notes: "Call time 6:00 PM."
+  },
+  {
+    id: 10,
+    title: "Performance",
+    date: "2026-07-04",
+    time: "7:30 PM",
+    type: "performance",
+    characters: ["both"],
+    act: "Full Play",
+    scenes: [],
+    location: "Blue Ridge Community Theatre",
+    notes: "Call time 6:00 PM."
+  },
+  {
+    id: 11,
+    title: "Closing Night",
+    date: "2026-07-05",
+    time: "7:30 PM",
+    type: "performance",
+    characters: ["both"],
+    act: "Full Play",
+    scenes: [],
+    location: "Blue Ridge Community Theatre",
+    notes: "Call time 6:00 PM. Strike follows."
+  }
+];
+
+// ── TAB SWITCHING ──
+function switchTab(tab) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  event.currentTarget.classList.add('active');
+  if (tab === 'calendar') renderCalendar();
+}
+
+// ── FILTER STATE ──
+function getFilters() {
+  return {
+    type: document.getElementById('f-type').value,
+    character: document.getElementById('f-character').value,
+    act: document.getElementById('f-act').value,
+    scene: document.getElementById('f-scene').value,
+    from: document.getElementById('f-from').value,
+    to: document.getElementById('f-to').value,
+  };
+}
+
+function resetFilters() {
+  ['f-type','f-character','f-act','f-scene','f-from','f-to'].forEach(id => {
+    const el = document.getElementById(id);
+    el.value = '';
+  });
+  applyFilters();
+}
+
+function applyFilters() { renderCalendar(); }
+
+// ── RENDER ──
+function renderCalendar() {
+  const f = getFilters();
+  let events = [...EVENTS];
+
+  if (f.type) events = events.filter(e => e.type === f.type);
+  if (f.character) events = events.filter(e => e.characters.includes(f.character));
+  if (f.act) events = events.filter(e => e.act === f.act);
+  if (f.scene) events = events.filter(e => e.scenes.includes(f.scene));
+  if (f.from) events = events.filter(e => e.date >= f.from);
+  if (f.to) events = events.filter(e => e.date <= f.to);
+
+  // Sort by date
+  events.sort((a,b) => a.date.localeCompare(b.date));
+
+  // Pills
+  const pillsEl = document.getElementById('filter-pills');
+  const pills = [];
+  if (f.type) pills.push({label: typeLabel(f.type), key: 'type'});
+  if (f.character) pills.push({label: charLabel(f.character), key: 'character'});
+  if (f.act) pills.push({label: f.act, key: 'act'});
+  if (f.scene) pills.push({label: f.scene, key: 'scene'});
+  if (f.from) pills.push({label: 'From ' + formatDate(f.from), key: 'from'});
+  if (f.to) pills.push({label: 'To ' + formatDate(f.to), key: 'to'});
+
+  pillsEl.innerHTML = pills.map(p =>
+    `<span class="pill">${p.label}<span class="pill-x" onclick="clearFilter('${p.key}')">×</span></span>`
+  ).join('');
+
+  // Meta
+  document.getElementById('results-meta').textContent =
+    events.length === 0 ? '' :
+    events.length === 1 ? '1 event' :
+    `${events.length} events`;
+
+  // Events
+  const listEl = document.getElementById('event-list');
+  if (events.length === 0) {
+    listEl.innerHTML = '<div class="no-events">No events match the current filters.</div>';
+    return;
+  }
+
+  listEl.innerHTML = events.map(e => {
+    const charTags = e.characters.map(c =>
+      `<span class="event-tag ${c}">${charLabel(c)}</span>`
+    ).join('');
+    const sceneTags = e.scenes.map(s =>
+      `<span class="event-tag">${s}</span>`
+    ).join('');
+    const actTag = e.act ? `<span class="event-tag">${e.act}</span>` : '';
+
+    return `
+    <div class="event-card">
+      <div class="event-stripe ${e.type}"></div>
+      <div class="event-body">
+        <div class="event-top">
+          <div class="event-title">${e.title}</div>
+          <span class="event-type-badge badge-${e.type}">${typeLabel(e.type)}</span>
+        </div>
+        <div class="event-meta-row">
+          <span class="event-meta-item">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>
+            ${formatDate(e.date)}
+          </span>
+          <span class="event-meta-item">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3.5l2.5 1.5"/></svg>
+            ${e.time}
+          </span>
+          ${e.location ? `<span class="event-meta-item">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6c0 3.5 4.5 8.5 4.5 8.5S12.5 9.5 12.5 6c0-2.5-2-4.5-4.5-4.5z"/><circle cx="8" cy="6" r="1.5"/></svg>
+            ${e.location}
+          </span>` : ''}
+        </div>
+        ${(e.characters.length || e.act || e.scenes.length) ? `
+        <div class="event-tags">
+          ${charTags}${actTag}${sceneTags}
+        </div>` : ''}
+        ${e.notes ? `<div style="margin-top:10px;font-size:13px;color:#6a6050;font-style:italic;">${e.notes}</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function clearFilter(key) {
+  document.getElementById('f-' + key).value = '';
+  applyFilters();
+}
+
+function typeLabel(t) {
+  return {tableread:'Table Read', rehearsal:'Rehearsal', fitting:'Fitting', techdress:'Tech / Dress', performance:'Performance'}[t] || t;
+}
+
+function charLabel(c) {
+  return {gabe:'Gabe', karen:'Karen', both:'Full Cast'}[c] || c;
+}
+
+function formatDate(d) {
+  if (!d) return '';
+  const [y,m,day] = d.split('-');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${months[parseInt(m)-1]} ${parseInt(day)}, ${y}`;
+}
+</script>
 
 </body>
 </html>
