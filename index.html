@@ -612,6 +612,163 @@
     border-radius: 6px;
   }
 
+  /* ══════════════════════════════════════
+     NOTES PANELS
+  ══════════════════════════════════════ */
+  .notes-wrap { padding: 28px 16px 64px; }
+
+  .notes-header { margin-bottom: 24px; }
+  .notes-header h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 26px; font-weight: 400; color: #1c2b1e; margin-bottom: 4px;
+  }
+  .notes-header p { font-size: 13px; color: #9a8a7a; margin: 0; }
+
+  /* Add note button */
+  .add-note-btn {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em;
+    background: #1c2b1e; color: #e8e0d0;
+    border: none; border-radius: 5px;
+    padding: 11px 18px; cursor: pointer; margin-bottom: 24px;
+    transition: background 0.15s;
+  }
+  .add-note-btn:hover { background: #2e4a32; }
+  .add-note-btn .plus { font-size: 18px; line-height: 1; }
+
+  /* New note form */
+  .note-form {
+    background: #fff; border: 1px solid #ddd6cc; border-radius: 6px;
+    padding: 18px; margin-bottom: 20px; display: none;
+  }
+  .note-form.open { display: block; }
+
+  .note-form-row {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;
+  }
+
+  .note-form-group {
+    display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 120px;
+  }
+
+  .note-form-group label {
+    font-size: 9px; text-transform: uppercase;
+    letter-spacing: 0.14em; color: #9a8a7a;
+  }
+
+  .note-form-group select,
+  .note-form-group input[type="text"] {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 13px; color: #2e2e2e;
+    background: #faf8f4; border: 1px solid #ddd6cc;
+    border-radius: 4px; padding: 7px 10px;
+    appearance: none; -webkit-appearance: none; width: 100%;
+  }
+
+  .note-form-group select:focus,
+  .note-form-group input:focus { outline: 2px solid #8fa880; outline-offset: 1px; }
+
+  .note-textarea {
+    width: 100%; min-height: 120px;
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 15px; line-height: 1.7; color: #2e2e2e;
+    background: #faf8f4; border: 1px solid #ddd6cc;
+    border-radius: 4px; padding: 12px 14px;
+    resize: vertical; margin-bottom: 12px;
+  }
+
+  .note-textarea:focus { outline: 2px solid #8fa880; outline-offset: 1px; }
+  .note-textarea::placeholder { color: #b8a890; font-style: italic; }
+
+  .note-form-actions { display: flex; gap: 8px; justify-content: flex-end; }
+
+  .btn-save {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em;
+    background: #4a7a56; color: #fff;
+    border: none; border-radius: 4px; padding: 8px 18px;
+    cursor: pointer; transition: background 0.15s;
+  }
+  .btn-save:hover { background: #3a6040; }
+
+  .btn-cancel {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em;
+    background: none; color: #9a8a7a;
+    border: 1px solid #ddd6cc; border-radius: 4px; padding: 8px 14px;
+    cursor: pointer; transition: border-color 0.15s;
+  }
+  .btn-cancel:hover { border-color: #9a8a7a; }
+
+  /* Note cards */
+  .notes-list { display: flex; flex-direction: column; gap: 12px; }
+
+  .note-card {
+    background: #fff; border: 1px solid #ddd6cc;
+    border-radius: 6px; padding: 16px 18px;
+    position: relative;
+  }
+
+  .note-card.gabe-note { border-left: 4px solid #4a7a56; }
+  .note-card.karen-note { border-left: 4px solid #8b6650; }
+
+  .note-card-top {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 8px; margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .note-card-meta { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .note-badge {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em;
+    padding: 3px 8px; border-radius: 3px;
+    background: #eef3ec; color: #3a6040; border: 1px solid #c4d8be;
+  }
+
+  .note-badge.karen-badge {
+    background: #f3ede8; color: #6a3820; border-color: #d4b8a8;
+  }
+
+  .note-badge.scene-badge {
+    background: #faf8f4; color: #7a6a58; border-color: #e4ddd5;
+  }
+
+  .note-timestamp {
+    font-size: 11px; color: #b8a890; white-space: nowrap; flex-shrink: 0;
+  }
+
+  .note-text {
+    font-size: 15px; color: #2e2e2e; line-height: 1.7;
+    white-space: pre-wrap; word-break: break-word;
+  }
+
+  .note-actions {
+    display: flex; gap: 10px; margin-top: 12px;
+    padding-top: 10px; border-top: 1px solid #f0ece6;
+  }
+
+  .note-action-btn {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;
+    background: none; border: none; cursor: pointer; padding: 0;
+    color: #9a8a7a; transition: color 0.15s;
+  }
+  .note-action-btn:hover { color: #3a3228; }
+  .note-action-btn.delete:hover { color: #a03020; }
+
+  .no-notes {
+    text-align: center; padding: 48px 20px;
+    color: #9a8a7a; font-style: italic; font-size: 15px;
+    background: #fff; border: 1px solid #ddd6cc; border-radius: 6px;
+  }
+
+  .notes-count {
+    font-size: 12px; color: #9a8a7a; margin-bottom: 14px;
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+
   /* ── FOOTER ── */
   footer {
     background: #1c2b1e;
@@ -676,8 +833,10 @@
 
   <!-- TAB BAR -->
   <div class="tab-bar">
-    <button class="tab-btn active" onclick="switchTab('guide')">Character Guide</button>
-    <button class="tab-btn" onclick="switchTab('calendar')">📅 Calendar</button>
+    <button class="tab-btn active" onclick="switchTab('guide', this)">Character Guide</button>
+    <button class="tab-btn" onclick="switchTab('calendar', this)">📅 Calendar</button>
+    <button class="tab-btn" onclick="switchTab('notes-jeremy', this)">🎭 Jeremy</button>
+    <button class="tab-btn" onclick="switchTab('notes-christina', this)">🎭 Christina</button>
   </div>
 </div>
 
@@ -1004,6 +1163,106 @@
 </div>
 </div><!-- /panel-calendar -->
 
+<!-- ══════════════════════════════════════
+     TAB: JEREMY (GABE) NOTES
+══════════════════════════════════════ -->
+<div id="panel-notes-jeremy" class="tab-panel">
+<div class="notes-wrap">
+  <div class="notes-header">
+    <h2>Jeremy's Notes — Gabe</h2>
+    <p>Your personal rehearsal notes. Saved in this browser.</p>
+  </div>
+
+  <button class="add-note-btn" onclick="openForm('jeremy')">
+    <span class="plus">+</span> Add New Note
+  </button>
+
+  <div class="note-form" id="form-jeremy">
+    <div class="note-form-row">
+      <div class="note-form-group">
+        <label for="jeremy-act">Act</label>
+        <select id="jeremy-act">
+          <option value="">— Select Act —</option>
+          <option value="Act 1">Act 1</option>
+          <option value="Act 2">Act 2</option>
+          <option value="Full Play">Full Play</option>
+          <option value="General">General</option>
+        </select>
+      </div>
+      <div class="note-form-group">
+        <label for="jeremy-scene">Scene</label>
+        <select id="jeremy-scene">
+          <option value="">— Select Scene —</option>
+          <option value="Scene 1">Scene 1</option>
+          <option value="Scene 2">Scene 2</option>
+          <option value="Scene 3">Scene 3</option>
+          <option value="Scene 4">Scene 4</option>
+          <option value="All Scenes">All Scenes</option>
+        </select>
+      </div>
+    </div>
+    <textarea class="note-textarea" id="jeremy-text" placeholder="Write your note here — a direction you received, something you discovered, a question to bring back to the room..."></textarea>
+    <div class="note-form-actions">
+      <button class="btn-cancel" onclick="closeForm('jeremy')">Cancel</button>
+      <button class="btn-save" onclick="saveNote('jeremy')">Save Note</button>
+    </div>
+  </div>
+
+  <div class="notes-count" id="count-jeremy"></div>
+  <div class="notes-list" id="notes-jeremy"></div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     TAB: CHRISTINA (KAREN) NOTES
+══════════════════════════════════════ -->
+<div id="panel-notes-christina" class="tab-panel">
+<div class="notes-wrap">
+  <div class="notes-header">
+    <h2>Christina's Notes — Karen</h2>
+    <p>Your personal rehearsal notes. Saved in this browser.</p>
+  </div>
+
+  <button class="add-note-btn" onclick="openForm('christina')">
+    <span class="plus">+</span> Add New Note
+  </button>
+
+  <div class="note-form" id="form-christina">
+    <div class="note-form-row">
+      <div class="note-form-group">
+        <label for="christina-act">Act</label>
+        <select id="christina-act">
+          <option value="">— Select Act —</option>
+          <option value="Act 1">Act 1</option>
+          <option value="Act 2">Act 2</option>
+          <option value="Full Play">Full Play</option>
+          <option value="General">General</option>
+        </select>
+      </div>
+      <div class="note-form-group">
+        <label for="christina-scene">Scene</label>
+        <select id="christina-scene">
+          <option value="">— Select Scene —</option>
+          <option value="Scene 1">Scene 1</option>
+          <option value="Scene 2">Scene 2</option>
+          <option value="Scene 3">Scene 3</option>
+          <option value="Scene 4">Scene 4</option>
+          <option value="All Scenes">All Scenes</option>
+        </select>
+      </div>
+    </div>
+    <textarea class="note-textarea" id="christina-text" placeholder="Write your note here — a direction you received, something you discovered, a question to bring back to the room..."></textarea>
+    <div class="note-form-actions">
+      <button class="btn-cancel" onclick="closeForm('christina')">Cancel</button>
+      <button class="btn-save" onclick="saveNote('christina')">Save Note</button>
+    </div>
+  </div>
+
+  <div class="notes-count" id="count-christina"></div>
+  <div class="notes-list" id="notes-christina"></div>
+</div>
+</div>
+
 <footer>
   Dinner With Friends · Blue Ridge Community Theatre<br>
   Character Study Guide · Prepared for First Table Read
@@ -1155,12 +1414,14 @@ const EVENTS = [
 ];
 
 // ── TAB SWITCHING ──
-function switchTab(tab) {
+function switchTab(tab, btn) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('panel-' + tab).classList.add('active');
-  event.currentTarget.classList.add('active');
+  if (btn) btn.classList.add('active');
   if (tab === 'calendar') renderCalendar();
+  if (tab === 'notes-jeremy') renderNotes('jeremy');
+  if (tab === 'notes-christina') renderNotes('christina');
 }
 
 // ── FILTER STATE ──
@@ -1287,7 +1548,120 @@ function formatDate(d) {
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   return `${months[parseInt(m)-1]} ${parseInt(day)}, ${y}`;
 }
-</script>
+// ══════════════════════════════════════
+// NOTES SYSTEM
+// Notes are saved to localStorage per person.
+// ══════════════════════════════════════
+
+function notesKey(person) { return 'dwf-notes-' + person; }
+
+function loadNotes(person) {
+  try {
+    return JSON.parse(localStorage.getItem(notesKey(person))) || [];
+  } catch(e) { return []; }
+}
+
+function saveNotes(person, notes) {
+  localStorage.setItem(notesKey(person), JSON.stringify(notes));
+}
+
+function openForm(person) {
+  document.getElementById('form-' + person).classList.add('open');
+  document.getElementById(person + '-text').focus();
+}
+
+function closeForm(person) {
+  const form = document.getElementById('form-' + person);
+  form.classList.remove('open');
+  document.getElementById(person + '-act').value = '';
+  document.getElementById(person + '-scene').value = '';
+  document.getElementById(person + '-text').value = '';
+}
+
+function saveNote(person) {
+  const text = document.getElementById(person + '-text').value.trim();
+  if (!text) {
+    document.getElementById(person + '-text').focus();
+    return;
+  }
+  const act   = document.getElementById(person + '-act').value;
+  const scene = document.getElementById(person + '-scene').value;
+  const notes = loadNotes(person);
+  notes.unshift({
+    id: Date.now(),
+    text,
+    act,
+    scene,
+    ts: new Date().toISOString()
+  });
+  saveNotes(person, notes);
+  closeForm(person);
+  renderNotes(person);
+}
+
+function deleteNote(person, id) {
+  if (!confirm('Delete this note?')) return;
+  const notes = loadNotes(person).filter(n => n.id !== id);
+  saveNotes(person, notes);
+  renderNotes(person);
+}
+
+function editNote(person, id) {
+  const notes = loadNotes(person);
+  const note = notes.find(n => n.id === id);
+  if (!note) return;
+  // Populate form
+  document.getElementById(person + '-act').value = note.act || '';
+  document.getElementById(person + '-scene').value = note.scene || '';
+  document.getElementById(person + '-text').value = note.text;
+  openForm(person);
+  // Remove old note and re-save on next save
+  const remaining = notes.filter(n => n.id !== id);
+  saveNotes(person, remaining);
+  renderNotes(person);
+}
+
+function renderNotes(person) {
+  const notes = loadNotes(person);
+  const isKaren = person === 'christina';
+  const listEl  = document.getElementById('notes-' + person);
+  const countEl = document.getElementById('count-' + person);
+
+  countEl.textContent = notes.length === 0 ? '' :
+    notes.length === 1 ? '1 note' : notes.length + ' notes';
+
+  if (notes.length === 0) {
+    listEl.innerHTML = '<div class="no-notes">No notes yet. Hit "+ Add New Note" to get started.</div>';
+    return;
+  }
+
+  listEl.innerHTML = notes.map(n => {
+    const cardClass = isKaren ? 'karen-note' : 'gabe-note';
+    const badgeClass = isKaren ? 'karen-badge' : '';
+    const actBadge  = n.act   ? `<span class="note-badge ${badgeClass}">${n.act}</span>` : '';
+    const sceneBadge = n.scene ? `<span class="note-badge scene-badge">${n.scene}</span>` : '';
+    const ts = new Date(n.ts);
+    const tsStr = ts.toLocaleDateString('en-US', {month:'short', day:'numeric'}) +
+                  ' · ' + ts.toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit'});
+    return `
+    <div class="note-card ${cardClass}" id="note-${n.id}">
+      <div class="note-card-top">
+        <div class="note-card-meta">${actBadge}${sceneBadge}</div>
+        <span class="note-timestamp">${tsStr}</span>
+      </div>
+      <div class="note-text">${escHtml(n.text)}</div>
+      <div class="note-actions">
+        <button class="note-action-btn" onclick="editNote('${person}', ${n.id})">Edit</button>
+        <button class="note-action-btn delete" onclick="deleteNote('${person}', ${n.id})">Delete</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
 
 </body>
 </html>
