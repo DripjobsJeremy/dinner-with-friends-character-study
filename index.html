@@ -127,76 +127,102 @@ body {
 }
 
 .cover-body {
-  padding: 48px 20px 44px;
+  padding: 52px 24px 44px;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 20px;
 }
 
-.cover-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 0;
+/* Artistic hero: large logo offset left, behind title */
+.cover-art {
+  position: relative;
   width: 100%;
+  max-width: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px;
 }
 
-.cover-logo {
-  width: 100px;
-  height: 100px;
+.cover-logo-bg {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 170px;
+  height: 170px;
   object-fit: contain;
-  margin-bottom: 20px;
-  filter: drop-shadow(0 4px 16px rgba(0,0,0,0.4));
+  opacity: 0.2;
+  filter: drop-shadow(0 0 24px rgba(91,141,184,0.5));
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cover-title-block {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding-left: 56px;
+  width: 100%;
 }
 
 .cover-main-title {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 42px;
+  font-size: 40px;
   font-weight: 400;
   font-style: italic;
   color: var(--cover-text);
   line-height: 1.1;
   letter-spacing: 0.01em;
-  margin-bottom: 6px;
+  text-shadow: 0 2px 16px rgba(10,22,34,0.7);
 }
 
 .cover-main-by {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--cover-sub);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  margin-bottom: 16px;
+  margin-top: 8px;
+}
+
+.cover-info-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
 }
 
 .cover-info-row {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--cover-val);
   letter-spacing: 0.04em;
-  line-height: 1.8;
+  line-height: 1.7;
 }
 
 .cover-info-muted {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--cover-meta);
   letter-spacing: 0.08em;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .cover-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 11px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--cover-meta);
   text-decoration: none;
   border: 1px solid rgba(232,224,208,0.2);
   border-radius: 4px;
-  padding: 5px 12px;
-  margin-top: 16px;
+  padding: 8px 16px;
+  margin-top: 12px;
+  min-height: 44px;
   transition: border-color 0.15s, color 0.15s;
 }
 .cover-link:hover { border-color: var(--orange-light); color: var(--orange-light); }
@@ -324,9 +350,13 @@ body {
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  background: none;
+  background: var(--bg2);
   border: 1px solid var(--border);
   border-radius: 6px;
+  position: sticky;
+  top: 8px;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
   color: var(--text-muted);
   padding: 7px 14px;
   cursor: pointer;
@@ -646,10 +676,10 @@ select, input {
 
 /* ── BACK BUTTON ── */
 .back-btn {
-  font-size: 16px;
-  padding: 14px 22px;
+  font-size: 15px;
+  padding: 12px 20px;
   min-height: 48px;
-  margin: 20px 20px 0;
+  margin: 12px 16px 0;
   display: inline-flex;
   align-items: center;
 }
@@ -746,8 +776,9 @@ h3.subhead { font-size: 12px; }
    DESKTOP (540px+ — layout shifts)
    ════════════════════════════════════════════ */
 @media (min-width: 540px) {
-  .cover-body { padding: 52px 40px 48px; }
-  .cover-logo { width: 112px; height: 112px; }
+  .cover-body { padding: 56px 40px 48px; }
+  .cover-logo-bg { width: 200px; height: 200px; left: -10px; }
+  .cover-title-block { padding-left: 72px; }
   .cover-main-title { font-size: 48px; }
   .main, .cal-wrap, .notes-wrap { padding-left: 24px; padding-right: 24px; }
   .trait-grid { grid-template-columns: 1fr 1fr; }
@@ -760,7 +791,8 @@ h3.subhead { font-size: 12px; }
 }
 @media (min-width: 820px) {
   .cover-body { padding: 60px 60px 52px; }
-  .cover-logo { width: 124px; height: 124px; }
+  .cover-logo-bg { width: 220px; height: 220px; left: 0; opacity: 0.18; }
+  .cover-title-block { padding-left: 80px; }
   .cover-main-title { font-size: 52px; }
   .main, .cal-wrap, .notes-wrap { max-width: 860px; margin: 0 auto; padding-left: 40px; padding-right: 40px; }
   .character-card { padding: 32px 36px; }
@@ -899,6 +931,12 @@ h3.subhead { font-size: 12px; }
 .jump-link-beth   { border-color: #a0508055; color: #a05080; background: #f5eaf2; }
 .jump-link-beth:hover { background: #e8d0e0; border-color: #a05080; }
 .jump-link-couple { border-color: #1c2b1e55; color: #1c2b1e; background: #eef3ec; }
+.jump-link-gabe-karen { border-color: rgba(232,98,42,0.4); color: #E8622A; background: rgba(232,98,42,0.08); }
+.jump-link-gabe-karen:hover { background: rgba(232,98,42,0.18); border-color: var(--accent); }
+.jump-link-tom-beth   { border-color: rgba(46,95,138,0.4);  color: #2E5F8A; background: rgba(46,95,138,0.08); }
+.jump-link-tom-beth:hover   { background: rgba(46,95,138,0.18); border-color: #2E5F8A; }
+[data-theme="dark"] .jump-link-gabe-karen { background: rgba(232,98,42,0.15); color: #F5905A; border-color: rgba(232,98,42,0.4); }
+[data-theme="dark"] .jump-link-tom-beth   { background: rgba(91,141,184,0.15); color: #8AAFD4; border-color: rgba(91,141,184,0.4); }
 .jump-link-couple:hover { background: #d4e8d8; border-color: #1c2b1e; }
 [data-theme="dark"] .jump-link-gabe   { background: #1a2e1c; color: #7ac890; border-color: #3a6040; }
 [data-theme="dark"] .jump-link-karen  { background: #2a1e18; color: #c09070; border-color: #6a4030; }
@@ -919,20 +957,18 @@ footer { background: var(--cover-bg); color: #6a8060; text-align: center; paddin
       <span id="theme-label">Dark</span>
     </button>
 
-    <div class="cover-center">
-      <!-- Theatre logo -->
-      <img class="cover-logo" src="logo.png" alt="Blue Ridge Community Theatre">
-
-      <!-- Main title -->
-      <div class="cover-main-title">Dinner With Friends</div>
-      <div class="cover-main-by">by Donald Margulies</div>
-
-      <!-- Production info -->
+    <!-- Artistic cover layout: logo offset behind title -->
+    <div class="cover-art">
+      <img class="cover-logo-bg" src="logo.png" alt="">
+      <div class="cover-title-block">
+        <div class="cover-main-title">Dinner With Friends</div>
+        <div class="cover-main-by">by Donald Margulies</div>
+      </div>
+    </div>
+    <div class="cover-info-block">
       <div class="cover-info-row">Directed by Jessica Marie Moss</div>
       <div class="cover-info-row">Blue Ridge Community Theatre · Blue Ridge, GA</div>
       <div class="cover-info-row cover-info-muted">Pulitzer Prize for Drama, 2000</div>
-
-      <!-- Facebook link -->
       <a class="cover-link" href="https://www.facebook.com/BRCTGA" target="_blank">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
         Blue Ridge Community Theatre
@@ -966,7 +1002,8 @@ footer { background: var(--cover-bg); color: #6a8060; text-align: center; paddin
     <a class="jump-link jump-link-karen" href="#section-karen">Karen</a>
     <a class="jump-link jump-link-tom"   href="#section-tom">Tom</a>
     <a class="jump-link jump-link-beth"  href="#section-beth">Beth</a>
-    <a class="jump-link jump-link-couple" href="#section-couples">The Couples</a>
+    <a class="jump-link jump-link-gabe-karen" href="#section-gabe-karen">Gabe &amp; Karen</a>
+    <a class="jump-link jump-link-tom-beth"   href="#section-tom-beth">Tom &amp; Beth</a>
     <a class="jump-link" href="#section-craft">Craft</a>
     <a class="jump-link" href="#section-reference">Reference</a>
   </div>
@@ -1167,7 +1204,7 @@ footer { background: var(--cover-bg); color: #6a8060; text-align: center; paddin
   </div>
 
   <!-- GABE AND KAREN TOGETHER -->
-  <div class="together-section">
+  <div class="together-section" id="section-gabe-karen">
     <h2>Gabe & Karen — The Couple</h2>
     <p>Here is the great gift of this production: Jeremy and Christina are actually married. The task for most actors playing this couple is to manufacture twelve years of intimacy from scratch. They arrive with it. The familiarity, the private shorthand, the genuine physical ease — all of it is available from day one. The work is not to build it but to trust it.</p>
     <h3>What the Play Requires</h3>
@@ -1189,6 +1226,7 @@ footer { background: var(--cover-bg); color: #6a8060; text-align: center; paddin
   <!-- TOM AND BETH TOGETHER -->
   <div class="section">
     <div id="section-couples" class="section-label">The Other Couple</div>
+    <div id="section-tom-beth"></div>
     <h2>Tom & Beth — What Went Wrong</h2>
     <p>The marriage of Tom and Beth is the wound at the center of the play — and Margulies refuses to assign blame cleanly. Both characters contributed to the failure. Both are right about some things. Both are wrong about others. The production that takes sides loses the play.</p>
     <p>The Act 1 Scene 2 scene between Tom and Beth alone is the most volatile in the play — two people who know exactly how to wound each other, and then, without warning, the kiss. John and Lauren need to find the genuine history between these two people: the thing that drew them together in the first place, still alive underneath all the wreckage. Without that, the scene is just a fight. With it, it's heartbreaking.</p>
