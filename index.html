@@ -550,6 +550,20 @@ p { margin-bottom: 14px; color: var(--text2); }
 .note-action-btn.delete:hover { color: #a03020; }
 .no-notes { text-align: center; padding: 48px 20px; color: var(--text-muted); font-style: italic; font-size: 15px; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; }
 
+.from-director-badge {
+  background: #1c2b1e22 !important;
+  border-color: #1c2b1e55 !important;
+  color: var(--cover-bg) !important;
+}
+[data-theme="dark"] .from-director-badge {
+  background: rgba(232,224,208,0.1) !important;
+  border-color: rgba(232,224,208,0.3) !important;
+  color: var(--cover-text) !important;
+}
+.note-card-director {
+  background: color-mix(in srgb, var(--bg2) 92%, #1c2b1e 8%);
+}
+
 /* Copy-to-actor toggle */
 .copy-toggle-box {
   background: var(--helper-bg);
@@ -1142,8 +1156,8 @@ footer a:hover { text-decoration: underline; }
   </div>
 
   <div class="helper-box" style="margin-bottom:20px">
-    <strong>Your notes are private to this device.</strong> Notes saved here are stored in this browser only — no one else can see them unless they're using the same browser on the same device.<br><br>
-    <strong>📤 Copying a note to an actor's tab:</strong> When you select a specific actor from the Actor dropdown, a toggle will appear. Check it to also write that note to their tab on <em>this device</em>. Use this only for notes you intentionally want to send to that actor — for example, during a shared rehearsal session on a single laptop. If the actor uses their own phone or computer, they won't see it there. For cross-device sharing, copy the note text and send via message or email.
+    <strong>Your notes are private to this device.</strong> Notes you save here are stored in this browser only — no one else can see them.<br><br>
+    <strong>📤 Sending a note to an actor's tab:</strong> When you select a specific actor from the Actor dropdown, a toggle will appear. Check it to send that note directly to their tab — <em>on any device</em>. It's sent securely to the cloud and will appear the next time they open their tab, wherever they are. Use this only for notes you intentionally want them to see. The toggle resets after each save so every share is a conscious choice.
   </div>
 
   <button class="add-note-btn jess-btn" onclick="openForm('jess')"><span class="plus">+</span> Add New Note</button>
@@ -1656,60 +1670,81 @@ function handleJessActorChange() {
 
 const PERSON_COLORS={jeremy:'#4a7a56',christina:'#8b6650',john:'#5a6aaa',lauren:'#a05080',jess:'#1c2b1e'};
 
+// ══════════════════════════════════════
+// SUPABASE — cross-device director→actor notes
+// ══════════════════════════════════════
+const SB_URL   = 'https://tpsyyogqysrmgdcazwmy.supabase.co';
+const SB_KEY   = 'sb_publishable_IzGf5ShvnuPbgsfac8LK-w_rYz1ewQz';
+const SB_TABLE = 'shared_notes';
+
+async function sbInsert(row) {
+  try {
+    const res = await fetch(`${SB_URL}/rest/v1/${SB_TABLE}`, {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json', 'apikey':SB_KEY, 'Authorization':`Bearer ${SB_KEY}`, 'Prefer':'return=minimal' },
+      body: JSON.stringify(row)
+    });
+    if (!res.ok) { console.error('SB insert:', await res.text()); return false; }
+    return true;
+  } catch(e) { console.error('SB insert failed:', e); return false; }
+}
+
+async function sbFetch(recipient) {
+  try {
+    const res = await fetch(`${SB_URL}/rest/v1/${SB_TABLE}?recipient=eq.${recipient}&order=ts.desc`, {
+      headers: { 'apikey':SB_KEY, 'Authorization':`Bearer ${SB_KEY}` }
+    });
+    if (!res.ok) return [];
+    return await res.json();
+  } catch(e) { console.error('SB fetch failed:', e); return []; }
+}
+
+async function sbDelete(id) {
+  try {
+    await fetch(`${SB_URL}/rest/v1/${SB_TABLE}?id=eq.${id}`, {
+      method: 'DELETE',
+      headers: { 'apikey':SB_KEY, 'Authorization':`Bearer ${SB_KEY}` }
+    });
+  } catch(e) { console.error('SB delete failed:', e); }
+}
+
+// ══════════════════════════════════════
+// LOCAL NOTES (localStorage — private per device)
+// ══════════════════════════════════════
 function notesKey(p){ return 'dwf-notes-'+p; }
 function loadNotes(p){ try{return JSON.parse(localStorage.getItem(notesKey(p)))||[];}catch(e){return[];} }
 function persistNotes(p,n){ localStorage.setItem(notesKey(p),JSON.stringify(n)); }
 
 function openForm(p){ document.getElementById('form-'+p).classList.add('open'); document.getElementById(p+'-text').focus(); }
+
 function closeForm(p){
   document.getElementById('form-'+p).classList.remove('open');
   ['act','scene','text','production','actor'].forEach(f=>{const el=document.getElementById(p+'-'+f);if(el)el.value='';});
-  if (p === 'jess') {
-    const toggle = document.getElementById('jess-copy-toggle');
-    const check  = document.getElementById('jess-copy-check');
-    if (toggle) toggle.style.display = 'none';
-    if (check)  check.checked = false;
+  if(p==='jess'){
+    const t=document.getElementById('jess-copy-toggle'), c=document.getElementById('jess-copy-check');
+    if(t) t.style.display='none'; if(c) c.checked=false;
   }
 }
 
-function saveNote(p){
+async function saveNote(p){
   const text=document.getElementById(p+'-text').value.trim();
-  if(!text){document.getElementById(p+'-text').focus();return;}
+  if(!text){ document.getElementById(p+'-text').focus(); return; }
   const get=id=>(document.getElementById(id)||{}).value||'';
-  const note = {
-    id:Date.now(),
-    text,
-    act:get(p+'-act'),
-    scene:get(p+'-scene'),
-    production:get(p+'-production'),
-    actor:get(p+'-actor'),
-    ts:new Date().toISOString()
-  };
+  const note={ id:Date.now(), text, act:get(p+'-act'), scene:get(p+'-scene'), production:get(p+'-production'), actor:get(p+'-actor'), ts:new Date().toISOString() };
+  const notes=loadNotes(p); notes.unshift(note); persistNotes(p,notes);
 
-  // Save to this person's notes
-  const notes=loadNotes(p);
-  notes.unshift(note);
-  persistNotes(p,notes);
-
-  // If Jess and copy toggle is checked, copy to actor's tab
-  if (p === 'jess') {
-    const actorKey = document.getElementById('jess-actor').value;
-    const copyCheck = document.getElementById('jess-copy-check');
-    if (copyCheck && copyCheck.checked && actorKey && actorKey !== 'fullcast') {
-      const actorNotes = loadNotes(actorKey);
-      actorNotes.unshift({
-        ...note,
-        id: Date.now() + 1, // avoid ID collision
-        production: '', // strip production area — not relevant in actor's tab
-        actor: '',
-        _fromDirector: true
-      });
-      persistNotes(actorKey, actorNotes);
+  if(p==='jess'){
+    const actorKey=document.getElementById('jess-actor').value;
+    const copyCheck=document.getElementById('jess-copy-check');
+    if(copyCheck?.checked && actorKey && actorKey!=='fullcast'){
+      const btn=document.querySelector('#form-jess .btn-save');
+      if(btn){btn.textContent='Sending…';btn.disabled=true;}
+      const ok=await sbInsert({ id:Date.now(), recipient:actorKey, text:note.text, act:note.act, scene:note.scene, production:note.production, ts:note.ts });
+      if(btn){btn.textContent='Save Note';btn.disabled=false;}
+      if(!ok) alert('Note saved locally but could not reach the server. Check your connection.');
     }
   }
-
-  closeForm(p);
-  renderNotes(p);
+  closeForm(p); renderNotes(p);
 }
 
 function deleteNote(p,id){
@@ -1723,22 +1758,27 @@ function editNote(p,id){
   if(!note)return;
   ['act','scene','production','actor'].forEach(f=>{const el=document.getElementById(p+'-'+f);if(el)el.value=note[f]||'';});
   document.getElementById(p+'-text').value=note.text;
-  openForm(p);
-  persistNotes(p,notes.filter(n=>n.id!==id));
-  renderNotes(p);
+  openForm(p); persistNotes(p,notes.filter(n=>n.id!==id)); renderNotes(p);
 }
 
-function renderNotes(p){
-  const notes=loadNotes(p);
+async function renderNotes(p){
   const color=PERSON_COLORS[p]||'#888';
   const countEl=document.getElementById('count-'+p);
   const listEl=document.getElementById('notes-'+p);
-  if(countEl) countEl.textContent=notes.length===0?'':notes.length===1?'1 note':notes.length+' notes';
-  if(!listEl)return;
-  if(!notes.length){listEl.innerHTML='<div class="no-notes">No notes yet. Hit "+ Add New Note" to get started.</div>';return;}
-  listEl.innerHTML=notes.map(n=>{
+  if(!listEl) return;
+  listEl.innerHTML='<div class="no-notes" style="font-style:normal;opacity:0.5">Loading…</div>';
+  const local=loadNotes(p);
+  let shared=[];
+  if(p!=='jess'){ shared=(await sbFetch(p)).map(n=>({...n,_fromDirector:true,_supabase:true})); }
+  const seenIds=new Set();
+  const all=[...shared,...local].filter(n=>{ if(seenIds.has(n.id))return false; seenIds.add(n.id); return true; }).sort((a,b)=>new Date(b.ts)-new Date(a.ts));
+  if(countEl) countEl.textContent=all.length===0?'':all.length===1?'1 note':`${all.length} notes`;
+  if(!all.length){listEl.innerHTML='<div class="no-notes">No notes yet. Hit "+ Add New Note" to get started.</div>';return;}
+  listEl.innerHTML=all.map(n=>{
+    const fromDir=n._fromDirector;
+    const cardBorder=fromDir?'#1c2b1e':color;
     const badges=[
-      n._fromDirector ? `<span class="note-badge" style="background:#1c2b1e22;border-color:#1c2b1e55;color:var(--cover-bg)">📤 From Director</span>` : '',
+      fromDir?`<span class="note-badge from-director-badge">📤 From Director</span>`:'',
       n.production?`<span class="note-badge" style="background:${color}18;border-color:${color}55;color:${color}">${n.production}</span>`:'',
       n.actor?`<span class="note-badge scene-badge">${n.actor}</span>`:'',
       n.act?`<span class="note-badge" style="background:${color}18;border-color:${color}55;color:${color}">${n.act}</span>`:'',
@@ -1746,15 +1786,20 @@ function renderNotes(p){
     ].filter(Boolean).join('');
     const ts=new Date(n.ts);
     const tsStr=ts.toLocaleDateString('en-US',{month:'short',day:'numeric'})+' · '+ts.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
-    return `<div class="note-card" style="border-left:4px solid ${color}">
+    const actions=fromDir&&n._supabase
+      ?`<button class="note-action-btn delete" onclick="deleteSharedNote('${p}',${n.id})">Dismiss</button>`
+      :`<button class="note-action-btn" onclick="editNote('${p}',${n.id})">Edit</button><button class="note-action-btn delete" onclick="deleteNote('${p}',${n.id})">Delete</button>`;
+    return `<div class="note-card${fromDir?' note-card-director':''}" style="border-left:4px solid ${cardBorder}">
       <div class="note-card-top"><div class="note-card-meta">${badges}</div><span class="note-timestamp">${tsStr}</span></div>
       <div class="note-text">${escHtml(n.text)}</div>
-      <div class="note-actions">
-        <button class="note-action-btn" onclick="editNote('${p}',${n.id})">Edit</button>
-        <button class="note-action-btn delete" onclick="deleteNote('${p}',${n.id})">Delete</button>
-      </div>
+      <div class="note-actions">${actions}</div>
     </div>`;
   }).join('');
+}
+
+async function deleteSharedNote(p,id){
+  if(!confirm('Dismiss this note from the director?'))return;
+  await sbDelete(id); renderNotes(p);
 }
 
 function escHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
@@ -1762,9 +1807,7 @@ function escHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace
 // ══════════════════════════════════════
 // INIT
 // ══════════════════════════════════════
-document.addEventListener('DOMContentLoaded', ()=>{
-  initActorChips();
-});
+document.addEventListener('DOMContentLoaded',()=>{ initActorChips(); });
 </script>
 
 </body>
