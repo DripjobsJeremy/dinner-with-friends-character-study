@@ -130,11 +130,27 @@ body {
   margin-bottom: 4px;
 }
 
-.cover-subtitle {
-  font-size: 12px;
-  color: var(--cover-meta);
-  letter-spacing: 0.04em;
+.cover-subtitle-block {
+  margin-top: 10px;
+  margin-bottom: 4px;
 }
+.cover-tool-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 28px;
+  font-weight: 400;
+  font-style: italic;
+  color: #f0e8d8;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+.cover-tool-tagline {
+  font-size: 12px;
+  color: var(--cover-sub);
+  margin-top: 5px;
+  line-height: 1.6;
+  max-width: 480px;
+}
+.cover-tool-tagline em { font-style: italic; color: var(--cover-val); }
 
 .cover-meta {
   margin-top: 20px;
@@ -534,7 +550,42 @@ p { margin-bottom: 14px; color: var(--text2); }
 .note-action-btn.delete:hover { color: #a03020; }
 .no-notes { text-align: center; padding: 48px 20px; color: var(--text-muted); font-style: italic; font-size: 15px; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; }
 
-/* ── FOOTER ── */
+/* Copy-to-actor toggle */
+.copy-toggle-box {
+  background: var(--helper-bg);
+  border: 1px solid var(--helper-border);
+  border-radius: 6px;
+  padding: 12px 16px;
+}
+.copy-toggle-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--helper-text);
+  line-height: 1.5;
+}
+.copy-toggle-label input[type="checkbox"] {
+  margin-top: 3px;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  accent-color: var(--green);
+  cursor: pointer;
+}
+.copy-toggle-text { flex: 1; }
+.copy-toggle-hint {
+  font-size: 12px;
+  color: var(--helper-text);
+  opacity: 0.8;
+  margin-top: 8px;
+  padding-left: 26px;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+
 footer { background: var(--cover-bg); color: #6a8060; text-align: center; padding: 24px 16px; font-size: 11px; letter-spacing: 0.06em; line-height: 1.7; }
 footer a { color: #8fa880; text-decoration: none; }
 footer a:hover { text-decoration: underline; }
@@ -572,14 +623,17 @@ footer a:hover { text-decoration: underline; }
       <span class="theme-icon" id="theme-icon">🌙</span>
       <span id="theme-label">Dark</span>
     </button>
-    <div class="cover-eyebrow">Character Study Guide · Blue Ridge Community Theatre</div>
+    <div class="cover-eyebrow">Blue Ridge Community Theatre · Production Companion</div>
     <div class="cover-credits">By Donald Margulies · Directed by Jessica Marie Moss</div>
-    <div class="cover-subtitle">Pulitzer Prize for Drama, 2000</div>
+    <div class="cover-subtitle-block">
+      <div class="cover-tool-name">The Green Room</div>
+      <div class="cover-tool-tagline">Schedules, notes &amp; character study — all in one place for the cast of <em>Dinner With Friends</em></div>
+    </div>
     <div class="cover-meta">
-      <div class="cover-meta-item"><span class="label">Your Role</span><span class="value">Gabe</span></div>
-      <div class="cover-meta-item"><span class="label">Christina's Role</span><span class="value">Karen</span></div>
+      <div class="cover-meta-item"><span class="label">Playwright</span><span class="value">Donald Margulies</span></div>
       <div class="cover-meta-item"><span class="label">Director</span><span class="value">Jessica Marie Moss</span></div>
-      <div class="cover-meta-item"><span class="label">Venue</span><span class="value">Blue Ridge, GA</span></div>
+      <div class="cover-meta-item"><span class="label">Company</span><span class="value">Blue Ridge Community Theatre</span></div>
+      <div class="cover-meta-item"><span class="label">Pulitzer Prize</span><span class="value">Drama, 2000</span></div>
     </div>
     <div class="cover-links">
       <a class="cover-link" href="https://www.facebook.com/BRCTGA" target="_blank">
@@ -1087,7 +1141,14 @@ footer a:hover { text-decoration: underline; }
     <h2>Jess — Director's Notes</h2>
     <p>Production notes. Saved in this browser.</p>
   </div>
+
+  <div class="helper-box" style="margin-bottom:20px">
+    <strong>Your notes are private to this device.</strong> Notes saved here are stored in this browser only — no one else can see them unless they're using the same browser on the same device.<br><br>
+    <strong>📤 Copying a note to an actor's tab:</strong> When you select a specific actor from the Actor dropdown, a toggle will appear. Check it to also write that note to their tab on <em>this device</em>. Use this only for notes you intentionally want to send to that actor — for example, during a shared rehearsal session on a single laptop. If the actor uses their own phone or computer, they won't see it there. For cross-device sharing, copy the note text and send via message or email.
+  </div>
+
   <button class="add-note-btn jess-btn" onclick="openForm('jess')"><span class="plus">+</span> Add New Note</button>
+
   <div class="note-form" id="form-jess">
     <div class="note-form-row">
       <div class="note-form-group">
@@ -1108,16 +1169,27 @@ footer a:hover { text-decoration: underline; }
       </div>
       <div class="note-form-group">
         <label for="jess-actor">Actor</label>
-        <select id="jess-actor">
+        <select id="jess-actor" onchange="handleJessActorChange()">
           <option value="">— Actor —</option>
-          <option>Beth (Lauren)</option>
-          <option>Gabe (Jeremy)</option>
-          <option>Karen (Christina)</option>
-          <option>Tom (John)</option>
-          <option>Full Cast</option>
+          <option value="jeremy">Gabe (Jeremy)</option>
+          <option value="christina">Karen (Christina)</option>
+          <option value="john">Tom (John)</option>
+          <option value="lauren">Beth (Lauren)</option>
+          <option value="fullcast">Full Cast</option>
         </select>
       </div>
     </div>
+
+    <div id="jess-copy-toggle" style="display:none; margin-bottom:14px;">
+      <div class="copy-toggle-box">
+        <label class="copy-toggle-label">
+          <input type="checkbox" id="jess-copy-check">
+          <span class="copy-toggle-text">Also copy this note to <strong id="jess-copy-actor-name"></strong>'s tab on this device</span>
+        </label>
+        <div class="copy-toggle-hint">Only use this toggle for notes you want that actor to see. Each note is copied individually — the toggle resets after each save.</div>
+      </div>
+    </div>
+
     <div class="note-form-row">
       <div class="note-form-group">
         <label for="jess-act">Act</label>
@@ -1134,12 +1206,14 @@ footer a:hover { text-decoration: underline; }
         </select>
       </div>
     </div>
+
     <textarea class="note-textarea" id="jess-text" placeholder="Director's note, blocking note, production note..."></textarea>
     <div class="note-form-actions">
       <button class="btn-cancel" onclick="closeForm('jess')">Cancel</button>
       <button class="btn-save" onclick="saveNote('jess')">Save Note</button>
     </div>
   </div>
+
   <div class="notes-count" id="count-jess"></div>
   <div class="notes-list" id="notes-jess"></div>
 </div>
@@ -1560,8 +1634,27 @@ function renderFilterPills() {
 }
 
 // ══════════════════════════════════════
-// NOTES
+// JESS ACTOR COPY TOGGLE
 // ══════════════════════════════════════
+const ACTOR_DISPLAY_NAMES = {
+  jeremy: 'Jeremy (Gabe)',
+  christina: 'Christina (Karen)',
+  john: 'John (Tom)',
+  lauren: 'Lauren (Beth)'
+};
+
+function handleJessActorChange() {
+  const val = document.getElementById('jess-actor').value;
+  const toggle = document.getElementById('jess-copy-toggle');
+  const nameEl = document.getElementById('jess-copy-actor-name');
+  const check  = document.getElementById('jess-copy-check');
+  const isSpecific = val && val !== 'fullcast';
+  toggle.style.display = isSpecific ? 'block' : 'none';
+  if (isSpecific) nameEl.textContent = ACTOR_DISPLAY_NAMES[val] || val;
+  check.checked = false; // always reset on actor change
+}
+
+
 const PERSON_COLORS={jeremy:'#4a7a56',christina:'#8b6650',john:'#5a6aaa',lauren:'#a05080',jess:'#1c2b1e'};
 
 function notesKey(p){ return 'dwf-notes-'+p; }
@@ -1572,15 +1665,50 @@ function openForm(p){ document.getElementById('form-'+p).classList.add('open'); 
 function closeForm(p){
   document.getElementById('form-'+p).classList.remove('open');
   ['act','scene','text','production','actor'].forEach(f=>{const el=document.getElementById(p+'-'+f);if(el)el.value='';});
+  if (p === 'jess') {
+    const toggle = document.getElementById('jess-copy-toggle');
+    const check  = document.getElementById('jess-copy-check');
+    if (toggle) toggle.style.display = 'none';
+    if (check)  check.checked = false;
+  }
 }
 
 function saveNote(p){
   const text=document.getElementById(p+'-text').value.trim();
   if(!text){document.getElementById(p+'-text').focus();return;}
   const get=id=>(document.getElementById(id)||{}).value||'';
+  const note = {
+    id:Date.now(),
+    text,
+    act:get(p+'-act'),
+    scene:get(p+'-scene'),
+    production:get(p+'-production'),
+    actor:get(p+'-actor'),
+    ts:new Date().toISOString()
+  };
+
+  // Save to this person's notes
   const notes=loadNotes(p);
-  notes.unshift({id:Date.now(),text,act:get(p+'-act'),scene:get(p+'-scene'),production:get(p+'-production'),actor:get(p+'-actor'),ts:new Date().toISOString()});
+  notes.unshift(note);
   persistNotes(p,notes);
+
+  // If Jess and copy toggle is checked, copy to actor's tab
+  if (p === 'jess') {
+    const actorKey = document.getElementById('jess-actor').value;
+    const copyCheck = document.getElementById('jess-copy-check');
+    if (copyCheck && copyCheck.checked && actorKey && actorKey !== 'fullcast') {
+      const actorNotes = loadNotes(actorKey);
+      actorNotes.unshift({
+        ...note,
+        id: Date.now() + 1, // avoid ID collision
+        production: '', // strip production area — not relevant in actor's tab
+        actor: '',
+        _fromDirector: true
+      });
+      persistNotes(actorKey, actorNotes);
+    }
+  }
+
   closeForm(p);
   renderNotes(p);
 }
@@ -1611,6 +1739,7 @@ function renderNotes(p){
   if(!notes.length){listEl.innerHTML='<div class="no-notes">No notes yet. Hit "+ Add New Note" to get started.</div>';return;}
   listEl.innerHTML=notes.map(n=>{
     const badges=[
+      n._fromDirector ? `<span class="note-badge" style="background:#1c2b1e22;border-color:#1c2b1e55;color:var(--cover-bg)">📤 From Director</span>` : '',
       n.production?`<span class="note-badge" style="background:${color}18;border-color:${color}55;color:${color}">${n.production}</span>`:'',
       n.actor?`<span class="note-badge scene-badge">${n.actor}</span>`:'',
       n.act?`<span class="note-badge" style="background:${color}18;border-color:${color}55;color:${color}">${n.act}</span>`:'',
