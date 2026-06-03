@@ -1,977 +1,593 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Dinner With Friends — The Studio</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Source Serif 4', Georgia, serif;
-    font-size: 16px;
-    line-height: 1.75;
-    color: #1a1a1a;
-    background: #faf8f4;
-    padding: 0;
-    -webkit-text-size-adjust: 100%;
-  }
-
-  /* ── COVER ── */
-  .cover {
-    background: #1c2b1e;
-    color: #e8e0d0;
-    padding: 48px 20px 32px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .cover::before {
-    content: '';
-    position: absolute;
-    top: -60px; right: -60px;
-    width: 240px; height: 240px;
-    border-radius: 50%;
-    border: 1px solid rgba(232,224,208,0.12);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .cover-eyebrow {
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: #8fa880;
-    margin-bottom: 16px;
-    line-height: 1.6;
-  }
-
-  .cover h1 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 42px;
-    font-weight: 400;
-    line-height: 1.1;
-    color: #f0e8d8;
-    margin-bottom: 10px;
-  }
-
-  .cover h1 em { font-style: italic; }
-
-  .cover-subtitle {
-    font-size: 13px;
-    color: #a0937e;
-    margin-top: 12px;
-    letter-spacing: 0.04em;
-  }
-
-  .cover-meta {
-    margin-top: 32px;
-    padding-top: 24px;
-    border-top: 1px solid rgba(232,224,208,0.18);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-
-  .cover-meta-item { font-size: 12px; }
-
-  .cover-meta-item .label {
-    color: #6a7d5c;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-size: 9px;
-    display: block;
-    margin-bottom: 3px;
-  }
-
-  .cover-meta-item .value { color: #d4c8b4; }
-
-  /* ── TABS ── */
-  .tab-bar-outer {
-    background: #1c2b1e;
-    padding: 0 20px;
-    position: relative;
-    z-index: 10;
-  }
-
-  .tab-bar {
-    display: flex;
-    gap: 2px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  .tab-bar::-webkit-scrollbar { display: none; }
-
-  .tab-btn {
-    font-family: 'Source Serif 4', Georgia, serif;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    padding: 12px 18px 13px;
-    border: none;
-    border-radius: 6px 6px 0 0;
-    cursor: pointer;
-    background: rgba(255,255,255,0.07);
-    color: #8fa880;
-    transition: background 0.15s, color 0.15s;
-    white-space: nowrap;
-    flex-shrink: 0;
-    position: relative;
-    z-index: 11;
-  }
-
-  .tab-btn:hover {
-    background: rgba(255,255,255,0.13);
-    color: #c4b8a4;
-  }
-
-  .tab-btn.active {
-    background: #faf8f4;
-    color: #1c2b1e;
-    font-weight: 500;
-  }
-
-  /* ── TAB PANELS ── */
-  .tab-panel { display: none; }
-  .tab-panel.active { display: block; }
-
-  /* ── MAIN (character guide panel) ── */
-  .main { padding: 0 16px 64px; }
-  .section { padding-top: 44px; }
-
-  .section-label {
-    font-size: 9px;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: #8fa880;
-    margin-bottom: 6px;
-  }
-
-  h2 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 26px;
-    font-weight: 400;
-    color: #1c2b1e;
-    line-height: 1.25;
-    margin-bottom: 16px;
-  }
-
-  h3 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 19px;
-    font-weight: 400;
-    color: #2a3d2c;
-    margin-bottom: 10px;
-    margin-top: 24px;
-  }
-
-  h3.subhead {
-    font-family: 'Source Serif 4', serif;
-    font-size: 11px;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: #7a8f6e;
-    margin-top: 22px;
-    margin-bottom: 8px;
-  }
-
-  p { margin-bottom: 14px; color: #2e2e2e; }
-
-  .divider { border: none; border-top: 1px solid #d8d0c4; margin: 32px 0; }
-
-  /* ── CHARACTER CARDS ── */
-  .character-card {
-    background: #ffffff;
-    border: 1px solid #ddd6cc;
-    border-radius: 6px;
-    padding: 20px 18px;
-    margin: 24px 0;
-  }
-
-  .character-card.gabe { border-left: 4px solid #4a7a56; }
-  .character-card.karen { border-left: 4px solid #8b6650; }
-
-  .character-card-header {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    margin-bottom: 16px;
-  }
-
-  .character-name {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 26px;
-    font-weight: 600;
-    color: #1c2b1e;
-  }
-
-  .character-card.karen .character-name { color: #5c3d2a; }
-
-  .character-role {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: #9a8a7a;
-    line-height: 1.5;
-  }
-
-  .essence-block {
-    background: #f2efe8;
-    border-radius: 4px;
-    padding: 14px 16px;
-    margin-bottom: 16px;
-    font-style: italic;
-    font-size: 15px;
-    color: #3a3228;
-    line-height: 1.65;
-  }
-
-  .character-card.gabe .essence-block { background: #eef3ec; }
-
-  .trait-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-    margin: 16px 0;
-  }
-
-  .trait-item {
-    background: #faf8f4;
-    border: 1px solid #e4ddd5;
-    border-radius: 4px;
-    padding: 12px 14px;
-  }
-
-  .character-card.gabe .trait-item { background: #f5f8f4; border-color: #d4dfd2; }
-
-  .trait-label {
-    font-size: 9px;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: #9a8a7a;
-    margin-bottom: 5px;
-    display: block;
-  }
-
-  .character-card.gabe .trait-label { color: #7a9470; }
-  .trait-value { font-size: 14px; color: #2e2e2e; line-height: 1.55; }
-
-  .callout {
-    border-left: 3px solid #8fa880;
-    padding: 12px 16px;
-    margin: 18px 0;
-    background: #f5f8f4;
-    border-radius: 0 4px 4px 0;
-  }
-
-  .callout.amber { border-left-color: #b08050; background: #faf6f0; }
-  .callout p { font-size: 14px; margin: 0; color: #3a3228; }
-  .callout strong { color: #1c2b1e; }
-
-  .two-column { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 16px 0; }
-
-  .column-block {
-    background: #fff;
-    border: 1px solid #ddd6cc;
-    border-radius: 4px;
-    padding: 16px 18px;
-  }
-
-  .column-block h4 {
-    font-family: 'Source Serif 4', serif;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: #9a8a7a;
-    margin-bottom: 10px;
-  }
-
-  .column-block ul { list-style: none; padding: 0; }
-
-  .column-block ul li {
-    font-size: 14px;
-    color: #2e2e2e;
-    padding: 5px 0 5px 20px;
-    border-bottom: 1px solid #f0ece6;
-    line-height: 1.5;
-    position: relative;
-  }
-
-  .column-block ul li:last-child { border-bottom: none; }
-
-  .column-block ul li::before {
-    content: '—';
-    position: absolute;
-    left: 0;
-    color: #b8a890;
-    font-size: 12px;
-  }
-
-  .scene-breakdown { border: 1px solid #ddd6cc; border-radius: 4px; overflow: hidden; margin: 16px 0; }
-
-  .scene-row { display: grid; grid-template-columns: 1fr; border-bottom: 1px solid #ece6de; }
-  .scene-row:last-child { border-bottom: none; }
-
-  .scene-label {
-    background: #f2efe8;
-    padding: 10px 14px;
-    font-size: 11px;
-    font-weight: 500;
-    color: #5c4f3e;
-    font-family: 'Source Serif 4', serif;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    border-bottom: 1px solid #ece6de;
-  }
-
-  .scene-content { padding: 12px 14px; font-size: 14px; color: #2e2e2e; line-height: 1.65; background: #fff; }
-
-  .methodology-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 16px 0; }
-
-  .method-card { background: #fff; border: 1px solid #ddd6cc; border-radius: 4px; padding: 16px 18px; }
-
-  .method-card h4 {
-    font-family: 'Source Serif 4', serif;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: #8fa880;
-    margin-bottom: 7px;
-  }
-
-  .method-card p { font-size: 14px; margin: 0; color: #3a3228; line-height: 1.65; }
-
-  .together-section {
-    background: #1c2b1e;
-    color: #e8e0d0;
-    padding: 28px 18px;
-    border-radius: 6px;
-    margin: 32px 0;
-  }
-
-  .together-section h2 { color: #f0e8d8; font-size: 24px; margin-bottom: 14px; }
-  .together-section p { color: #c4b8a4; font-size: 15px; }
-
-  .together-section h3 {
-    color: #d4c8b4;
-    font-family: 'Source Serif 4', serif;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-size: 10px;
-    margin-top: 24px;
-    margin-bottom: 8px;
-  }
-
-  .together-section .callout { background: rgba(232,224,208,0.07); border-left-color: #8fa880; }
-  .together-section .callout p { color: #c4b8a4; }
-
-  .checklist { list-style: none; padding: 0; margin: 14px 0; }
-
-  .checklist li {
-    font-size: 14px;
-    color: #2e2e2e;
-    padding: 7px 0 7px 22px;
-    position: relative;
-    border-bottom: 1px solid #f0ece6;
-    line-height: 1.55;
-  }
-
-  .checklist li:last-child { border-bottom: none; }
-
-  .checklist li::before {
-    content: '○';
-    position: absolute;
-    left: 0;
-    color: #b8a890;
-    font-size: 11px;
-    top: 9px;
-  }
-
-  .together-section .checklist li { color: #c4b8a4; border-bottom-color: rgba(232,224,208,0.1); }
-  .together-section .checklist li::before { color: #6a8060; }
-
-  /* ══════════════════════════════════════
-     CALENDAR PANEL
-  ══════════════════════════════════════ */
-  .cal-wrap { padding: 28px 16px 64px; }
-
-  .cal-header {
-    margin-bottom: 24px;
-  }
-
-  .cal-header h2 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 26px;
-    font-weight: 400;
-    color: #1c2b1e;
-    margin-bottom: 4px;
-  }
-
-  .cal-header p {
-    font-size: 13px;
-    color: #9a8a7a;
-    margin: 0;
-  }
-
-  /* Filters */
-  .filters {
-    background: #fff;
-    border: 1px solid #ddd6cc;
-    border-radius: 6px;
-    padding: 16px;
-    margin-bottom: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: flex-end;
-  }
-
-  .filter-group {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    min-width: 120px;
-    flex: 1;
-  }
-
-  .filter-group label {
-    font-size: 9px;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: #9a8a7a;
-  }
-
-  .filter-group select,
-  .filter-group input[type="date"] {
-    font-family: 'Source Serif 4', Georgia, serif;
-    font-size: 13px;
-    color: #2e2e2e;
-    background: #faf8f4;
-    border: 1px solid #ddd6cc;
-    border-radius: 4px;
-    padding: 7px 10px;
-    appearance: none;
-    -webkit-appearance: none;
-    width: 100%;
-    cursor: pointer;
-  }
-
-  .filter-group select:focus,
-  .filter-group input[type="date"]:focus {
-    outline: 2px solid #8fa880;
-    outline-offset: 1px;
-  }
-
-  .filter-reset {
-    font-family: 'Source Serif 4', Georgia, serif;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    background: none;
-    border: 1px solid #ddd6cc;
-    border-radius: 4px;
-    color: #9a8a7a;
-    padding: 7px 14px;
-    cursor: pointer;
-    align-self: flex-end;
-    white-space: nowrap;
-    transition: border-color 0.15s, color 0.15s;
-  }
-
-  .filter-reset:hover { border-color: #8fa880; color: #4a7a56; }
-
-  /* Active filter pills */
-  .filter-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 16px;
-    min-height: 0;
-  }
-
-  .pill {
-    font-size: 11px;
-    background: #eef3ec;
-    color: #3a6040;
-    border: 1px solid #c4d8be;
-    border-radius: 20px;
-    padding: 3px 10px 3px 10px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .pill-x {
-    cursor: pointer;
-    font-size: 13px;
-    line-height: 1;
-    color: #7a9470;
-    padding: 0 2px;
-  }
-
-  /* Results count */
-  .results-meta {
-    font-size: 12px;
-    color: #9a8a7a;
-    margin-bottom: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  /* Event cards */
-  .event-list { display: flex; flex-direction: column; gap: 10px; }
-
-  .event-card {
-    background: #fff;
-    border: 1px solid #ddd6cc;
-    border-radius: 6px;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: 6px 1fr;
-  }
-
-  .event-stripe { width: 6px; }
-
-  .event-stripe.rehearsal { background: #4a7a56; }
-  .event-stripe.performance { background: #8b6650; }
-  .event-stripe.fitting { background: #6a7aaa; }
-  .event-stripe.tableread { background: #b08050; }
-  .event-stripe.techdress { background: #7a5080; }
-
-  .event-body { padding: 14px 16px; }
-
-  .event-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .event-title {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 16px;
-    font-weight: 600;
-    color: #1c2b1e;
-    line-height: 1.3;
-  }
-
-  .event-type-badge {
-    font-size: 9px;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    padding: 3px 8px;
-    border-radius: 3px;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .badge-rehearsal { background: #eef3ec; color: #3a6040; }
-  .badge-performance { background: #f3ede8; color: #6a3820; }
-  .badge-fitting { background: #eceef8; color: #3a4070; }
-  .badge-tableread { background: #f5ede0; color: #7a4a10; }
-  .badge-techdress { background: #f0eaf5; color: #5a3070; }
-
-  .event-meta-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 8px;
-  }
-
-  .event-meta-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 13px;
-    color: #6a6050;
-  }
-
-  .event-meta-item svg { flex-shrink: 0; opacity: 0.6; }
-
-  .event-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    margin-top: 10px;
-  }
-
-  .event-tag {
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 3px;
-    border: 1px solid #e4ddd5;
-    color: #7a6a58;
-    background: #faf8f4;
-  }
-
-  .event-tag.gabe { border-color: #b8d4be; color: #3a6040; background: #f0f6f0; }
-  .event-tag.karen { border-color: #d4b8a8; color: #6a3820; background: #f8f0ec; }
-  .event-tag.both { border-color: #c4bcd0; color: #3a306a; background: #f4f2f8; }
-
-  .no-events {
-    text-align: center;
-    padding: 48px 20px;
-    color: #9a8a7a;
-    font-style: italic;
-    font-size: 15px;
-    background: #fff;
-    border: 1px solid #ddd6cc;
-    border-radius: 6px;
-  }
-
-  /* ══════════════════════════════════════
-     VIEW TOGGLES & NAVIGATION
-  ══════════════════════════════════════ */
-  .view-toggles {
-    display: flex; gap: 4px; margin-bottom: 16px;
-  }
-  .view-btn {
-    font-family: 'Source Serif 4', Georgia, serif;
-    font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em;
-    background: #fff; border: 1px solid #ddd6cc; border-radius: 4px;
-    padding: 7px 14px; cursor: pointer; color: #9a8a7a;
-    transition: all 0.15s;
-  }
-  .view-btn:hover { border-color: #8fa880; color: #3a6040; }
-  .view-btn.active { background: #1c2b1e; color: #e8e0d0; border-color: #1c2b1e; }
-
-  /* Navigation row */
-  .cal-nav {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 12px;
-  }
-  .cal-nav-btn {
-    font-family: 'Source Serif 4', Georgia, serif;
-    font-size: 12px; background: none; border: 1px solid #ddd6cc;
-    border-radius: 4px; padding: 6px 12px; cursor: pointer; color: #6a6050;
-    transition: border-color 0.15s;
-  }
-  .cal-nav-btn:hover { border-color: #8fa880; color: #3a6040; }
-  .cal-nav-label { font-size: 14px; font-weight: 500; color: #1c2b1e; }
-
-  /* Legend */
-  .avail-legend {
-    display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;
-    padding: 10px 14px; background: #fff; border: 1px solid #ddd6cc; border-radius: 4px;
-  }
-  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #3a3228; }
-  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-
-  /* ── WEEK GRID ── */
-  .week-grid {
-    border: 1px solid #ddd6cc; border-radius: 6px; overflow: hidden;
-    margin-bottom: 20px; overflow-x: auto;
-  }
-  .week-header-row, .week-actor-row {
-    display: grid;
-    grid-template-columns: 90px repeat(7, 1fr);
-    min-width: 560px;
-  }
-  .week-header-row { background: #f2efe8; border-bottom: 1px solid #ddd6cc; }
-  .week-actor-row { border-bottom: 1px solid #ece6de; }
-  .week-actor-row:last-child { border-bottom: none; }
-  .week-day-header {
-    text-align: center; padding: 8px 4px; font-size: 11px;
-    text-transform: uppercase; letter-spacing: 0.1em; color: #7a6a58;
-    border-left: 1px solid #ddd6cc;
-  }
-  .week-day-header span { display: block; font-size: 16px; font-weight: 600; color: #1c2b1e; letter-spacing: 0; text-transform: none; }
-  .week-day-header.today { background: #eef3ec; }
-  .week-day-header.today span { color: #4a7a56; }
-  .week-actor-col { background: #f2efe8; border-bottom: 1px solid #ddd6cc; }
-  .week-actor-label {
-    padding: 10px 8px; font-size: 11px; font-weight: 500; color: #3a3228;
-    background: #faf8f4; border-left: 3px solid #ddd;
-    display: flex; align-items: center;
-  }
-  .week-cell {
-    border-left: 1px solid #ece6de; min-height: 52px; padding: 6px 4px;
-    position: relative; transition: background 0.1s;
-    display: flex; flex-direction: column; align-items: center; gap: 3px;
-  }
-  .cell-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 4px; }
-  .status-unavail .cell-dot { background: #ccc !important; }
-  .status-remote .cell-dot { background: #f0a840 !important; }
-  .status-tbd .cell-dot { background: #b0b0b0 !important; }
-  .status-partial .cell-dot { background: #e0c080 !important; }
-  .status-unavail { background: #faf8f8 !important; }
-  .status-remote { background: #fffbf0 !important; }
-  .status-tbd { background: #f8f8f8 !important; }
-  .cell-event-pill {
-    font-size: 9px; color: #fff; padding: 1px 5px; border-radius: 3px;
-    white-space: nowrap; overflow: hidden; max-width: 100%; text-overflow: ellipsis;
-  }
-
-  /* ── MONTH GRID ── */
-  .month-block { margin-bottom: 28px; }
-  .month-title {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 18px; color: #1c2b1e; margin-bottom: 8px; padding-left: 2px;
-  }
-  .month-grid {
-    display: grid; grid-template-columns: repeat(7, 1fr);
-    border: 1px solid #ddd6cc; border-radius: 6px; overflow: hidden;
-  }
-  .month-dow {
-    text-align: center; padding: 6px 2px; font-size: 10px;
-    text-transform: uppercase; letter-spacing: 0.1em; color: #9a8a7a;
-    background: #f2efe8; border-bottom: 1px solid #ddd6cc;
-    border-right: 1px solid #ece6de;
-  }
-  .month-dow:last-child { border-right: none; }
-  .month-day {
-    min-height: 56px; padding: 4px; background: #fff;
-    border-bottom: 1px solid #ece6de; border-right: 1px solid #ece6de;
-    position: relative;
-  }
-  .month-day:nth-child(7n) { border-right: none; }
-  .month-day.empty { background: #faf8f4; }
-  .month-day.today { background: #eef3ec; }
-  .month-day-num { font-size: 11px; color: #6a6050; margin-bottom: 2px; text-align: right; }
-  .today .month-day-num { color: #4a7a56; font-weight: 700; }
-  .month-day-dots { display: flex; flex-wrap: wrap; gap: 2px; margin-bottom: 2px; }
-  .month-dot { width: 7px; height: 7px; border-radius: 50%; }
-  .month-event-pill {
-    font-size: 8px; color: #fff; padding: 1px 4px; border-radius: 2px;
-    white-space: nowrap; overflow: hidden; max-width: 100%; text-overflow: ellipsis;
-    display: block; margin-bottom: 1px;
-  }
-
-  /* Actor note button colours */
-  .gabe-btn   { background: #4a7a56 !important; }
-  .karen-btn  { background: #8b6650 !important; }
-  .john-btn   { background: #5a6aaa !important; }
-  .lauren-btn { background: #a05080 !important; }
-  .jess-btn   { background: #1c2b1e !important; }
-
-
-  /* ══════════════════════════════════════
-     NOTES PANELS
-  ══════════════════════════════════════ */
-  .notes-wrap { padding: 28px 16px 64px; }
-
-  .notes-header { margin-bottom: 24px; }
-  .notes-header h2 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 26px; font-weight: 400; color: #1c2b1e; margin-bottom: 4px;
-  }
-  .notes-header p { font-size: 13px; color: #9a8a7a; margin: 0; }
-
-  /* Add note button */
-  .add-note-btn {
-    display: flex; align-items: center; gap: 8px;
-    font-family: 'Source Serif 4', Georgia, serif;
-    font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em;
-    background: #1c2b1e; color: #e8e0d0;
-    border: none; border-radius: 5px;
-    padding: 11px 18px; cursor: pointer; margin-bottom: 24px;
-    transition: background 0.15s;
-  }
-  .add-note-btn:hover { background: #2e4a32; }
-  .add-note-btn .plus { font-size: 18px; line-height: 1; }
-
-  /* New note form */
-  .note-form {
-    background: #fff; border: 1px solid #ddd6cc; border-radius: 6px;
-    padding: 18px; margin-bottom: 20px; display: none;
-  }
-  .note-form.open { display: block; }
-
-  .note-form-row {
-    display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;
-  }
-
-  .note-form-group {
-    display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 120px;
-  }
-
-  .note-form-group label {
-    font-size: 9px; text-transform: uppercase;
-    letter-spacing: 0.14em; color: #9a8a7a;
-  }
-
-  .note-form-group select,
-  .note-form-group input[type="text"] {
-    font-family: 'Source Serif 4', Georgia, serif;
-    font-size: 13px; color: #2e2e2e;
-    background: #faf8f4; border: 1px solid #ddd6cc;
-    border-radius: 4px; padding: 7px 10px;
-    appearance: none; -webkit-appearance: none; width: 100%;
-  }
-
-  .note-form-group select:focus,
-  .note-form-group input:focus { outline: 2px solid #8fa880; outline-offset: 1px; }
-
-  .note-textarea {
-    width: 100%; min-height: 120px;
-    font-family: 'Source Serif 4', Georgia, serif;
-    font-size: 15px; line-height: 1.7; color: #2e2e2e;
-    background: #faf8f4; border: 1px solid #ddd6cc;
-    border-radius: 4px; padding: 12px 14px;
-    resize: vertical; margin-bottom: 12px;
-  }
-
-  .note-textarea:focus { outline: 2px solid #8fa880; outline-offset: 1px; }
-  .note-textarea::placeholder { color: #b8a890; font-style: italic; }
-
-  .note-form-actions { display: flex; gap: 8px; justify-content: flex-end; }
-
-  .btn-save {
-    font-family: 'Source Serif 4', Georgia, serif;
-    font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em;
-    background: #4a7a56; color: #fff;
-    border: none; border-radius: 4px; padding: 8px 18px;
-    cursor: pointer; transition: background 0.15s;
-  }
-  .btn-save:hover { background: #3a6040; }
-
-  .btn-cancel {
-    font-family: 'Source Serif 4', Georgia, serif;
-    font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em;
-    background: none; color: #9a8a7a;
-    border: 1px solid #ddd6cc; border-radius: 4px; padding: 8px 14px;
-    cursor: pointer; transition: border-color 0.15s;
-  }
-  .btn-cancel:hover { border-color: #9a8a7a; }
-
-  /* Note cards */
-  .notes-list { display: flex; flex-direction: column; gap: 12px; }
-
-  .note-card {
-    background: #fff; border: 1px solid #ddd6cc;
-    border-radius: 6px; padding: 16px 18px;
-    position: relative;
-  }
-
-  .note-card.gabe-note { border-left: 4px solid #4a7a56; }
-  .note-card.karen-note { border-left: 4px solid #8b6650; }
-
-  .note-card-top {
-    display: flex; justify-content: space-between;
-    align-items: flex-start; gap: 8px; margin-bottom: 10px;
-    flex-wrap: wrap;
-  }
-
-  .note-card-meta { display: flex; flex-wrap: wrap; gap: 6px; }
-
-  .note-badge {
-    font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em;
-    padding: 3px 8px; border-radius: 3px;
-    background: #eef3ec; color: #3a6040; border: 1px solid #c4d8be;
-  }
-
-  .note-badge.karen-badge {
-    background: #f3ede8; color: #6a3820; border-color: #d4b8a8;
-  }
-
-  .note-badge.scene-badge {
-    background: #faf8f4; color: #7a6a58; border-color: #e4ddd5;
-  }
-
-  .note-timestamp {
-    font-size: 11px; color: #b8a890; white-space: nowrap; flex-shrink: 0;
-  }
-
-  .note-text {
-    font-size: 15px; color: #2e2e2e; line-height: 1.7;
-    white-space: pre-wrap; word-break: break-word;
-  }
-
-  .note-actions {
-    display: flex; gap: 10px; margin-top: 12px;
-    padding-top: 10px; border-top: 1px solid #f0ece6;
-  }
-
-  .note-action-btn {
-    font-family: 'Source Serif 4', Georgia, serif;
-    font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;
-    background: none; border: none; cursor: pointer; padding: 0;
-    color: #9a8a7a; transition: color 0.15s;
-  }
-  .note-action-btn:hover { color: #3a3228; }
-  .note-action-btn.delete:hover { color: #a03020; }
-
-  .no-notes {
-    text-align: center; padding: 48px 20px;
-    color: #9a8a7a; font-style: italic; font-size: 15px;
-    background: #fff; border: 1px solid #ddd6cc; border-radius: 6px;
-  }
-
-  .notes-count {
-    font-size: 12px; color: #9a8a7a; margin-bottom: 14px;
-    text-transform: uppercase; letter-spacing: 0.1em;
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    background: #1c2b1e;
-    color: #6a8060;
-    text-align: center;
-    padding: 24px 16px;
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    line-height: 1.7;
-  }
-
-  /* ── TABLET AND UP ── */
-  @media (min-width: 540px) {
-    .cover { padding: 56px 32px 32px; }
-    .tab-bar-outer { padding: 0 32px; }
-    .cover h1 { font-size: 48px; }
-    .main { padding: 0 24px 72px; }
-    .cal-wrap { padding: 32px 24px 72px; }
-    .trait-grid { grid-template-columns: 1fr 1fr; }
-    .two-column { grid-template-columns: 1fr 1fr; }
-    .methodology-grid { grid-template-columns: 1fr 1fr; }
-    .scene-row { grid-template-columns: 160px 1fr; }
-    .scene-label { border-bottom: none; border-right: 1px solid #ece6de; display: flex; align-items: center; }
-    .character-card { padding: 26px 28px; }
-    .character-card-header { flex-direction: row; align-items: baseline; gap: 14px; }
-    .filter-group { min-width: 140px; }
-  }
-
-  @media (min-width: 820px) {
-    .cover { padding: 72px 60px 32px; }
-    .tab-bar-outer { padding: 0 60px; }
-    .cover h1 { font-size: 52px; }
-    .main, .cal-wrap { max-width: 820px; margin: 0 auto; padding-left: 40px; padding-right: 40px; }
-    .character-card { padding: 32px 36px; }
-    h2 { font-size: 30px; }
-    .together-section { padding: 40px 36px; }
-  }
+/* ══ THEME TOKENS ══ */
+:root {
+  --bg:          #faf8f4;
+  --bg2:         #ffffff;
+  --bg3:         #f2efe8;
+  --border:      #ddd6cc;
+  --border2:     #ece6de;
+  --text:        #1a1a1a;
+  --text2:       #2e2e2e;
+  --text3:       #6a6050;
+  --text-muted:  #9a8a7a;
+  --cover-bg:    #1c2b1e;
+  --cover-text:  #e8e0d0;
+  --cover-sub:   #a0937e;
+  --cover-meta:  #6a7d5c;
+  --cover-val:   #d4c8b4;
+  --tab-idle:    rgba(255,255,255,0.07);
+  --tab-text:    #8fa880;
+  --tab-hover:   rgba(255,255,255,0.13);
+  --tab-active-bg: #faf8f4;
+  --tab-active-text: #1c2b1e;
+  --green:       #4a7a56;
+  --green-light: #eef3ec;
+  --section-label: #8fa880;
+  --callout-bg:  #f5f8f4;
+  --callout-amber-bg: #faf6f0;
+  --helper-bg:   #e8f4fd;
+  --helper-border:#b3d9f5;
+  --helper-text: #1a5276;
+  --dark-section-bg: #1c2b1e;
+  --dark-section-text: #c4b8a4;
+}
+[data-theme="dark"] {
+  --bg:          #141414;
+  --bg2:         #1e1e1e;
+  --bg3:         #252525;
+  --border:      #333;
+  --border2:     #2a2a2a;
+  --text:        #e8e4dc;
+  --text2:       #d4cfc6;
+  --text3:       #b0a898;
+  --text-muted:  #7a7060;
+  --cover-bg:    #0e1a10;
+  --cover-text:  #e8e0d0;
+  --cover-sub:   #8a7d6e;
+  --cover-meta:  #5a6d4c;
+  --cover-val:   #b4a894;
+  --tab-idle:    rgba(255,255,255,0.06);
+  --tab-text:    #7a9470;
+  --tab-hover:   rgba(255,255,255,0.1);
+  --tab-active-bg: #141414;
+  --tab-active-text: #e8e4dc;
+  --green:       #5a9a66;
+  --green-light: #1a2e1c;
+  --section-label: #7a9470;
+  --callout-bg:  #1a2e1c;
+  --callout-amber-bg: #2a1e10;
+  --helper-bg:   #0d1f2d;
+  --helper-border:#1a4a6a;
+  --helper-text: #7ac4f0;
+  --dark-section-bg: #0e1a10;
+  --dark-section-text: #a4987e;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-text-size-adjust: 100%;
+  transition: background 0.2s, color 0.2s;
+}
+
+/* ── COVER ── */
+.cover {
+  background: var(--cover-bg);
+  color: var(--cover-text);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.cover-poster {
+  width: 100%;
+  max-height: 380px;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.cover-body {
+  padding: 24px 20px 28px;
+  position: relative;
+}
+
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  border: 1px solid rgba(232,224,208,0.08);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cover-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cover-meta);
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.cover-credits {
+  font-size: 13px;
+  color: var(--cover-sub);
+  margin-bottom: 4px;
+}
+
+.cover-subtitle {
+  font-size: 12px;
+  color: var(--cover-meta);
+  letter-spacing: 0.04em;
+}
+
+.cover-meta {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(232,224,208,0.15);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.cover-meta-item { font-size: 12px; }
+.cover-meta-item .label {
+  color: var(--cover-meta);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 9px;
+  display: block;
+  margin-bottom: 2px;
+}
+.cover-meta-item .value { color: var(--cover-val); }
+
+.cover-links {
+  margin-top: 14px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.cover-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--cover-meta);
+  text-decoration: none;
+  border: 1px solid rgba(232,224,208,0.2);
+  border-radius: 4px;
+  padding: 5px 10px;
+  transition: border-color 0.15s, color 0.15s;
+}
+.cover-link:hover { border-color: #8fa880; color: #8fa880; }
+
+/* Dark mode toggle */
+.theme-toggle {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--cover-text);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  z-index: 20;
+  transition: background 0.15s;
+}
+.theme-toggle:hover { background: rgba(255,255,255,0.16); }
+.theme-icon { font-size: 14px; }
+
+/* ── TAB BAR ── */
+.tab-bar-outer {
+  background: var(--cover-bg);
+  padding: 0 20px;
+  position: relative;
+  z-index: 10;
+}
+.tab-bar {
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.tab-bar::-webkit-scrollbar { display: none; }
+.tab-btn {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 11px 16px 12px;
+  border: none;
+  border-radius: 6px 6px 0 0;
+  cursor: pointer;
+  background: var(--tab-idle);
+  color: var(--tab-text);
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 11;
+}
+.tab-btn:hover { background: var(--tab-hover); color: var(--cover-text); }
+.tab-btn.active { background: var(--tab-active-bg); color: var(--tab-active-text); font-weight: 500; }
+
+/* ── TAB PANELS ── */
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── MAIN ── */
+.main { padding: 0 16px 64px; }
+.section { padding-top: 44px; }
+
+.section-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--section-label);
+  margin-bottom: 6px;
+}
+
+h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 26px; font-weight: 400;
+  color: var(--text);
+  line-height: 1.25; margin-bottom: 16px;
+}
+
+h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 19px; font-weight: 400;
+  color: var(--text);
+  margin-bottom: 10px; margin-top: 24px;
+}
+
+h3.subhead {
+  font-family: 'Source Serif 4', serif;
+  font-size: 11px; font-weight: 400;
+  text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--section-label);
+  margin-top: 22px; margin-bottom: 8px;
+}
+
+p { margin-bottom: 14px; color: var(--text2); }
+
+.divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+/* ── CHARACTER CARDS ── */
+.character-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px; padding: 20px 18px; margin: 24px 0;
+}
+.character-card.gabe { border-left: 4px solid #4a7a56; }
+.character-card.karen { border-left: 4px solid #8b6650; }
+.character-card-header { display: flex; flex-direction: column; gap: 4px; margin-bottom: 16px; }
+.character-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 26px; font-weight: 600; color: var(--text);
+}
+.character-card.karen .character-name { color: var(--text); }
+.character-role { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); line-height: 1.5; }
+
+.essence-block {
+  background: var(--bg3);
+  border-radius: 4px; padding: 14px 16px; margin-bottom: 16px;
+  font-style: italic; font-size: 15px; color: var(--text2); line-height: 1.65;
+}
+.character-card.gabe .essence-block { background: var(--green-light); }
+
+.trait-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 16px 0; }
+.trait-item { background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 12px 14px; }
+.character-card.gabe .trait-item { background: var(--green-light); border-color: var(--border); }
+.trait-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted); margin-bottom: 5px; display: block; }
+.trait-value { font-size: 14px; color: var(--text2); line-height: 1.55; }
+
+.callout { border-left: 3px solid var(--green); padding: 12px 16px; margin: 18px 0; background: var(--callout-bg); border-radius: 0 4px 4px 0; }
+.callout.amber { border-left-color: #b08050; background: var(--callout-amber-bg); }
+.callout p { font-size: 14px; margin: 0; color: var(--text2); }
+.callout strong { color: var(--text); }
+
+.two-column { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 16px 0; }
+.column-block { background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 16px 18px; }
+.column-block h4 { font-family: 'Source Serif 4', serif; font-size: 10px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--text-muted); margin-bottom: 10px; }
+.column-block ul { list-style: none; padding: 0; }
+.column-block ul li { font-size: 14px; color: var(--text2); padding: 5px 0 5px 20px; border-bottom: 1px solid var(--border2); line-height: 1.5; position: relative; }
+.column-block ul li:last-child { border-bottom: none; }
+.column-block ul li::before { content: '—'; position: absolute; left: 0; color: var(--text-muted); font-size: 12px; }
+
+.scene-breakdown { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin: 16px 0; }
+.scene-row { display: grid; grid-template-columns: 1fr; border-bottom: 1px solid var(--border2); }
+.scene-row:last-child { border-bottom: none; }
+.scene-label { background: var(--bg3); padding: 10px 14px; font-size: 11px; font-weight: 500; color: var(--text3); font-family: 'Source Serif 4', serif; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid var(--border2); }
+.scene-content { padding: 12px 14px; font-size: 14px; color: var(--text2); line-height: 1.65; background: var(--bg2); }
+
+.methodology-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 16px 0; }
+.method-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 16px 18px; }
+.method-card h4 { font-family: 'Source Serif 4', serif; font-size: 10px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--section-label); margin-bottom: 7px; }
+.method-card p { font-size: 14px; margin: 0; color: var(--text2); line-height: 1.65; }
+
+.together-section { background: var(--dark-section-bg); color: var(--cover-text); padding: 28px 18px; border-radius: 6px; margin: 32px 0; }
+.together-section h2 { color: var(--cover-text); font-size: 24px; margin-bottom: 14px; }
+.together-section p { color: var(--dark-section-text); font-size: 15px; }
+.together-section h3 { color: var(--cover-val); font-family: 'Source Serif 4', serif; text-transform: uppercase; letter-spacing: 0.12em; font-size: 10px; margin-top: 24px; margin-bottom: 8px; }
+.together-section .callout { background: rgba(232,224,208,0.07); border-left-color: #8fa880; }
+.together-section .callout p { color: var(--dark-section-text); }
+
+.checklist { list-style: none; padding: 0; margin: 14px 0; }
+.checklist li { font-size: 14px; color: var(--text2); padding: 7px 0 7px 22px; position: relative; border-bottom: 1px solid var(--border2); line-height: 1.55; }
+.checklist li:last-child { border-bottom: none; }
+.checklist li::before { content: '○'; position: absolute; left: 0; color: var(--text-muted); font-size: 11px; top: 9px; }
+.together-section .checklist li { color: var(--dark-section-text); border-bottom-color: rgba(232,224,208,0.1); }
+.together-section .checklist li::before { color: #6a8060; }
+
+/* ══ CALENDAR ══ */
+.cal-wrap { padding: 28px 16px 64px; }
+.cal-header { margin-bottom: 16px; }
+.cal-header h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 26px; font-weight: 400; color: var(--text); margin-bottom: 4px; }
+.cal-header p { font-size: 13px; color: var(--text-muted); margin: 0; }
+
+/* Helper text */
+.helper-box {
+  background: var(--helper-bg);
+  border: 1px solid var(--helper-border);
+  border-radius: 6px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: var(--helper-text);
+  line-height: 1.65;
+}
+.helper-box strong { color: var(--helper-text); }
+.helper-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.helper-dot-row { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+.hdot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; display: inline-block; }
+
+/* View toggles */
+.view-toggles { display: flex; gap: 4px; margin-bottom: 14px; flex-wrap: wrap; }
+.view-btn { font-family: 'Source Serif 4', Georgia, serif; font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 7px 14px; cursor: pointer; color: var(--text-muted); transition: all 0.15s; }
+.view-btn:hover { border-color: var(--green); color: var(--green); }
+.view-btn.active { background: var(--cover-bg); color: var(--cover-text); border-color: var(--cover-bg); }
+
+/* Nav */
+.cal-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.cal-nav-btn { font-family: 'Source Serif 4', Georgia, serif; font-size: 12px; background: none; border: 1px solid var(--border); border-radius: 4px; padding: 6px 12px; cursor: pointer; color: var(--text3); transition: border-color 0.15s; }
+.cal-nav-btn:hover { border-color: var(--green); color: var(--green); }
+.cal-nav-label { font-size: 14px; font-weight: 500; color: var(--text); }
+
+/* Legend */
+.avail-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; padding: 10px 14px; background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text2); }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+/* Filters */
+.filters { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 16px; margin-bottom: 14px; display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; }
+.filter-group { display: flex; flex-direction: column; gap: 4px; min-width: 120px; flex: 1; }
+.filter-group label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted); }
+.filter-group select, .filter-group input[type="date"] { font-family: 'Source Serif 4', Georgia, serif; font-size: 13px; color: var(--text); background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 7px 10px; appearance: none; -webkit-appearance: none; width: 100%; cursor: pointer; }
+.filter-group select:focus, .filter-group input:focus { outline: 2px solid var(--green); outline-offset: 1px; }
+.filter-group select[multiple] { height: 88px; padding: 4px; }
+.filter-reset { font-family: 'Source Serif 4', Georgia, serif; font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; background: none; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); padding: 7px 14px; cursor: pointer; align-self: flex-end; white-space: nowrap; transition: all 0.15s; }
+.filter-reset:hover { border-color: var(--green); color: var(--green); }
+
+/* Filter pills */
+.filter-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.pill { font-size: 11px; background: var(--green-light); color: var(--green); border: 1px solid; border-color: color-mix(in srgb, var(--green) 30%, transparent); border-radius: 20px; padding: 3px 10px; display: flex; align-items: center; gap: 6px; }
+.pill-x { cursor: pointer; font-size: 13px; line-height: 1; color: var(--green); padding: 0 2px; }
+
+.results-meta { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.1em; }
+
+/* Event cards */
+.event-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+.event-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; display: grid; grid-template-columns: 6px 1fr; }
+.event-stripe { width: 6px; }
+.event-stripe.rehearsal { background: #4a7a56; }
+.event-stripe.performance { background: #8b6650; }
+.event-stripe.fitting { background: #6a7aaa; }
+.event-stripe.tableread { background: #b08050; }
+.event-stripe.techdress { background: #7a5080; }
+.event-body { padding: 14px 16px; }
+.event-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; flex-wrap: wrap; }
+.event-title { font-family: 'Playfair Display', Georgia, serif; font-size: 16px; font-weight: 600; color: var(--text); line-height: 1.3; }
+.event-type-badge { font-size: 9px; text-transform: uppercase; letter-spacing: 0.12em; padding: 3px 8px; border-radius: 3px; white-space: nowrap; flex-shrink: 0; }
+.badge-rehearsal { background: var(--green-light); color: var(--green); }
+.badge-performance { background: #f3ede8; color: #6a3820; }
+.badge-fitting { background: #eceef8; color: #3a4070; }
+.badge-tableread { background: #f5ede0; color: #7a4a10; }
+.badge-techdress { background: #f0eaf5; color: #5a3070; }
+[data-theme="dark"] .badge-performance { background: #2a1e18; color: #c09070; }
+[data-theme="dark"] .badge-fitting { background: #1a1e30; color: #8090c0; }
+[data-theme="dark"] .badge-tableread { background: #2a1e10; color: #c09060; }
+[data-theme="dark"] .badge-techdress { background: #1e1428; color: #a070b0; }
+.event-meta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+.event-meta-item { font-size: 13px; color: var(--text3); }
+.event-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.event-tag { font-size: 10px; padding: 2px 8px; border-radius: 3px; border: 1px solid var(--border); color: var(--text3); background: var(--bg); }
+.event-tag.both { border-color: #c4bcd0; color: #5a5090; background: #f4f2f8; }
+[data-theme="dark"] .event-tag.both { background: #1e1a28; color: #9080b0; }
+
+/* ── WEEK GRID ── */
+.week-grid { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 20px; overflow-x: auto; }
+.week-header-row, .week-actor-row { display: grid; grid-template-columns: 90px repeat(7, 1fr); min-width: 560px; }
+.week-header-row { background: var(--bg3); border-bottom: 1px solid var(--border); }
+.week-actor-row { border-bottom: 1px solid var(--border2); }
+.week-actor-row:last-child { border-bottom: none; }
+.week-day-header { text-align: center; padding: 8px 4px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); border-left: 1px solid var(--border); }
+.week-day-header span { display: block; font-size: 16px; font-weight: 600; color: var(--text); letter-spacing: 0; text-transform: none; }
+.week-day-header.today { background: var(--green-light); }
+.week-day-header.today span { color: var(--green); }
+.week-actor-col { background: var(--bg3); }
+.week-actor-label { padding: 10px 8px; font-size: 11px; font-weight: 500; color: var(--text2); background: var(--bg3); display: flex; align-items: center; }
+.week-cell { border-left: 1px solid var(--border2); min-height: 52px; padding: 6px 4px; display: flex; flex-direction: column; align-items: center; gap: 3px; background: var(--bg2); }
+.week-cell.status-unavail { background: var(--bg) !important; }
+.week-cell.status-remote { background: color-mix(in srgb, #f0a840 8%, var(--bg2)) !important; }
+.week-cell.status-tbd { background: var(--bg3) !important; }
+.cell-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
+.cell-event-pill { font-size: 9px; color: #fff; padding: 1px 5px; border-radius: 3px; white-space: nowrap; overflow: hidden; max-width: 100%; text-overflow: ellipsis; }
+
+/* ── MONTH GRID ── */
+.month-block { margin-bottom: 28px; }
+.month-title { font-family: 'Playfair Display', Georgia, serif; font-size: 18px; color: var(--text); margin-bottom: 8px; }
+.month-grid { display: grid; grid-template-columns: repeat(7, 1fr); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.month-dow { text-align: center; padding: 6px 2px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); background: var(--bg3); border-bottom: 1px solid var(--border); border-right: 1px solid var(--border2); }
+.month-dow:last-child { border-right: none; }
+.month-day { min-height: 56px; padding: 4px; background: var(--bg2); border-bottom: 1px solid var(--border2); border-right: 1px solid var(--border2); }
+.month-day:nth-child(7n) { border-right: none; }
+.month-day.empty { background: var(--bg); }
+.month-day.today { background: var(--green-light); }
+.month-day-num { font-size: 11px; color: var(--text3); margin-bottom: 2px; text-align: right; }
+.today .month-day-num { color: var(--green); font-weight: 700; }
+.month-day-dots { display: flex; flex-wrap: wrap; gap: 2px; margin-bottom: 2px; }
+.month-dot { width: 7px; height: 7px; border-radius: 50%; cursor: default; }
+.month-event-pill { font-size: 8px; color: #fff; padding: 1px 4px; border-radius: 2px; white-space: nowrap; overflow: hidden; max-width: 100%; text-overflow: ellipsis; display: block; margin-bottom: 1px; }
+
+/* ── LIST VIEW ── */
+.list-view-table { width: 100%; border-collapse: collapse; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; font-size: 13px; }
+.list-view-table th { background: var(--bg3); text-align: left; padding: 9px 12px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); border-bottom: 1px solid var(--border); cursor: pointer; white-space: nowrap; user-select: none; }
+.list-view-table th:hover { color: var(--green); }
+.list-view-table th .sort-arrow { margin-left: 4px; opacity: 0.5; }
+.list-view-table th.sorted .sort-arrow { opacity: 1; color: var(--green); }
+.list-view-table td { padding: 9px 12px; border-bottom: 1px solid var(--border2); color: var(--text2); vertical-align: middle; }
+.list-view-table tr:last-child td { border-bottom: none; }
+.list-view-table tr:hover td { background: var(--bg3); }
+.list-actor-dots { display: flex; gap: 4px; }
+.list-dot { width: 9px; height: 9px; border-radius: 50%; title: attr(title); }
+.list-no-data { text-align: center; padding: 32px; color: var(--text-muted); font-style: italic; }
+
+/* Sort controls */
+.sort-controls { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; align-items: center; }
+.sort-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); }
+.sort-btn { font-family: 'Source Serif 4', Georgia, serif; font-size: 11px; background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 5px 12px; cursor: pointer; color: var(--text-muted); transition: all 0.15s; }
+.sort-btn:hover { border-color: var(--green); color: var(--green); }
+.sort-btn.active { background: var(--green-light); border-color: var(--green); color: var(--green); }
+
+/* Actor multi-select filter */
+.actor-filter-wrap { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.actor-chip { font-size: 11px; padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border); cursor: pointer; color: var(--text-muted); background: var(--bg2); transition: all 0.15s; user-select: none; }
+.actor-chip.active { border-width: 2px; color: #fff; }
+
+/* ══ NOTES ══ */
+.notes-wrap { padding: 28px 16px 64px; }
+.notes-header { margin-bottom: 20px; }
+.notes-header h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 26px; font-weight: 400; color: var(--text); margin-bottom: 4px; }
+.notes-header p { font-size: 13px; color: var(--text-muted); margin: 0; }
+
+.add-note-btn { display: flex; align-items: center; gap: 8px; font-family: 'Source Serif 4', Georgia, serif; font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; background: #1c2b1e; color: #e8e0d0; border: none; border-radius: 5px; padding: 11px 18px; cursor: pointer; margin-bottom: 20px; transition: opacity 0.15s; }
+.add-note-btn:hover { opacity: 0.85; }
+.add-note-btn .plus { font-size: 18px; line-height: 1; }
+.gabe-btn { background: #4a7a56 !important; }
+.karen-btn { background: #8b6650 !important; }
+.john-btn { background: #5a6aaa !important; }
+.lauren-btn { background: #a05080 !important; }
+.jess-btn { background: #1c2b1e !important; }
+
+.note-form { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 18px; margin-bottom: 20px; display: none; }
+.note-form.open { display: block; }
+.note-form-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+.note-form-group { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 120px; }
+.note-form-group label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted); }
+.note-form-group select, .note-form-group input[type="text"] { font-family: 'Source Serif 4', Georgia, serif; font-size: 13px; color: var(--text); background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 7px 10px; appearance: none; -webkit-appearance: none; width: 100%; }
+.note-textarea { width: 100%; min-height: 120px; font-family: 'Source Serif 4', Georgia, serif; font-size: 15px; line-height: 1.7; color: var(--text); background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 12px 14px; resize: vertical; margin-bottom: 12px; }
+.note-textarea::placeholder { color: var(--text-muted); font-style: italic; }
+.note-form-actions { display: flex; gap: 8px; justify-content: flex-end; }
+.btn-save { font-family: 'Source Serif 4', Georgia, serif; font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; background: var(--green); color: #fff; border: none; border-radius: 4px; padding: 8px 18px; cursor: pointer; transition: opacity 0.15s; }
+.btn-save:hover { opacity: 0.85; }
+.btn-cancel { font-family: 'Source Serif 4', Georgia, serif; font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; background: none; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 8px 14px; cursor: pointer; }
+.btn-cancel:hover { border-color: var(--text-muted); }
+
+.notes-count { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.1em; }
+.notes-list { display: flex; flex-direction: column; gap: 12px; }
+.note-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+.note-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+.note-card-meta { display: flex; flex-wrap: wrap; gap: 6px; }
+.note-badge { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; padding: 3px 8px; border-radius: 3px; background: var(--green-light); color: var(--green); border: 1px solid; }
+.note-badge.scene-badge { background: var(--bg); color: var(--text3); border-color: var(--border); }
+.note-timestamp { font-size: 11px; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; }
+.note-text { font-size: 15px; color: var(--text2); line-height: 1.7; white-space: pre-wrap; word-break: break-word; }
+.note-actions { display: flex; gap: 10px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border2); }
+.note-action-btn { font-family: 'Source Serif 4', Georgia, serif; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; background: none; border: none; cursor: pointer; padding: 0; color: var(--text-muted); transition: color 0.15s; }
+.note-action-btn:hover { color: var(--text); }
+.note-action-btn.delete:hover { color: #a03020; }
+.no-notes { text-align: center; padding: 48px 20px; color: var(--text-muted); font-style: italic; font-size: 15px; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; }
+
+/* ── FOOTER ── */
+footer { background: var(--cover-bg); color: #6a8060; text-align: center; padding: 24px 16px; font-size: 11px; letter-spacing: 0.06em; line-height: 1.7; }
+footer a { color: #8fa880; text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* ── RESPONSIVE ── */
+@media (min-width: 540px) {
+  .cover-poster { max-height: 440px; }
+  .cover-body { padding: 28px 32px 32px; }
+  .tab-bar-outer { padding: 0 32px; }
+  .main, .cal-wrap, .notes-wrap { padding-left: 24px; padding-right: 24px; }
+  .trait-grid { grid-template-columns: 1fr 1fr; }
+  .two-column { grid-template-columns: 1fr 1fr; }
+  .methodology-grid { grid-template-columns: 1fr 1fr; }
+  .scene-row { grid-template-columns: 160px 1fr; }
+  .scene-label { border-bottom: none; border-right: 1px solid var(--border2); display: flex; align-items: center; }
+  .character-card { padding: 26px 28px; }
+  .character-card-header { flex-direction: row; align-items: baseline; gap: 14px; }
+}
+@media (min-width: 820px) {
+  .cover-body { padding: 28px 60px 32px; }
+  .tab-bar-outer { padding: 0 60px; }
+  .main, .cal-wrap, .notes-wrap { max-width: 860px; margin: 0 auto; padding-left: 40px; padding-right: 40px; }
+  .character-card { padding: 32px 36px; }
+  h2 { font-size: 30px; }
+  .together-section { padding: 40px 36px; }
+}
 </style>
 </head>
 <body>
 
 <div class="cover">
-  <div class="cover-eyebrow">Character Study Guide · Blue Ridge Community Theatre</div>
-  <h1><em>Dinner</em><br>With Friends</h1>
-  <div class="cover-subtitle">Donald Margulies · Pulitzer Prize for Drama, 2000</div>
-  <div class="cover-meta">
-    <div class="cover-meta-item">
-      <span class="label">Your Role</span>
-      <span class="value">Gabe</span>
+  <img class="cover-poster" src="poster.png" alt="Dinner With Friends — Directed by Jessica Marie Moss">
+  <div class="cover-body">
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <span class="theme-icon" id="theme-icon">🌙</span>
+      <span id="theme-label">Dark</span>
+    </button>
+    <div class="cover-eyebrow">Character Study Guide · Blue Ridge Community Theatre</div>
+    <div class="cover-credits">By Donald Margulies · Directed by Jessica Marie Moss</div>
+    <div class="cover-subtitle">Pulitzer Prize for Drama, 2000</div>
+    <div class="cover-meta">
+      <div class="cover-meta-item"><span class="label">Your Role</span><span class="value">Gabe</span></div>
+      <div class="cover-meta-item"><span class="label">Christina's Role</span><span class="value">Karen</span></div>
+      <div class="cover-meta-item"><span class="label">Director</span><span class="value">Jessica Marie Moss</span></div>
+      <div class="cover-meta-item"><span class="label">Venue</span><span class="value">Blue Ridge, GA</span></div>
     </div>
-    <div class="cover-meta-item">
-      <span class="label">Christina's Role</span>
-      <span class="value">Karen</span>
-    </div>
-    <div class="cover-meta-item">
-      <span class="label">First Table Read</span>
-      <span class="value">Tomorrow</span>
-    </div>
-    <div class="cover-meta-item">
-      <span class="label">Premiere</span>
-      <span class="value">Humana Festival, 1998</span>
+    <div class="cover-links">
+      <a class="cover-link" href="https://www.facebook.com/BRCTGA" target="_blank">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Blue Ridge Community Theatre
+      </a>
     </div>
   </div>
-
-  <!-- TAB BAR moved outside cover -->
 </div>
 
 <!-- TAB BAR -->
@@ -986,10 +602,6 @@
     <button class="tab-btn" onclick="switchTab('notes-jess', this)">🎬 Jess</button>
   </div>
 </div>
-
-<!-- ══════════════════════════════════════
-     TAB: CHARACTER GUIDE
-══════════════════════════════════════ -->
 <div id="panel-guide" class="tab-panel active">
 <div class="main">
 
@@ -1234,10 +846,6 @@
 </div><!-- /main -->
 </div><!-- /panel-guide -->
 
-
-<!-- ══════════════════════════════════════
-     TAB: CALENDAR
-══════════════════════════════════════ -->
 <!-- ══════════════════════════════════════
      TAB: CALENDAR
 ══════════════════════════════════════ -->
@@ -1249,25 +857,47 @@
     <p>Blue Ridge Community Theatre · <em>Dinner With Friends</em></p>
   </div>
 
+  <!-- HELPER -->
+  <div class="helper-box">
+    <strong>How to read availability:</strong> Coloured dots on each day show actor availability at a glance.
+    <div class="helper-legend">
+      <span class="helper-dot-row"><span class="hdot" style="background:#4a7a56"></span> Jeremy (Gabe)</span>
+      <span class="helper-dot-row"><span class="hdot" style="background:#8b6650"></span> Christina (Karen)</span>
+      <span class="helper-dot-row"><span class="hdot" style="background:#5a6aaa"></span> John (Tom)</span>
+      <span class="helper-dot-row"><span class="hdot" style="background:#a05080"></span> Lauren (Beth)</span>
+    </div>
+    <div class="helper-legend" style="margin-top:8px">
+      <span class="helper-dot-row"><span class="hdot" style="background:#4a7a56"></span> Available</span>
+      <span class="helper-dot-row"><span class="hdot" style="background:#ccc"></span> Unavailable</span>
+      <span class="helper-dot-row"><span class="hdot" style="background:#f0a840"></span> Remote</span>
+      <span class="helper-dot-row"><span class="hdot" style="background:#b0b0b0"></span> TBD</span>
+      <span class="helper-dot-row"><span class="hdot" style="background:#e0c080"></span> Partial</span>
+    </div>
+  </div>
+
   <!-- VIEW TOGGLES -->
   <div class="view-toggles">
     <button class="view-btn active" onclick="setView('week', this)">Week</button>
     <button class="view-btn" onclick="setView('month', this)">Month</button>
     <button class="view-btn" onclick="setView('3month', this)">3 Month</button>
+    <button class="view-btn" onclick="setView('list', this)">List</button>
   </div>
 
-  <!-- AVAILABILITY LEGEND -->
-  <div class="avail-legend">
-    <span class="legend-item"><span class="legend-dot" style="background:#4a7a56"></span>Jeremy (Gabe)</span>
-    <span class="legend-item"><span class="legend-dot" style="background:#8b6650"></span>Christina (Karen)</span>
-    <span class="legend-item"><span class="legend-dot" style="background:#5a6aaa"></span>John (Tom)</span>
-    <span class="legend-item"><span class="legend-dot" style="background:#a05080"></span>Lauren (Beth)</span>
+  <!-- ACTOR FILTER CHIPS (multi-select) -->
+  <div class="actor-filter-wrap" id="actor-chips"></div>
+
+  <!-- SORT CONTROLS (list view) -->
+  <div class="sort-controls" id="sort-controls" style="display:none">
+    <span class="sort-label">Sort by:</span>
+    <button class="sort-btn active" onclick="setSort('date', this)">Date</button>
+    <button class="sort-btn" onclick="setSort('actor', this)">Actor</button>
+    <button class="sort-btn" onclick="setSort('status', this)">Availability</button>
   </div>
 
-  <!-- FILTERS -->
+  <!-- EVENT FILTERS -->
   <div class="filters">
     <div class="filter-group">
-      <label for="f-type">Type</label>
+      <label for="f-type">Event Type</label>
       <select id="f-type" onchange="applyFilters()">
         <option value="">All Types</option>
         <option value="tableread">Table Read</option>
@@ -1275,15 +905,6 @@
         <option value="fitting">Fitting</option>
         <option value="techdress">Tech / Dress</option>
         <option value="performance">Performance</option>
-      </select>
-    </div>
-    <div class="filter-group">
-      <label for="f-character">Character</label>
-      <select id="f-character" onchange="applyFilters()">
-        <option value="">All Characters</option>
-        <option value="gabe">Gabe</option>
-        <option value="karen">Karen</option>
-        <option value="both">Full Cast</option>
       </select>
     </div>
     <div class="filter-group">
@@ -1296,14 +917,12 @@
       </select>
     </div>
     <div class="filter-group">
-      <label for="f-scene">Scene</label>
-      <select id="f-scene" onchange="applyFilters()">
-        <option value="">All Scenes</option>
-        <option value="Scene 1">Scene 1</option>
-        <option value="Scene 2">Scene 2</option>
-        <option value="Scene 3">Scene 3</option>
-        <option value="Scene 4">Scene 4</option>
-      </select>
+      <label for="f-from">From Date</label>
+      <input type="date" id="f-from" onchange="applyFilters()">
+    </div>
+    <div class="filter-group">
+      <label for="f-to">To Date</label>
+      <input type="date" id="f-to" onchange="applyFilters()">
     </div>
     <button class="filter-reset" onclick="resetFilters()">Clear</button>
   </div>
@@ -1311,19 +930,13 @@
   <div class="filter-pills" id="filter-pills"></div>
   <div class="results-meta" id="results-meta"></div>
 
-  <!-- CALENDAR GRID -->
+  <!-- CALENDAR OUTPUT -->
   <div id="cal-grid"></div>
-
-  <!-- EVENT LIST (week view) -->
   <div class="event-list" id="event-list"></div>
 
 </div>
 </div><!-- /panel-calendar -->
 
-
-<!-- NOTES PANELS MACRO: person, character, color hint -->
-
-<!-- Jeremy -->
 <div id="panel-notes-jeremy" class="tab-panel">
 <div class="notes-wrap">
   <div class="notes-header">
@@ -1538,9 +1151,39 @@
   Character Study Guide · Prepared for First Table Read
 </footer>
 
+
+<footer>
+  <a href="https://www.facebook.com/BRCTGA" target="_blank">Blue Ridge Community Theatre</a> · Blue Ridge, GA<br>
+  <em>Dinner With Friends</em> · By Donald Margulies · Directed by Jessica Marie Moss
+</footer>
+
 <script>
 // ══════════════════════════════════════
-// CONFIRMED EVENTS
+// THEME
+// ══════════════════════════════════════
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('theme-icon').textContent  = isDark ? '🌙' : '☀️';
+  document.getElementById('theme-label').textContent = isDark ? 'Dark' : 'Light';
+  localStorage.setItem('dwf-theme', isDark ? 'light' : 'dark');
+}
+(function() {
+  const saved = localStorage.getItem('dwf-theme');
+  if (saved === 'dark') {
+    document.documentElement.setAttribute('data-theme','dark');
+    document.addEventListener('DOMContentLoaded', () => {
+      const icon = document.getElementById('theme-icon');
+      const label = document.getElementById('theme-label');
+      if (icon) icon.textContent = '☀️';
+      if (label) label.textContent = 'Light';
+    });
+  }
+})();
+
+// ══════════════════════════════════════
+// EVENTS
 // ══════════════════════════════════════
 const EVENTS = [
   { id:1, title:"First Table Read", date:"2026-06-03", time:"7:00 PM", type:"tableread", characters:["both"], act:"Full Play", scenes:[], location:"Blue Ridge Community Theatre", notes:"Full cast. Bring pencils, not pens." },
@@ -1548,508 +1191,453 @@ const EVENTS = [
 ];
 
 // ══════════════════════════════════════
-// ACTOR AVAILABILITY
-// status: "avail" | "unavail" | "remote" | "tbd" | "partial"
-// actors that have data: jeremy(gabe), christina(karen), john(tom)
+// AVAILABILITY DATA
 // ══════════════════════════════════════
 const AVAILABILITY = {};
-
 function avail(actor, date, status, note) {
   if (!AVAILABILITY[date]) AVAILABILITY[date] = {};
-  AVAILABILITY[date][actor] = { status, note: note || '' };
+  AVAILABILITY[date][actor] = { status, note: note||'' };
 }
 
-// ── JEREMY (Gabe) ──
-// June — available most days; weekdays 6pm+, weekends 9am+
-const jeremyJune = {
-  '06-08':'avail','06-09':'avail','06-10':'avail','06-11':'avail','06-12':'avail',
-  '06-13':'avail','06-14':'avail','06-15':'avail','06-16':'avail',
-  '06-17':'remote','06-18':'remote',
-  '06-19':'unavail',
-  '06-20':'avail','06-21':'avail','06-22':'avail','06-23':'avail','06-24':'avail',
-  '06-25':'avail','06-26':'avail','06-27':'avail','06-28':'avail','06-29':'avail','06-30':'avail'
-};
-Object.entries(jeremyJune).forEach(([d,s]) => avail('jeremy', `2026-${d}`, s, s==='remote'?'Remote – Florida':''));
+// Jeremy (Gabe)
+const jJune = {'06-08':'avail','06-09':'avail','06-10':'avail','06-11':'avail','06-12':'avail','06-13':'avail','06-14':'avail','06-15':'avail','06-16':'avail','06-17':'remote','06-18':'remote','06-19':'unavail','06-20':'avail','06-21':'avail','06-22':'avail','06-23':'avail','06-24':'avail','06-25':'avail','06-26':'avail','06-27':'avail','06-28':'avail','06-29':'avail','06-30':'avail'};
+const jJulyNotes = {'07-11':'RENT workshop','07-12':'RENT workshop','07-13':'RENT audition','07-15':'Remote','07-16':'RENT callbacks','07-17':'RENT Table Read','07-19':'RENT Rehearsal','07-20':'RENT Rehearsal','07-21':'RENT Rehearsal','07-22':'RENT Rehearsal','07-23':'RENT Rehearsal','07-26':'RENT Rehearsal','07-27':'RENT Rehearsal','07-28':'RENT Rehearsal','07-29':'RENT Rehearsal','07-30':'RENT Rehearsal','07-31':'RENT Rehearsal'};
+const jJuly = {'07-01':'avail','07-02':'avail','07-03':'unavail','07-04':'unavail','07-05':'unavail','07-06':'avail','07-07':'avail','07-08':'avail','07-09':'avail','07-10':'avail','07-11':'unavail','07-12':'unavail','07-13':'unavail','07-14':'tbd','07-15':'remote','07-16':'tbd','07-17':'tbd','07-18':'avail','07-19':'tbd','07-20':'tbd','07-21':'tbd','07-22':'tbd','07-23':'tbd','07-24':'avail','07-25':'avail','07-26':'tbd','07-27':'tbd','07-28':'tbd','07-29':'tbd','07-30':'tbd','07-31':'tbd'};
+Object.entries(jJune).forEach(([d,s]) => avail('jeremy',`2026-${d}`,s,d==='06-17'||d==='06-18'?'Remote – Florida':''));
+Object.entries(jJuly).forEach(([d,s]) => avail('jeremy',`2026-${d}`,s,jJulyNotes[d]||''));
 
-// July
-const jeremyJuly = {
-  '07-01':'avail','07-02':'avail','07-03':'unavail','07-04':'unavail','07-05':'unavail',
-  '07-06':'avail','07-07':'avail','07-08':'avail','07-09':'avail','07-10':'avail',
-  '07-11':'unavail','07-12':'unavail','07-13':'unavail',
-  '07-14':'tbd','07-15':'remote','07-16':'tbd','07-17':'tbd',
-  '07-18':'avail',
-  '07-19':'tbd','07-20':'tbd','07-21':'tbd','07-22':'tbd','07-23':'tbd',
-  '07-24':'avail','07-25':'avail',
-  '07-26':'tbd','07-27':'tbd','07-28':'tbd','07-29':'tbd','07-30':'tbd','07-31':'tbd'
-};
-const rentNotes = {
-  '07-11':'RENT workshop','07-12':'RENT workshop','07-13':'RENT audition',
-  '07-15':'Remote','07-16':'RENT callbacks','07-17':'RENT Table Read',
-  '07-19':'RENT Rehearsal','07-20':'RENT Rehearsal','07-21':'RENT Rehearsal',
-  '07-22':'RENT Rehearsal','07-23':'RENT Rehearsal','07-26':'RENT Rehearsal',
-  '07-27':'RENT Rehearsal','07-28':'RENT Rehearsal','07-29':'RENT Rehearsal',
-  '07-30':'RENT Rehearsal','07-31':'RENT Rehearsal'
-};
-Object.entries(jeremyJuly).forEach(([d,s]) => avail('jeremy', `2026-${d}`, s, rentNotes[d]||''));
+// Christina (Karen)
+const cJuneNotes = {'06-14':'Available 2pm onward','06-16':'Travel to FL if no conflict','06-17':'Remote – Florida','06-18':'Remote – Florida','06-20':'Travel back from FL'};
+const cJune = {'06-08':'avail','06-09':'avail','06-10':'avail','06-11':'avail','06-12':'avail','06-13':'avail','06-14':'partial','06-15':'avail','06-16':'avail','06-17':'remote','06-18':'remote','06-19':'unavail','06-20':'avail','06-21':'avail','06-22':'avail','06-23':'avail','06-24':'avail','06-25':'avail','06-26':'avail','06-27':'avail','06-28':'avail','06-29':'avail','06-30':'avail'};
+const cJuly = {'07-01':'avail','07-02':'avail','07-03':'unavail','07-04':'unavail','07-05':'unavail','07-06':'avail','07-07':'avail','07-08':'avail','07-09':'avail','07-10':'avail','07-11':'avail','07-12':'avail','07-13':'avail','07-14':'avail','07-15':'avail','07-16':'avail','07-17':'avail','07-18':'avail','07-19':'avail','07-20':'avail','07-21':'avail','07-22':'avail','07-23':'avail','07-24':'avail','07-25':'avail','07-26':'avail','07-27':'avail','07-28':'avail','07-29':'avail','07-30':'avail','07-31':'avail'};
+Object.entries(cJune).forEach(([d,s]) => avail('christina',`2026-${d}`,s,cJuneNotes[d]||''));
+Object.entries(cJuly).forEach(([d,s]) => avail('christina',`2026-${d}`,s,''));
 
-// ── CHRISTINA (Karen) ──
-// June — weekdays 6pm+, weekends 9am+ (earlier preferred)
-const christinaJune = {
-  '06-08':'avail','06-09':'avail','06-10':'avail','06-11':'avail','06-12':'avail',
-  '06-13':'avail','06-14':'partial',
-  '06-15':'avail','06-16':'avail',
-  '06-17':'remote','06-18':'remote',
-  '06-19':'unavail',
-  '06-20':'avail','06-21':'avail','06-22':'avail','06-23':'avail','06-24':'avail',
-  '06-25':'avail','06-26':'avail','06-27':'avail','06-28':'avail','06-29':'avail','06-30':'avail'
-};
-const christinaJuneNotes = {
-  '06-14':'Available 2pm onward','06-16':'Will travel to FL if no conflict',
-  '06-17':'Remote – Florida','06-18':'Remote – Florida','06-20':'Travel back from FL'
-};
-Object.entries(christinaJune).forEach(([d,s]) => avail('christina', `2026-${d}`, s, christinaJuneNotes[d]||''));
-
-// July
-const christinaJuly = {
-  '07-01':'avail','07-02':'avail','07-03':'unavail','07-04':'unavail','07-05':'unavail',
-  '07-06':'avail','07-07':'avail','07-08':'avail','07-09':'avail','07-10':'avail',
-  '07-11':'avail','07-12':'avail','07-13':'avail','07-14':'avail','07-15':'avail',
-  '07-16':'avail','07-17':'avail','07-18':'avail','07-19':'avail','07-20':'avail',
-  '07-21':'avail','07-22':'avail','07-23':'avail','07-24':'avail','07-25':'avail',
-  '07-26':'avail','07-27':'avail','07-28':'avail','07-29':'avail','07-30':'avail','07-31':'avail'
-};
-Object.entries(christinaJuly).forEach(([d,s]) => avail('christina', `2026-${d}`, s, ''));
-
-// ── JOHN (Tom) ──
-// Weekday availability 11am+, weekends 11am+
-const johnJune = {
-  '06-08':'avail','06-09':'unavail','06-10':'avail','06-11':'avail','06-12':'avail',
-  '06-13':'unavail','06-14':'avail','06-15':'avail','06-16':'avail','06-17':'avail',
-  '06-18':'avail','06-19':'unavail','06-20':'unavail','06-21':'unavail','06-22':'unavail',
-  '06-23':'avail','06-24':'avail','06-25':'avail','06-26':'unavail','06-27':'unavail',
-  '06-28':'unavail','06-29':'unavail','06-30':'avail'
-};
-Object.entries(johnJune).forEach(([d,s]) => avail('john', `2026-${d}`, s, ''));
-
-const johnJuly = {
-  '07-01':'unavail','07-02':'unavail','07-03':'unavail','07-04':'unavail','07-05':'unavail',
-  '07-06':'avail','07-07':'avail','07-08':'avail','07-09':'avail','07-10':'avail',
-  '07-11':'avail','07-12':'avail','07-13':'avail','07-14':'avail','07-15':'avail',
-  '07-16':'avail','07-17':'unavail','07-18':'unavail','07-19':'unavail',
-  '07-20':'avail','07-21':'avail','07-22':'avail','07-23':'avail','07-24':'avail',
-  '07-25':'avail','07-26':'avail','07-27':'avail','07-28':'avail','07-29':'avail',
-  '07-30':'avail','07-31':'avail'
-};
-Object.entries(johnJuly).forEach(([d,s]) => avail('john', `2026-${d}`, s, ''));
-
-// August — John totally available
-for (let d = 1; d <= 31; d++) {
-  const dd = String(d).padStart(2,'0');
-  avail('john', `2026-08-${dd}`, 'avail', '');
-}
+// John (Tom)
+const nJune = {'06-08':'avail','06-09':'unavail','06-10':'avail','06-11':'avail','06-12':'avail','06-13':'unavail','06-14':'avail','06-15':'avail','06-16':'avail','06-17':'avail','06-18':'avail','06-19':'unavail','06-20':'unavail','06-21':'unavail','06-22':'unavail','06-23':'avail','06-24':'avail','06-25':'avail','06-26':'unavail','06-27':'unavail','06-28':'unavail','06-29':'unavail','06-30':'avail'};
+const nJuly = {'07-01':'unavail','07-02':'unavail','07-03':'unavail','07-04':'unavail','07-05':'unavail','07-06':'avail','07-07':'avail','07-08':'avail','07-09':'avail','07-10':'avail','07-11':'avail','07-12':'avail','07-13':'avail','07-14':'avail','07-15':'avail','07-16':'avail','07-17':'unavail','07-18':'unavail','07-19':'unavail','07-20':'avail','07-21':'avail','07-22':'avail','07-23':'avail','07-24':'avail','07-25':'avail','07-26':'avail','07-27':'avail','07-28':'avail','07-29':'avail','07-30':'avail','07-31':'avail'};
+Object.entries(nJune).forEach(([d,s]) => avail('john',`2026-${d}`,s,''));
+Object.entries(nJuly).forEach(([d,s]) => avail('john',`2026-${d}`,s,''));
+for (let d=1;d<=31;d++) avail('john',`2026-08-${String(d).padStart(2,'0')}`,'avail','');
 
 // ══════════════════════════════════════
 // ACTOR CONFIG
 // ══════════════════════════════════════
 const ACTORS = [
-  { key:'jeremy',   label:'Jeremy (Gabe)',    color:'#4a7a56', light:'#eef3ec' },
-  { key:'christina',label:'Christina (Karen)', color:'#8b6650', light:'#f3ede8' },
-  { key:'john',     label:'John (Tom)',        color:'#5a6aaa', light:'#eceef8' },
-  { key:'lauren',   label:'Lauren (Beth)',     color:'#a05080', light:'#f5eaf2' }
+  { key:'jeremy',    label:'Jeremy (Gabe)',     color:'#4a7a56', light:'#eef3ec' },
+  { key:'christina', label:'Christina (Karen)',  color:'#8b6650', light:'#f3ede8' },
+  { key:'john',      label:'John (Tom)',         color:'#5a6aaa', light:'#eceef8' },
+  { key:'lauren',    label:'Lauren (Beth)',      color:'#a05080', light:'#f5eaf2' }
 ];
 
-const STATUS_LABELS = {
-  avail:'Available', unavail:'Unavailable', remote:'Remote', tbd:'TBD', partial:'Partial'
-};
-
 // ══════════════════════════════════════
-// VIEW STATE
+// STATE
 // ══════════════════════════════════════
 let currentView = 'week';
-let viewAnchor = new Date('2026-06-08'); // start of first rehearsal week
+let viewAnchor  = new Date('2026-06-08');
+let activeActors = new Set(ACTORS.map(a=>a.key));
+let sortField = 'date';
+let sortDir   = 1;
 
-function setView(view, btn) {
-  currentView = view;
-  document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+// ══════════════════════════════════════
+// THEME TOGGLE
+// ══════════════════════════════════════
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+tab).classList.add('active');
+  if (btn) btn.classList.add('active');
+  if (tab==='calendar') renderCalendar();
+  ['jeremy','christina','john','lauren','jess'].forEach(p=>{ if(tab==='notes-'+p) renderNotes(p); });
+}
+
+// ══════════════════════════════════════
+// ACTOR CHIPS
+// ══════════════════════════════════════
+function initActorChips() {
+  const wrap = document.getElementById('actor-chips');
+  wrap.innerHTML = ACTORS.map(a =>
+    `<span class="actor-chip active" id="chip-${a.key}"
+      style="border-color:${a.color};color:${a.color};background:${a.light}"
+      onclick="toggleActor('${a.key}')">${a.label}</span>`
+  ).join('');
+}
+
+function toggleActor(key) {
+  if (activeActors.has(key)) {
+    activeActors.delete(key);
+    const chip = document.getElementById('chip-'+key);
+    chip.classList.remove('active');
+    chip.style.background = '';
+    chip.style.color = ACTORS.find(a=>a.key===key).color;
+    chip.style.opacity = '0.45';
+  } else {
+    activeActors.add(key);
+    const a = ACTORS.find(a=>a.key===key);
+    const chip = document.getElementById('chip-'+key);
+    chip.classList.add('active');
+    chip.style.background = a.light;
+    chip.style.opacity = '1';
+  }
+  renderCalendar();
+}
+
+// ══════════════════════════════════════
+// SORT
+// ══════════════════════════════════════
+function setSort(field, btn) {
+  if (sortField===field) sortDir*=-1;
+  else { sortField=field; sortDir=1; }
+  document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   renderCalendar();
 }
 
 // ══════════════════════════════════════
-// TAB SWITCHING
-// ══════════════════════════════════════
-function switchTab(tab, btn) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('panel-' + tab).classList.add('active');
-  if (btn) btn.classList.add('active');
-  if (tab === 'calendar') renderCalendar();
-  const notesTabs = ['jeremy','christina','john','lauren','jess'];
-  notesTabs.forEach(p => { if (tab === 'notes-' + p) renderNotes(p); });
-}
-
-// ══════════════════════════════════════
-// FILTER STATE
+// FILTERS
 // ══════════════════════════════════════
 function getFilters() {
   return {
     type: document.getElementById('f-type').value,
-    character: document.getElementById('f-character').value,
-    act: document.getElementById('f-act').value,
-    scene: document.getElementById('f-scene').value,
+    act:  document.getElementById('f-act').value,
+    from: document.getElementById('f-from').value,
+    to:   document.getElementById('f-to').value,
   };
 }
-
 function resetFilters() {
-  ['f-type','f-character','f-act','f-scene'].forEach(id => document.getElementById(id).value = '');
+  ['f-type','f-act','f-from','f-to'].forEach(id=>document.getElementById(id).value='');
   applyFilters();
 }
-
 function applyFilters() { renderCalendar(); }
+function clearFilter(key) { document.getElementById('f-'+key).value=''; applyFilters(); }
+
+// ══════════════════════════════════════
+// VIEW
+// ══════════════════════════════════════
+function setView(view, btn) {
+  currentView = view;
+  document.querySelectorAll('.view-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const sortCtrl = document.getElementById('sort-controls');
+  sortCtrl.style.display = view==='list' ? 'flex' : 'none';
+  renderCalendar();
+}
 
 // ══════════════════════════════════════
 // DATE HELPERS
 // ══════════════════════════════════════
-function dateStr(d) {
-  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+function dateStr(d) { return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
+function pad(n) { return String(n).padStart(2,'0'); }
+function addDays(d,n) { const r=new Date(d); r.setDate(r.getDate()+n); return r; }
+function startOfWeek(d) { const r=new Date(d); r.setDate(r.getDate()-r.getDay()); return r; }
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function fmtShort(d) { return MONTHS[d.getMonth()].slice(0,3)+' '+d.getDate(); }
+function fmtFull(ds) {
+  if(!ds) return '';
+  const [y,m,day]=ds.split('-');
+  return MONTHS[parseInt(m)-1]+' '+parseInt(day)+', '+y;
 }
 
-function addDays(d, n) { const r = new Date(d); r.setDate(r.getDate()+n); return r; }
-
-function startOfWeek(d) {
-  const r = new Date(d);
-  const day = r.getDay(); // 0=Sun
-  r.setDate(r.getDate() - day);
-  return r;
+function statusColor(s, actorColor) {
+  if (s==='avail')   return actorColor;
+  if (s==='unavail') return '#cccccc';
+  if (s==='remote')  return '#f0a840';
+  if (s==='tbd')     return '#b0b0b0';
+  if (s==='partial') return '#e0c080';
+  return '';
 }
-
-function startOfMonth(d) { return new Date(d.getFullYear(), d.getMonth(), 1); }
-
-const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-const DAY_SHORT = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-
-function formatShort(d) {
-  return MONTH_NAMES[d.getMonth()].slice(0,3) + ' ' + d.getDate();
+function eventColor(t) {
+  return {tableread:'#b08050',rehearsal:'#4a7a56',fitting:'#6a7aaa',techdress:'#7a5080',performance:'#8b6650'}[t]||'#888';
 }
+function typeLabel(t) { return {tableread:'Table Read',rehearsal:'Rehearsal',fitting:'Fitting',techdress:'Tech/Dress',performance:'Performance'}[t]||t; }
 
 // ══════════════════════════════════════
-// RENDER CALENDAR
+// MAIN RENDER
 // ══════════════════════════════════════
 function renderCalendar() {
   const grid = document.getElementById('cal-grid');
   const list = document.getElementById('event-list');
+  renderFilterPills();
 
-  if (currentView === 'week') {
+  if (currentView==='week') {
     grid.innerHTML = renderWeekGrid();
-    list.innerHTML = renderEventList();
-    renderFilterPills();
-  } else if (currentView === 'month') {
-    grid.innerHTML = renderMonthGrid(viewAnchor, 1);
+    list.innerHTML = renderEventCards();
+  } else if (currentView==='list') {
+    grid.innerHTML = renderListView();
     list.innerHTML = '';
-    renderFilterPills();
   } else {
-    grid.innerHTML = renderMonthGrid(viewAnchor, 3);
+    const months = currentView==='3month' ? 3 : 1;
+    grid.innerHTML = renderMonthsGrid(months);
     list.innerHTML = '';
-    renderFilterPills();
   }
-  document.getElementById('results-meta').textContent = '';
 }
 
 // ── WEEK GRID ──
 function renderWeekGrid() {
-  const weekStart = startOfWeek(viewAnchor);
-  const days = Array.from({length:7}, (_,i) => addDays(weekStart, i));
+  const ws = startOfWeek(viewAnchor);
+  const days = Array.from({length:7},(_,i)=>addDays(ws,i));
   const today = dateStr(new Date());
+  const visActors = ACTORS.filter(a=>activeActors.has(a.key));
 
-  let html = `
-  <div class="cal-nav">
+  let h = `<div class="cal-nav">
     <button class="cal-nav-btn" onclick="navWeek(-1)">&#8592; Prev</button>
-    <span class="cal-nav-label">${formatShort(days[0])} – ${formatShort(days[6])}, ${days[0].getFullYear()}</span>
+    <span class="cal-nav-label">${fmtShort(days[0])} – ${fmtShort(days[6])}, ${days[0].getFullYear()}</span>
     <button class="cal-nav-btn" onclick="navWeek(1)">Next &#8594;</button>
   </div>
   <div class="week-grid">
     <div class="week-header-row">
       <div class="week-actor-col"></div>`;
-
   days.forEach(d => {
     const ds = dateStr(d);
-    const isToday = ds === today;
-    html += `<div class="week-day-header ${isToday?'today':''}">${DAY_SHORT[d.getDay()]}<br><span>${d.getDate()}</span></div>`;
+    h += `<div class="week-day-header${ds===today?' today':''}">${DAYS[d.getDay()]}<br><span>${d.getDate()}</span></div>`;
   });
-  html += `</div>`;
+  h += '</div>';
 
-  ACTORS.forEach(actor => {
-    html += `<div class="week-actor-row">
+  visActors.forEach(actor => {
+    h += `<div class="week-actor-row">
       <div class="week-actor-label" style="border-left:3px solid ${actor.color}">${actor.label.split(' ')[0]}</div>`;
     days.forEach(d => {
       const ds = dateStr(d);
-      const av = AVAILABILITY[ds] && AVAILABILITY[ds][actor.key];
-      const status = av ? av.status : '';
-      const note = av ? av.note : '';
-      const eventsOnDay = EVENTS.filter(e => e.date === ds);
-      let cell = `<div class="week-cell status-${status}" title="${note||STATUS_LABELS[status]||''}" style="${status==='avail'?'background:'+actor.light+';border-color:'+actor.color+'22':''}" >`;
-      if (status) cell += `<span class="cell-dot status-dot-${status}" style="${status==='avail'?'background:'+actor.color:''}"></span>`;
-      eventsOnDay.forEach(ev => { cell += `<div class="cell-event-pill" style="background:${eventColor(ev.type)}">${ev.title.length>12?ev.title.slice(0,12)+'…':ev.title}</div>`; });
-      cell += `</div>`;
-      html += cell;
+      const av = AVAILABILITY[ds]?.[actor.key];
+      const st = av?.status||'';
+      const note = av?.note||'';
+      const evs = EVENTS.filter(e=>e.date===ds);
+      const dotColor = statusColor(st, actor.color);
+      let cell = `<div class="week-cell status-${st}" title="${note||(st?STATUS_LABELS[st]:'')}">`;
+      if (dotColor) cell += `<span class="cell-dot" style="background:${dotColor}"></span>`;
+      evs.forEach(ev => { cell += `<div class="cell-event-pill" style="background:${eventColor(ev.type)}">${ev.title.length>10?ev.title.slice(0,10)+'…':ev.title}</div>`; });
+      cell += '</div>';
+      h += cell;
     });
-    html += `</div>`;
+    h += '</div>';
   });
-
-  html += `</div>`;
-  return html;
+  h += '</div>';
+  return h;
 }
-
-function navWeek(dir) {
-  viewAnchor = addDays(viewAnchor, dir * 7);
-  renderCalendar();
-}
+function navWeek(dir) { viewAnchor=addDays(viewAnchor,dir*7); renderCalendar(); }
 
 // ── MONTH GRID ──
-function renderMonthGrid(anchor, numMonths) {
-  let html = `<div class="cal-nav">
-    <button class="cal-nav-btn" onclick="navMonth(-${numMonths})">&#8592; Prev</button>
-    <span class="cal-nav-label">${MONTH_NAMES[anchor.getMonth()]} ${anchor.getFullYear()}${numMonths>1?' – '+MONTH_NAMES[new Date(anchor.getFullYear(), anchor.getMonth()+numMonths-1).getMonth()]+' '+new Date(anchor.getFullYear(), anchor.getMonth()+numMonths-1).getFullYear():''}</span>
-    <button class="cal-nav-btn" onclick="navMonth(${numMonths})">Next &#8594;</button>
+function renderMonthsGrid(n) {
+  const anchor = new Date(viewAnchor.getFullYear(), viewAnchor.getMonth(), 1);
+  const endLabel = n>1 ? ' – '+MONTHS[new Date(anchor.getFullYear(),anchor.getMonth()+n-1).getMonth()].slice(0,3)+' '+new Date(anchor.getFullYear(),anchor.getMonth()+n-1).getFullYear() : '';
+  let h = `<div class="cal-nav">
+    <button class="cal-nav-btn" onclick="navMonth(-${n})">&#8592; Prev</button>
+    <span class="cal-nav-label">${MONTHS[anchor.getMonth()]} ${anchor.getFullYear()}${endLabel}</span>
+    <button class="cal-nav-btn" onclick="navMonth(${n})">Next &#8594;</button>
   </div>`;
-
-  for (let m = 0; m < numMonths; m++) {
-    const monthDate = new Date(anchor.getFullYear(), anchor.getMonth() + m, 1);
-    html += renderSingleMonth(monthDate);
-  }
-  return html;
+  for (let m=0;m<n;m++) h += renderOneMonth(new Date(anchor.getFullYear(),anchor.getMonth()+m,1));
+  return h;
 }
-
-function renderSingleMonth(monthDate) {
-  const year = monthDate.getFullYear();
-  const month = monthDate.getMonth();
-  const firstDay = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month+1, 0).getDate();
-  const today = dateStr(new Date());
-
-  let html = `<div class="month-block">
-    <div class="month-title">${MONTH_NAMES[month]} ${year}</div>
-    <div class="month-grid">
-      ${DAY_SHORT.map(d=>`<div class="month-dow">${d}</div>`).join('')}`;
-
-  for (let i = 0; i < firstDay; i++) html += `<div class="month-day empty"></div>`;
-
-  for (let day = 1; day <= daysInMonth; day++) {
-    const ds = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-    const isToday = ds === today;
-    const eventsOnDay = EVENTS.filter(e => e.date === ds);
-    const dayAvail = AVAILABILITY[ds] || {};
-
-    let dots = ACTORS.map(a => {
-      const av = dayAvail[a.key];
-      if (!av) return '';
-      return `<span class="month-dot" style="background:${av.status==='avail'?a.color:av.status==='unavail'?'#ccc':av.status==='remote'?'#f0a840':av.status==='tbd'?'#aaa':'#e0c080'}" title="${a.label}: ${STATUS_LABELS[av.status]}${av.note?' ('+av.note+')':''}"></span>`;
+function renderOneMonth(md) {
+  const y=md.getFullYear(), mo=md.getMonth();
+  const first=new Date(y,mo,1).getDay(), dim=new Date(y,mo+1,0).getDate();
+  const today=dateStr(new Date());
+  const visActors = ACTORS.filter(a=>activeActors.has(a.key));
+  let h = `<div class="month-block"><div class="month-title">${MONTHS[mo]} ${y}</div><div class="month-grid">`;
+  DAYS.forEach(d=>{ h+=`<div class="month-dow">${d}</div>`; });
+  for(let i=0;i<first;i++) h+=`<div class="month-day empty"></div>`;
+  for(let day=1;day<=dim;day++) {
+    const ds=`${y}-${pad(mo+1)}-${pad(day)}`;
+    const isToday=ds===today;
+    const dayAv=AVAILABILITY[ds]||{};
+    const evs=EVENTS.filter(e=>e.date===ds);
+    let dots=visActors.map(a=>{
+      const av=dayAv[a.key];
+      if(!av) return '';
+      const c=statusColor(av.status,a.color);
+      return c?`<span class="month-dot" style="background:${c}" title="${a.label}: ${STATUS_LABELS[av.status]}${av.note?' ('+av.note+')':''}"></span>`:'';
     }).join('');
-
-    let eventPills = eventsOnDay.map(ev =>
-      `<div class="month-event-pill" style="background:${eventColor(ev.type)}">${ev.title.length>10?ev.title.slice(0,10)+'…':ev.title}</div>`
-    ).join('');
-
-    html += `<div class="month-day ${isToday?'today':''}">
-      <div class="month-day-num">${day}</div>
-      <div class="month-day-dots">${dots}</div>
-      ${eventPills}
-    </div>`;
+    let pills=evs.map(ev=>`<div class="month-event-pill" style="background:${eventColor(ev.type)}">${ev.title.length>9?ev.title.slice(0,9)+'…':ev.title}</div>`).join('');
+    h+=`<div class="month-day${isToday?' today':''}"><div class="month-day-num">${day}</div><div class="month-day-dots">${dots}</div>${pills}</div>`;
   }
-
-  html += `</div></div>`;
-  return html;
+  h+=`</div></div>`;
+  return h;
 }
+function navMonth(dir) { viewAnchor=new Date(viewAnchor.getFullYear(),viewAnchor.getMonth()+dir,1); renderCalendar(); }
 
-function navMonth(dir) {
-  viewAnchor = new Date(viewAnchor.getFullYear(), viewAnchor.getMonth() + dir, 1);
-  renderCalendar();
-}
+// ── LIST VIEW ──
+const STATUS_LABELS={avail:'Available',unavail:'Unavailable',remote:'Remote',tbd:'TBD',partial:'Partial'};
 
-// ── EVENT LIST (week view only) ──
-function renderEventList() {
+function renderListView() {
   const f = getFilters();
-  const weekStart = startOfWeek(viewAnchor);
-  const weekDates = new Set(Array.from({length:7}, (_,i) => dateStr(addDays(weekStart, i))));
+  const visActors = ACTORS.filter(a=>activeActors.has(a.key));
 
-  let events = EVENTS.filter(e => weekDates.has(e.date));
-  if (f.type) events = events.filter(e => e.type === f.type);
-  if (f.character) events = events.filter(e => e.characters.includes(f.character));
-  if (f.act) events = events.filter(e => e.act === f.act);
-  if (f.scene) events = events.filter(e => e.scenes.includes(f.scene));
+  // Build rows: one row per (actor, date) in range
+  let rows = [];
+  const allDates = new Set([...Object.keys(AVAILABILITY)]);
 
-  if (!events.length) return '<div style="color:#9a8a7a;font-size:13px;font-style:italic;margin-top:8px;">No scheduled events this week.</div>';
+  // Filter by date range
+  const from = f.from || '2026-06-01';
+  const to   = f.to   || '2026-09-30';
 
-  return events.sort((a,b)=>a.date.localeCompare(b.date)).map(e => {
-    const charTags = e.characters.map(c=>`<span class="event-tag ${c}">${charLabel(c)}</span>`).join('');
-    const actTag = e.act ? `<span class="event-tag">${e.act}</span>` : '';
-    const sceneTags = e.scenes.map(s=>`<span class="event-tag">${s}</span>`).join('');
-    return `<div class="event-card">
-      <div class="event-stripe ${e.type}"></div>
-      <div class="event-body">
-        <div class="event-top">
-          <div class="event-title">${e.title}</div>
-          <span class="event-type-badge badge-${e.type}">${typeLabel(e.type)}</span>
-        </div>
-        <div class="event-meta-row">
-          <span class="event-meta-item">📅 ${formatDate(e.date)}</span>
-          <span class="event-meta-item">🕐 ${e.time}</span>
-          ${e.location?`<span class="event-meta-item">📍 ${e.location}</span>`:''}
-        </div>
-        ${(e.characters.length||e.act||e.scenes.length)?`<div class="event-tags">${charTags}${actTag}${sceneTags}</div>`:''}
-        ${e.notes?`<div style="margin-top:8px;font-size:13px;color:#6a6050;font-style:italic;">${e.notes}</div>`:''}
+  allDates.forEach(ds => {
+    if (ds < from || ds > to) return;
+    const dayAv = AVAILABILITY[ds]||{};
+    visActors.forEach(actor => {
+      const av = dayAv[actor.key];
+      if (!av) return;
+      rows.push({ date:ds, actor, status:av.status, note:av.note, events: EVENTS.filter(e=>e.date===ds) });
+    });
+  });
+
+  // Sort
+  rows.sort((a,b) => {
+    let va, vb;
+    if (sortField==='date') { va=a.date; vb=b.date; }
+    else if (sortField==='actor') { va=a.actor.label; vb=b.actor.label; }
+    else { va=a.status; vb=b.status; }
+    return va<vb?-sortDir:va>vb?sortDir:0;
+  });
+
+  if (!rows.length) return '<div class="list-no-data">No availability data in this range.</div>';
+
+  const arrow = sortDir===1?'↑':'↓';
+  const sa = f => sortField===f?' sorted':'';
+
+  let h = `<div style="overflow-x:auto"><table class="list-view-table">
+  <thead><tr>
+    <th onclick="setSort('date', this)" class="${sa('date')}">Date <span class="sort-arrow">${sortField==='date'?arrow:'↕'}</span></th>
+    <th onclick="setSort('actor', this)" class="${sa('actor')}">Actor <span class="sort-arrow">${sortField==='actor'?arrow:'↕'}</span></th>
+    <th onclick="setSort('status', this)" class="${sa('status')}">Availability <span class="sort-arrow">${sortField==='status'?arrow:'↕'}</span></th>
+    <th>Note</th>
+    <th>Events</th>
+  </tr></thead><tbody>`;
+
+  rows.forEach(r => {
+    const c = statusColor(r.status, r.actor.color);
+    const evPills = r.events.map(ev=>`<span style="display:inline-block;font-size:10px;background:${eventColor(ev.type)};color:#fff;padding:1px 6px;border-radius:3px;margin:1px">${ev.title}</span>`).join('');
+    h += `<tr>
+      <td>${fmtFull(r.date)}</td>
+      <td><span style="display:inline-flex;align-items:center;gap:6px"><span style="width:9px;height:9px;border-radius:50%;background:${r.actor.color};flex-shrink:0;display:inline-block"></span>${r.actor.label}</span></td>
+      <td><span style="display:inline-flex;align-items:center;gap:5px"><span style="width:9px;height:9px;border-radius:50%;background:${c};flex-shrink:0;display:inline-block"></span>${STATUS_LABELS[r.status]}</span></td>
+      <td style="color:var(--text-muted);font-style:italic;font-size:12px">${r.note||'—'}</td>
+      <td>${evPills||'—'}</td>
+    </tr>`;
+  });
+  h += '</tbody></table></div>';
+  return h;
+}
+
+// ── EVENT CARDS (week view below grid) ──
+function renderEventCards() {
+  const f = getFilters();
+  const ws = startOfWeek(viewAnchor);
+  const weekDates = new Set(Array.from({length:7},(_,i)=>dateStr(addDays(ws,i))));
+  let evs = EVENTS.filter(e=>weekDates.has(e.date));
+  if (f.type) evs=evs.filter(e=>e.type===f.type);
+  if (f.act)  evs=evs.filter(e=>e.act===f.act);
+  if (!evs.length) return '<div style="color:var(--text-muted);font-size:13px;font-style:italic;margin-top:8px">No scheduled events this week.</div>';
+  return evs.sort((a,b)=>a.date.localeCompare(b.date)).map(e=>`
+  <div class="event-card">
+    <div class="event-stripe ${e.type}"></div>
+    <div class="event-body">
+      <div class="event-top">
+        <div class="event-title">${e.title}</div>
+        <span class="event-type-badge badge-${e.type}">${typeLabel(e.type)}</span>
       </div>
-    </div>`;
-  }).join('');
+      <div class="event-meta-row">
+        <span class="event-meta-item">📅 ${fmtFull(e.date)}</span>
+        <span class="event-meta-item">🕐 ${e.time}</span>
+        ${e.location?`<span class="event-meta-item">📍 ${e.location}</span>`:''}
+      </div>
+      ${e.notes?`<div style="margin-top:8px;font-size:13px;color:var(--text3);font-style:italic">${e.notes}</div>`:''}
+    </div>
+  </div>`).join('');
 }
 
+// ── FILTER PILLS ──
 function renderFilterPills() {
-  const f = getFilters();
-  const pills = [];
-  if (f.type) pills.push({label:typeLabel(f.type), key:'type'});
-  if (f.character) pills.push({label:charLabel(f.character), key:'character'});
-  if (f.act) pills.push({label:f.act, key:'act'});
-  if (f.scene) pills.push({label:f.scene, key:'scene'});
-  document.getElementById('filter-pills').innerHTML = pills.map(p =>
+  const f=getFilters();
+  const pills=[];
+  if(f.type) pills.push({label:typeLabel(f.type),key:'type'});
+  if(f.act)  pills.push({label:f.act,key:'act'});
+  if(f.from) pills.push({label:'From '+fmtFull(f.from),key:'from'});
+  if(f.to)   pills.push({label:'To '+fmtFull(f.to),key:'to'});
+  document.getElementById('filter-pills').innerHTML=pills.map(p=>
     `<span class="pill">${p.label}<span class="pill-x" onclick="clearFilter('${p.key}')">×</span></span>`
   ).join('');
 }
 
-function clearFilter(key) {
-  document.getElementById('f-' + key).value = '';
-  applyFilters();
-}
-
-function eventColor(type) {
-  return {tableread:'#b08050',rehearsal:'#4a7a56',fitting:'#6a7aaa',techdress:'#7a5080',performance:'#8b6650'}[type]||'#888';
-}
-
-function typeLabel(t) {
-  return {tableread:'Table Read',rehearsal:'Rehearsal',fitting:'Fitting',techdress:'Tech/Dress',performance:'Performance'}[t]||t;
-}
-
-function charLabel(c) {
-  return {gabe:'Gabe',karen:'Karen',both:'Full Cast'}[c]||c;
-}
-
-function formatDate(d) {
-  if (!d) return '';
-  const [y,m,day] = d.split('-');
-  return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(m)-1]+' '+parseInt(day)+', '+y;
-}
-
 // ══════════════════════════════════════
-// NOTES SYSTEM
+// NOTES
 // ══════════════════════════════════════
-function notesKey(person) { return 'dwf-notes-' + person; }
+const PERSON_COLORS={jeremy:'#4a7a56',christina:'#8b6650',john:'#5a6aaa',lauren:'#a05080',jess:'#1c2b1e'};
 
-function loadNotes(person) {
-  try { return JSON.parse(localStorage.getItem(notesKey(person))) || []; }
-  catch(e) { return []; }
+function notesKey(p){ return 'dwf-notes-'+p; }
+function loadNotes(p){ try{return JSON.parse(localStorage.getItem(notesKey(p)))||[];}catch(e){return[];} }
+function persistNotes(p,n){ localStorage.setItem(notesKey(p),JSON.stringify(n)); }
+
+function openForm(p){ document.getElementById('form-'+p).classList.add('open'); document.getElementById(p+'-text').focus(); }
+function closeForm(p){
+  document.getElementById('form-'+p).classList.remove('open');
+  ['act','scene','text','production','actor'].forEach(f=>{const el=document.getElementById(p+'-'+f);if(el)el.value='';});
 }
 
-function persistNotes(person, notes) {
-  localStorage.setItem(notesKey(person), JSON.stringify(notes));
+function saveNote(p){
+  const text=document.getElementById(p+'-text').value.trim();
+  if(!text){document.getElementById(p+'-text').focus();return;}
+  const get=id=>(document.getElementById(id)||{}).value||'';
+  const notes=loadNotes(p);
+  notes.unshift({id:Date.now(),text,act:get(p+'-act'),scene:get(p+'-scene'),production:get(p+'-production'),actor:get(p+'-actor'),ts:new Date().toISOString()});
+  persistNotes(p,notes);
+  closeForm(p);
+  renderNotes(p);
 }
 
-function openForm(person) {
-  document.getElementById('form-' + person).classList.add('open');
-  document.getElementById(person + '-text').focus();
+function deleteNote(p,id){
+  if(!confirm('Delete this note?'))return;
+  persistNotes(p,loadNotes(p).filter(n=>n.id!==id));
+  renderNotes(p);
 }
 
-function closeForm(person) {
-  const form = document.getElementById('form-' + person);
-  form.classList.remove('open');
-  ['act','scene','text','production','actor'].forEach(f => {
-    const el = document.getElementById(person+'-'+f);
-    if (el) el.value = '';
-  });
+function editNote(p,id){
+  const notes=loadNotes(p),note=notes.find(n=>n.id===id);
+  if(!note)return;
+  ['act','scene','production','actor'].forEach(f=>{const el=document.getElementById(p+'-'+f);if(el)el.value=note[f]||'';});
+  document.getElementById(p+'-text').value=note.text;
+  openForm(p);
+  persistNotes(p,notes.filter(n=>n.id!==id));
+  renderNotes(p);
 }
 
-function saveNote(person) {
-  const text = document.getElementById(person + '-text').value.trim();
-  if (!text) { document.getElementById(person + '-text').focus(); return; }
-  const act   = (document.getElementById(person+'-act')   ||{}).value || '';
-  const scene = (document.getElementById(person+'-scene') ||{}).value || '';
-  const production = (document.getElementById(person+'-production')||{}).value || '';
-  const actor = (document.getElementById(person+'-actor')||{}).value || '';
-  const notes = loadNotes(person);
-  notes.unshift({ id:Date.now(), text, act, scene, production, actor, ts:new Date().toISOString() });
-  persistNotes(person, notes);
-  closeForm(person);
-  renderNotes(person);
-}
-
-function deleteNote(person, id) {
-  if (!confirm('Delete this note?')) return;
-  persistNotes(person, loadNotes(person).filter(n=>n.id!==id));
-  renderNotes(person);
-}
-
-function editNote(person, id) {
-  const notes = loadNotes(person);
-  const note = notes.find(n=>n.id===id);
-  if (!note) return;
-  const actEl   = document.getElementById(person+'-act');
-  const sceneEl = document.getElementById(person+'-scene');
-  const prodEl  = document.getElementById(person+'-production');
-  const actorEl = document.getElementById(person+'-actor');
-  const textEl  = document.getElementById(person+'-text');
-  if (actEl) actEl.value = note.act||'';
-  if (sceneEl) sceneEl.value = note.scene||'';
-  if (prodEl) prodEl.value = note.production||'';
-  if (actorEl) actorEl.value = note.actor||'';
-  if (textEl) textEl.value = note.text;
-  openForm(person);
-  persistNotes(person, notes.filter(n=>n.id!==id));
-  renderNotes(person);
-}
-
-const PERSON_COLORS = {
-  jeremy:'#4a7a56', christina:'#8b6650', john:'#5a6aaa', lauren:'#a05080', jess:'#1c2b1e'
-};
-
-function renderNotes(person) {
-  const notes = loadNotes(person);
-  const listEl  = document.getElementById('notes-' + person);
-  const countEl = document.getElementById('count-' + person);
-  const color   = PERSON_COLORS[person] || '#888';
-
-  countEl.textContent = notes.length === 0 ? '' : notes.length === 1 ? '1 note' : notes.length + ' notes';
-
-  if (!notes.length) {
-    listEl.innerHTML = '<div class="no-notes">No notes yet. Hit "+ Add New Note" to get started.</div>';
-    return;
-  }
-
-  listEl.innerHTML = notes.map(n => {
-    const badges = [
-      n.production ? `<span class="note-badge" style="background:${color}18;border-color:${color}44;color:${color}">${n.production}</span>` : '',
-      n.actor ? `<span class="note-badge scene-badge">${n.actor}</span>` : '',
-      n.act   ? `<span class="note-badge" style="background:${color}18;border-color:${color}44;color:${color}">${n.act}</span>` : '',
-      n.scene ? `<span class="note-badge scene-badge">${n.scene}</span>` : ''
+function renderNotes(p){
+  const notes=loadNotes(p);
+  const color=PERSON_COLORS[p]||'#888';
+  const countEl=document.getElementById('count-'+p);
+  const listEl=document.getElementById('notes-'+p);
+  if(countEl) countEl.textContent=notes.length===0?'':notes.length===1?'1 note':notes.length+' notes';
+  if(!listEl)return;
+  if(!notes.length){listEl.innerHTML='<div class="no-notes">No notes yet. Hit "+ Add New Note" to get started.</div>';return;}
+  listEl.innerHTML=notes.map(n=>{
+    const badges=[
+      n.production?`<span class="note-badge" style="background:${color}18;border-color:${color}55;color:${color}">${n.production}</span>`:'',
+      n.actor?`<span class="note-badge scene-badge">${n.actor}</span>`:'',
+      n.act?`<span class="note-badge" style="background:${color}18;border-color:${color}55;color:${color}">${n.act}</span>`:'',
+      n.scene?`<span class="note-badge scene-badge">${n.scene}</span>`:''
     ].filter(Boolean).join('');
-    const ts = new Date(n.ts);
-    const tsStr = ts.toLocaleDateString('en-US',{month:'short',day:'numeric'}) + ' · ' + ts.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+    const ts=new Date(n.ts);
+    const tsStr=ts.toLocaleDateString('en-US',{month:'short',day:'numeric'})+' · '+ts.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
     return `<div class="note-card" style="border-left:4px solid ${color}">
-      <div class="note-card-top">
-        <div class="note-card-meta">${badges}</div>
-        <span class="note-timestamp">${tsStr}</span>
-      </div>
+      <div class="note-card-top"><div class="note-card-meta">${badges}</div><span class="note-timestamp">${tsStr}</span></div>
       <div class="note-text">${escHtml(n.text)}</div>
       <div class="note-actions">
-        <button class="note-action-btn" onclick="editNote('${person}', ${n.id})">Edit</button>
-        <button class="note-action-btn delete" onclick="deleteNote('${person}', ${n.id})">Delete</button>
+        <button class="note-action-btn" onclick="editNote('${p}',${n.id})">Edit</button>
+        <button class="note-action-btn delete" onclick="deleteNote('${p}',${n.id})">Delete</button>
       </div>
     </div>`;
   }).join('');
 }
 
-function escHtml(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-</script>
+function escHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
+// ══════════════════════════════════════
+// INIT
+// ══════════════════════════════════════
+document.addEventListener('DOMContentLoaded', ()=>{
+  initActorChips();
+});
+</script>
 
 </body>
 </html>
