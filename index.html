@@ -600,6 +600,42 @@ p { margin-bottom: 14px; color: var(--text2); }
 }
 
 
+/* ── TOAST ── */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+.toast {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 14px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.22);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 320px;
+  text-align: center;
+  line-height: 1.4;
+  pointer-events: auto;
+  animation: toast-in 0.25s ease;
+  white-space: nowrap;
+}
+.toast.toast-success { background: #1c2b1e; color: #e8e0d0; }
+.toast.toast-error   { background: #5c1a10; color: #f0d8d4; }
+.toast.toast-sending { background: #2a3d4e; color: #d4e8f4; }
+.toast.toast-out     { animation: toast-out 0.3s ease forwards; }
+@keyframes toast-in  { from { opacity:0; transform:translateX(-50%) translateY(12px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
+@keyframes toast-out { from { opacity:1; transform:translateX(-50%) translateY(0); } to { opacity:0; transform:translateX(-50%) translateY(12px); } }
+
 footer { background: var(--cover-bg); color: #6a8060; text-align: center; padding: 24px 16px; font-size: 11px; letter-spacing: 0.06em; line-height: 1.7; }
 footer a { color: #8fa880; text-decoration: none; }
 footer a:hover { text-decoration: underline; }
@@ -1233,11 +1269,7 @@ footer a:hover { text-decoration: underline; }
 </div>
 
 
-<footer>
-  Dinner With Friends · Blue Ridge Community Theatre<br>
-  Character Study Guide · Prepared for First Table Read
-</footer>
-
+<div class="toast-container" id="toast-container"></div>
 
 <footer>
   <a href="https://www.facebook.com/BRCTGA" target="_blank">Blue Ridge Community Theatre</a> · Blue Ridge, GA<br>
@@ -1671,7 +1703,30 @@ function handleJessActorChange() {
 const PERSON_COLORS={jeremy:'#4a7a56',christina:'#8b6650',john:'#5a6aaa',lauren:'#a05080',jess:'#1c2b1e'};
 
 // ══════════════════════════════════════
-// SUPABASE — cross-device director→actor notes
+// TOAST NOTIFICATIONS
+// ══════════════════════════════════════
+let _toastTimer = null;
+
+function showToast(msg, type='success', duration=3500) {
+  const container = document.getElementById('toast-container');
+  // Remove any existing toast
+  const existing = container.querySelector('.toast');
+  if (existing) existing.remove();
+  if (_toastTimer) clearTimeout(_toastTimer);
+
+  const icons = { success:'✅', error:'❌', sending:'📤' };
+  const el = document.createElement('div');
+  el.className = `toast toast-${type}`;
+  el.innerHTML = `<span>${icons[type]||'ℹ️'}</span><span>${msg}</span>`;
+  container.appendChild(el);
+
+  _toastTimer = setTimeout(() => {
+    el.classList.add('toast-out');
+    setTimeout(() => el.remove(), 320);
+  }, duration);
+}
+
+
 // ══════════════════════════════════════
 const SB_URL   = 'https://tpsyyogqysrmgdcazwmy.supabase.co';
 const SB_KEY   = 'sb_publishable_IzGf5ShvnuPbgsfac8LK-w_rYz1ewQz';
@@ -1739,10 +1794,19 @@ async function saveNote(p){
     if(copyCheck?.checked && actorKey && actorKey!=='fullcast'){
       const btn=document.querySelector('#form-jess .btn-save');
       if(btn){btn.textContent='Sending…';btn.disabled=true;}
+      showToast('Sending note to ' + (ACTOR_DISPLAY_NAMES[actorKey]||actorKey) + '…', 'sending', 99999);
       const ok=await sbInsert({ id:Date.now(), recipient:actorKey, text:note.text, act:note.act, scene:note.scene, production:note.production, ts:note.ts });
       if(btn){btn.textContent='Save Note';btn.disabled=false;}
-      if(!ok) alert('Note saved locally but could not reach the server. Check your connection.');
+      if(ok){
+        showToast('Note sent to ' + (ACTOR_DISPLAY_NAMES[actorKey]||actorKey) + ' ✓', 'success');
+      } else {
+        showToast('Saved locally — server unreachable. Try again.', 'error', 5000);
+      }
+    } else {
+      showToast('Note saved.', 'success', 2000);
     }
+  } else {
+    showToast('Note saved.', 'success', 2000);
   }
   closeForm(p); renderNotes(p);
 }
