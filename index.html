@@ -253,51 +253,48 @@ body {
 .nav-section {
   background: var(--bg);
   border-top: 4px solid var(--accent);
-  padding: 36px 24px 48px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
+  padding: 36px 20px 48px;
+  box-sizing: border-box;
+  width: 100%;
 }
 .nav-section-label {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 20px;
+  font-size: 22px;
   font-style: italic;
   color: var(--text-muted);
   letter-spacing: 0.06em;
   text-align: center;
+  margin-bottom: 24px;
 }
-/* MOBILE-FIRST: full-width vertical stack */
+/* ── MOBILE: true vertical stack, no flex tricks ── */
 .nav-btn-grid {
-  display: flex;
-  flex-direction: column;   /* STACK on mobile */
-  align-items: stretch;     /* each button fills full width */
-  gap: 16px;
+  display: block;           /* block not flex — eliminates all flex axis confusion */
   width: 100%;
-  /* no max-width here — let padding on .nav-section handle margins */
+  box-sizing: border-box;
 }
 .nav-btn {
+  display: block;           /* block not flex — fills full width guaranteed */
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 400;
   letter-spacing: 0.02em;
   border: none;
-  border-radius: 14px;
+  border-radius: 16px;
   cursor: pointer;
-  /* Fixed height — identical for every button */
   width: 100%;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+  box-sizing: border-box;
+  height: 68px;
+  line-height: 68px;        /* vertically center text without flex */
+  padding: 0 24px;
+  margin-bottom: 16px;
   text-align: center;
-  /* Prevent label wrapping causing height differences */
   white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
   transition: transform 0.15s, box-shadow 0.15s;
   box-shadow: 0 3px 12px rgba(0,0,0,0.15);
 }
+.nav-btn:last-child { margin-bottom: 0; }
 .nav-btn:hover  { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,98,42,0.35); }
 .nav-btn:active { transform: translateY(1px);  box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
 .nav-btn-study      { background: #F5F0DC; color: #1A2E42; border: 2px solid #C8DFF0; }
@@ -686,20 +683,20 @@ select, input {
 
 /* ── SUB-NAV TABS ── */
 .sub-nav-btn {
-  font-size: 15px;
-  padding: 16px 22px;
-  min-height: 52px;
+  font-size: 16px;
+  padding: 16px 24px;
+  min-height: 54px;
 }
 
 /* ── BODY TEXT ── */
-body { font-size: 17px; line-height: 1.8; }   /* 17px: WCAG floor + legibility */
-p { font-size: 17px; margin-bottom: 16px; }
-h2 { font-size: 28px; line-height: 1.2; }
-h3 { font-size: 20px; }
+body { font-size: 18px; line-height: 1.85; }   /* 17px: WCAG floor + legibility */
+p { font-size: 18px; margin-bottom: 18px; }
+h2 { font-size: 30px; line-height: 1.2; }
+h3 { font-size: 22px; }
 h3.subhead { font-size: 12px; }
 
 /* ── COVER TITLE ── */
-.cover-main-title { font-size: 40px; }
+.cover-main-title { font-size: 38px; }
 .cover-info-row   { font-size: 16px; }
 
 /* ── SECTION / TRAIT LABELS — bump up from 9–11px ── */
@@ -707,16 +704,16 @@ h3.subhead { font-size: 12px; }
 .trait-label     { font-size: 11px; }
 .character-role  { font-size: 12px; }
 .scene-label     { font-size: 12px; }
-.essence-block   { font-size: 16px; }
+.essence-block   { font-size: 17px; }
 
 /* ── CHECKLIST ── */
-.checklist li { font-size: 16px; padding: 10px 0 10px 26px; }
+.checklist li { font-size: 17px; padding: 12px 0 12px 28px; }
 
 /* ── CALLOUT ── */
-.callout p { font-size: 15px; }
+.callout p { font-size: 16px; }
 
 /* ── NOTES FORM ── */
-.note-textarea    { font-size: 17px; min-height: 140px; }
+.note-textarea    { font-size: 18px; min-height: 150px; }
 .note-form-group label { font-size: 12px; }
 .add-note-btn     { font-size: 15px; padding: 14px 22px; min-height: 52px; }
 .btn-save, .btn-cancel { font-size: 14px; padding: 12px 20px; min-height: 44px; }
@@ -734,14 +731,14 @@ h3.subhead { font-size: 12px; }
 .event-meta-item { font-size: 14px; }
 
 /* ── JUMP NAV ── */
-.jump-link { font-size: 14px; padding: 8px 16px; min-height: 40px; display: inline-flex; align-items: center; }
+.jump-link { font-size: 15px; padding: 10px 18px; min-height: 44px; display: inline-flex; align-items: center; }
 
 /* ── HELPER BOX ── */
-.helper-box { font-size: 15px; }
+.helper-box { font-size: 16px; }
 
 /* ── SCENE CONTENT ── */
-.scene-content { font-size: 15px; }
-.method-card p { font-size: 15px; }
+.scene-content { font-size: 16px; }
+.method-card p { font-size: 16px; }
 
 /* ── THEME TOGGLE ── */
 .theme-toggle { font-size: 14px; padding: 8px 14px; min-height: 44px; }
@@ -749,27 +746,37 @@ h3.subhead { font-size: 12px; }
 /* ════════════════════════════════════════════
    TABLET (600px+) — horizontal nav
    ════════════════════════════════════════════ */
-/* Tablet/desktop: single horizontal row, no wrapping */
+/* ── DESKTOP: single horizontal row ── */
 @media (min-width: 768px) {
+  .nav-section {
+    padding: 44px 40px 52px;
+  }
   .nav-btn-grid {
-    flex-direction: row;      /* HORIZONTAL on desktop */
-    flex-wrap: nowrap;        /* NEVER wrap — always one line */
+    display: flex;            /* back to flex for horizontal layout */
+    flex-direction: row;
+    flex-wrap: nowrap;
     justify-content: center;
+    align-items: stretch;
     gap: 14px;
-    width: auto;
+    width: 100%;
   }
   .nav-btn {
-    flex: 0 0 auto;           /* do not grow or shrink */
-    width: 180px;             /* identical fixed width */
-    height: 60px;             /* identical fixed height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 0;              /* equal share of available space */
+    max-width: 220px;         /* cap so they don't get too wide */
+    height: 64px;
+    line-height: normal;
+    margin-bottom: 0;
     font-size: 16px;
+    padding: 0 12px;
   }
-  .nav-section { padding: 44px 40px 52px; }
   body { font-size: 16px; }
   p    { font-size: 16px; }
 }
 @media (min-width: 1024px) {
-  .nav-btn { width: 200px; font-size: 17px; }
+  .nav-btn { font-size: 17px; max-width: 240px; }
 }
 
 /* ════════════════════════════════════════════
