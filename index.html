@@ -218,39 +218,97 @@ body {
 .theme-icon { font-size: 14px; }
 
 /* ── TAB BAR ── */
-.tab-bar-outer {
+/* ── MAIN NAV BUTTONS ── */
+.main-nav {
   background: var(--cover-bg);
-  padding: 0 20px;
-  position: relative;
-  z-index: 10;
+  padding: 32px 20px 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
 }
-.tab-bar {
+.nav-btn {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  padding: 16px 40px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 340px;
+  text-align: center;
+  transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+}
+.nav-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.28); }
+.nav-btn:active { transform: translateY(0); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+.nav-btn-study    { background: #f0e8d8; color: #1c2b1e; }
+.nav-btn-actor    { background: #4a7a56; color: #fff; }
+.nav-btn-director { background: #1c2b1e; color: #e8e0d0; }
+.nav-btn-production { background: #5a6aaa; color: #fff; }
+.nav-btn-calendar { background: #8b6650; color: #fff; }
+[data-theme="dark"] .nav-btn-study { background: #2e3e2e; color: #e8e0d0; }
+
+/* ── SUB-NAV (tab row inside a section) ── */
+.sub-nav-bar {
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  padding: 0 16px;
   display: flex;
   gap: 2px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  position: sticky;
+  top: 0;
+  z-index: 50;
 }
-.tab-bar::-webkit-scrollbar { display: none; }
-.tab-btn {
+.sub-nav-bar::-webkit-scrollbar { display: none; }
+.sub-nav-btn {
   font-family: 'Source Serif 4', Georgia, serif;
-  font-size: 11px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  padding: 11px 16px 12px;
+  padding: 12px 18px;
   border: none;
-  border-radius: 6px 6px 0 0;
+  border-bottom: 3px solid transparent;
+  background: none;
   cursor: pointer;
-  background: var(--tab-idle);
-  color: var(--tab-text);
-  transition: background 0.15s, color 0.15s;
+  color: var(--text-muted);
   white-space: nowrap;
   flex-shrink: 0;
-  position: relative;
-  z-index: 11;
+  transition: color 0.15s, border-color 0.15s;
 }
-.tab-btn:hover { background: var(--tab-hover); color: var(--cover-text); }
-.tab-btn.active { background: var(--tab-active-bg); color: var(--tab-active-text); font-weight: 500; }
+.sub-nav-btn:hover { color: var(--text); }
+.sub-nav-btn.active { color: var(--text); border-bottom-color: var(--green); font-weight: 500; }
+
+/* ── BACK BUTTON ── */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-muted);
+  padding: 7px 14px;
+  cursor: pointer;
+  margin: 20px 16px 0;
+  transition: all 0.15s;
+}
+.back-btn:hover { border-color: var(--green); color: var(--green); }
+
+/* ── SECTION SCREENS ── */
+.screen { display: none; }
+.screen.active { display: block; }
 
 /* ── TAB PANELS ── */
 .tab-panel { display: none; }
@@ -515,11 +573,20 @@ p { margin-bottom: 14px; color: var(--text2); }
 .add-note-btn { display: flex; align-items: center; gap: 8px; font-family: 'Source Serif 4', Georgia, serif; font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; background: #1c2b1e; color: #e8e0d0; border: none; border-radius: 5px; padding: 11px 18px; cursor: pointer; margin-bottom: 20px; transition: opacity 0.15s; }
 .add-note-btn:hover { opacity: 0.85; }
 .add-note-btn .plus { font-size: 18px; line-height: 1; }
-.gabe-btn { background: #4a7a56 !important; }
-.karen-btn { background: #8b6650 !important; }
-.john-btn { background: #5a6aaa !important; }
+.gabe-btn   { background: #4a7a56 !important; }
+.karen-btn  { background: #8b6650 !important; }
+.john-btn   { background: #5a6aaa !important; }
 .lauren-btn { background: #a05080 !important; }
-.jess-btn { background: #1c2b1e !important; }
+.jess-btn   { background: #1c2b1e !important; }
+.zac-btn    { background: #2e4a32 !important; }
+.nancy-btn  { background: #7a5030 !important; }
+.theo-btn   { background: #3a5070 !important; }
+.tommy-btn  { background: #506040 !important; }
+
+@media (min-width: 600px) {
+  .main-nav { flex-direction: row; flex-wrap: wrap; justify-content: center; padding: 40px 32px 44px; gap: 16px; }
+  .nav-btn { width: auto; min-width: 160px; max-width: none; flex: 0 1 auto; }
+}
 
 .note-form { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 18px; margin-bottom: 20px; display: none; }
 .note-form.open { display: block; }
@@ -693,18 +760,17 @@ footer a:hover { text-decoration: underline; }
   </div>
 </div>
 
-<!-- TAB BAR -->
-<div class="tab-bar-outer">
-  <div class="tab-bar">
-    <button class="tab-btn active" onclick="switchTab('guide', this)">Character Guide</button>
-    <button class="tab-btn" onclick="switchTab('calendar', this)">📅 Calendar</button>
-    <button class="tab-btn" onclick="switchTab('notes-jeremy', this)">🎭 Jeremy</button>
-    <button class="tab-btn" onclick="switchTab('notes-christina', this)">🎭 Christina</button>
-    <button class="tab-btn" onclick="switchTab('notes-john', this)">🎭 John</button>
-    <button class="tab-btn" onclick="switchTab('notes-lauren', this)">🎭 Lauren</button>
-    <button class="tab-btn" onclick="switchTab('notes-jess', this)">🎬 Jess</button>
-  </div>
+<!-- MAIN NAV -->
+<div class="main-nav" id="main-nav">
+  <button class="nav-btn nav-btn-study"      onclick="showScreen('study')">Study</button>
+  <button class="nav-btn nav-btn-actor"      onclick="showScreen('actor-notes')">Actor Notes</button>
+  <button class="nav-btn nav-btn-director"   onclick="showScreen('director-notes')">Director Notes</button>
+  <button class="nav-btn nav-btn-production" onclick="showScreen('production-notes')">Production Notes</button>
+  <button class="nav-btn nav-btn-calendar"   onclick="showScreen('calendar')">Calendar</button>
 </div>
+<!-- STUDY SCREEN -->
+<div class="screen" id="screen-study">
+<button class="back-btn" onclick="showHome()">← Back</button>
 <div id="panel-guide" class="tab-panel active">
 <div class="main">
 
@@ -992,11 +1058,15 @@ footer a:hover { text-decoration: underline; }
 
 </div><!-- /main -->
 </div><!-- /panel-guide -->
+</div><!-- /screen-study -->
 
+<!-- CALENDAR SCREEN -->
+<div class="screen" id="screen-calendar">
+<button class="back-btn" onclick="showHome()">← Back</button>
 <!-- ══════════════════════════════════════
      TAB: CALENDAR
 ══════════════════════════════════════ -->
-<div id="panel-calendar" class="tab-panel">
+<div id="panel-calendar" class="tab-panel active">
 <div class="cal-wrap">
 
   <div class="cal-header">
@@ -1083,6 +1153,20 @@ footer a:hover { text-decoration: underline; }
 
 </div>
 </div><!-- /panel-calendar -->
+</div><!-- /screen-calendar -->
+
+
+<!-- ══════════════════════════════════════
+     ACTOR NOTES SCREEN
+══════════════════════════════════════ -->
+<div class="screen" id="screen-actor-notes">
+  <button class="back-btn" onclick="showHome()">← Back</button>
+  <div class="sub-nav-bar">
+    <button class="sub-nav-btn active" onclick="switchSubTab('actor-notes','jeremy',this)">Jeremy</button>
+    <button class="sub-nav-btn" onclick="switchSubTab('actor-notes','christina',this)">Christina</button>
+    <button class="sub-nav-btn" onclick="switchSubTab('actor-notes','john',this)">John</button>
+    <button class="sub-nav-btn" onclick="switchSubTab('actor-notes','lauren',this)">Lauren</button>
+  </div>
 
 <div id="panel-notes-jeremy" class="tab-panel">
 <div class="notes-wrap">
@@ -1091,7 +1175,9 @@ footer a:hover { text-decoration: underline; }
     <p>Personal rehearsal notes. Saved in this browser.</p>
   </div>
   <button class="add-note-btn gabe-btn" onclick="openForm('jeremy')"><span class="plus">+</span> Add New Note</button>
+  
   <div class="note-form" id="form-jeremy">
+    
     <div class="note-form-row">
       <div class="note-form-group">
         <label for="jeremy-act">Act</label>
@@ -1108,7 +1194,7 @@ footer a:hover { text-decoration: underline; }
         </select>
       </div>
     </div>
-    <textarea class="note-textarea" id="jeremy-text" placeholder="A direction you received, something you discovered, a question for the room..."></textarea>
+    <textarea class="note-textarea" id="jeremy-text" placeholder="Write your note here..."></textarea>
     <div class="note-form-actions">
       <button class="btn-cancel" onclick="closeForm('jeremy')">Cancel</button>
       <button class="btn-save" onclick="saveNote('jeremy')">Save Note</button>
@@ -1118,8 +1204,6 @@ footer a:hover { text-decoration: underline; }
   <div class="notes-list" id="notes-jeremy"></div>
 </div>
 </div>
-
-<!-- Christina -->
 <div id="panel-notes-christina" class="tab-panel">
 <div class="notes-wrap">
   <div class="notes-header">
@@ -1127,7 +1211,9 @@ footer a:hover { text-decoration: underline; }
     <p>Personal rehearsal notes. Saved in this browser.</p>
   </div>
   <button class="add-note-btn karen-btn" onclick="openForm('christina')"><span class="plus">+</span> Add New Note</button>
+  
   <div class="note-form" id="form-christina">
+    
     <div class="note-form-row">
       <div class="note-form-group">
         <label for="christina-act">Act</label>
@@ -1144,7 +1230,7 @@ footer a:hover { text-decoration: underline; }
         </select>
       </div>
     </div>
-    <textarea class="note-textarea" id="christina-text" placeholder="A direction you received, something you discovered, a question for the room..."></textarea>
+    <textarea class="note-textarea" id="christina-text" placeholder="Write your note here..."></textarea>
     <div class="note-form-actions">
       <button class="btn-cancel" onclick="closeForm('christina')">Cancel</button>
       <button class="btn-save" onclick="saveNote('christina')">Save Note</button>
@@ -1154,8 +1240,6 @@ footer a:hover { text-decoration: underline; }
   <div class="notes-list" id="notes-christina"></div>
 </div>
 </div>
-
-<!-- John -->
 <div id="panel-notes-john" class="tab-panel">
 <div class="notes-wrap">
   <div class="notes-header">
@@ -1163,7 +1247,9 @@ footer a:hover { text-decoration: underline; }
     <p>Personal rehearsal notes. Saved in this browser.</p>
   </div>
   <button class="add-note-btn john-btn" onclick="openForm('john')"><span class="plus">+</span> Add New Note</button>
+  
   <div class="note-form" id="form-john">
+    
     <div class="note-form-row">
       <div class="note-form-group">
         <label for="john-act">Act</label>
@@ -1180,7 +1266,7 @@ footer a:hover { text-decoration: underline; }
         </select>
       </div>
     </div>
-    <textarea class="note-textarea" id="john-text" placeholder="A direction you received, something you discovered, a question for the room..."></textarea>
+    <textarea class="note-textarea" id="john-text" placeholder="Write your note here..."></textarea>
     <div class="note-form-actions">
       <button class="btn-cancel" onclick="closeForm('john')">Cancel</button>
       <button class="btn-save" onclick="saveNote('john')">Save Note</button>
@@ -1190,8 +1276,6 @@ footer a:hover { text-decoration: underline; }
   <div class="notes-list" id="notes-john"></div>
 </div>
 </div>
-
-<!-- Lauren -->
 <div id="panel-notes-lauren" class="tab-panel">
 <div class="notes-wrap">
   <div class="notes-header">
@@ -1199,7 +1283,9 @@ footer a:hover { text-decoration: underline; }
     <p>Personal rehearsal notes. Saved in this browser.</p>
   </div>
   <button class="add-note-btn lauren-btn" onclick="openForm('lauren')"><span class="plus">+</span> Add New Note</button>
+  
   <div class="note-form" id="form-lauren">
+    
     <div class="note-form-row">
       <div class="note-form-group">
         <label for="lauren-act">Act</label>
@@ -1216,7 +1302,7 @@ footer a:hover { text-decoration: underline; }
         </select>
       </div>
     </div>
-    <textarea class="note-textarea" id="lauren-text" placeholder="A direction you received, something you discovered, a question for the room..."></textarea>
+    <textarea class="note-textarea" id="lauren-text" placeholder="Write your note here..."></textarea>
     <div class="note-form-actions">
       <button class="btn-cancel" onclick="closeForm('lauren')">Cancel</button>
       <button class="btn-save" onclick="saveNote('lauren')">Save Note</button>
@@ -1226,38 +1312,40 @@ footer a:hover { text-decoration: underline; }
   <div class="notes-list" id="notes-lauren"></div>
 </div>
 </div>
+</div><!-- /screen-actor-notes -->
 
-<!-- Jess — Director's Notes -->
+<!-- ══════════════════════════════════════
+     DIRECTOR NOTES SCREEN
+══════════════════════════════════════ -->
+<div class="screen" id="screen-director-notes">
+  <button class="back-btn" onclick="showHome()">← Back</button>
+  <div class="sub-nav-bar">
+    <button class="sub-nav-btn active" onclick="switchSubTab('director-notes','jess',this)">Jess</button>
+    <button class="sub-nav-btn" onclick="switchSubTab('director-notes','zac',this)">Zac</button>
+  </div>
+
 <div id="panel-notes-jess" class="tab-panel">
 <div class="notes-wrap">
   <div class="notes-header">
     <h2>Jess — Director's Notes</h2>
     <p>Production notes. Saved in this browser.</p>
   </div>
-
-  <div class="helper-box" style="margin-bottom:20px">
-    <strong>Your notes are private to this device.</strong> Notes you save here are stored in this browser only — no one else can see them.<br><br>
-    <strong>📤 Sending a note to an actor's tab:</strong> When you select a specific actor from the Actor dropdown, a toggle will appear. Check it to send that note directly to their tab — <em>on any device</em>. It's sent securely to the cloud and will appear the next time they open their tab, wherever they are. Use this only for notes you intentionally want them to see. The toggle resets after each save so every share is a conscious choice.
-  </div>
-
+  
+    <div class="helper-box" style="margin-bottom:16px;font-size:13px">
+      <strong>Your notes are private to this device.</strong> Notes you save here are stored in this browser only.<br><br>
+      <strong>📤 Sending a note to an actor's tab:</strong> Select a specific actor from the Actor dropdown and a toggle will appear. Check it to send that note to their tab on any device via the cloud. Use only for notes you want them to see. The toggle resets after each save.
+    </div>
   <button class="add-note-btn jess-btn" onclick="openForm('jess')"><span class="plus">+</span> Add New Note</button>
-
   <div class="note-form" id="form-jess">
+    
     <div class="note-form-row">
       <div class="note-form-group">
         <label for="jess-production">Production Area</label>
         <select id="jess-production">
           <option value="">— Production Area —</option>
-          <option>Rehearsal</option>
-          <option>Performance</option>
-          <option>Stage Management</option>
-          <option>Front of House</option>
-          <option>Volunteers</option>
-          <option>Lighting</option>
-          <option>Sound</option>
-          <option>Wardrobe</option>
-          <option>Props</option>
-          <option>Set</option>
+          <option>Rehearsal</option><option>Performance</option><option>Stage Management</option>
+          <option>Front of House</option><option>Volunteers</option><option>Lighting</option>
+          <option>Sound</option><option>Wardrobe</option><option>Props</option><option>Set</option>
         </select>
       </div>
       <div class="note-form-group">
@@ -1272,17 +1360,16 @@ footer a:hover { text-decoration: underline; }
         </select>
       </div>
     </div>
-
+    
     <div id="jess-copy-toggle" style="display:none; margin-bottom:14px;">
       <div class="copy-toggle-box">
         <label class="copy-toggle-label">
           <input type="checkbox" id="jess-copy-check">
-          <span class="copy-toggle-text">Also copy this note to <strong id="jess-copy-actor-name"></strong>'s tab on this device</span>
+          <span class="copy-toggle-text">Also copy this note to <strong id="jess-copy-actor-name"></strong>'s tab on any device</span>
         </label>
-        <div class="copy-toggle-hint">Only use this toggle for notes you want that actor to see. Each note is copied individually — the toggle resets after each save.</div>
+        <div class="copy-toggle-hint">Only use this toggle for notes you want that actor to see. Resets after each save.</div>
       </div>
     </div>
-
     <div class="note-form-row">
       <div class="note-form-group">
         <label for="jess-act">Act</label>
@@ -1299,18 +1386,224 @@ footer a:hover { text-decoration: underline; }
         </select>
       </div>
     </div>
-
     <textarea class="note-textarea" id="jess-text" placeholder="Director's note, blocking note, production note..."></textarea>
     <div class="note-form-actions">
       <button class="btn-cancel" onclick="closeForm('jess')">Cancel</button>
       <button class="btn-save" onclick="saveNote('jess')">Save Note</button>
     </div>
   </div>
-
   <div class="notes-count" id="count-jess"></div>
   <div class="notes-list" id="notes-jess"></div>
 </div>
 </div>
+<div id="panel-notes-zac" class="tab-panel">
+<div class="notes-wrap">
+  <div class="notes-header">
+    <h2>Zac — Assistant Director</h2>
+    <p>Production notes. Saved in this browser.</p>
+  </div>
+  
+  <button class="add-note-btn zac-btn" onclick="openForm('zac')"><span class="plus">+</span> Add New Note</button>
+  <div class="note-form" id="form-zac">
+    
+    <div class="note-form-row">
+      <div class="note-form-group">
+        <label for="zac-production">Production Area</label>
+        <select id="zac-production">
+          <option value="">— Production Area —</option>
+          <option>Rehearsal</option><option>Performance</option><option>Stage Management</option>
+          <option>Front of House</option><option>Volunteers</option><option>Lighting</option>
+          <option>Sound</option><option>Wardrobe</option><option>Props</option><option>Set</option>
+        </select>
+      </div>
+      <div class="note-form-group">
+        <label for="zac-actor">Actor</label>
+        <select id="zac-actor">
+          <option value="">— Actor —</option>
+          <option value="jeremy">Gabe (Jeremy)</option>
+          <option value="christina">Karen (Christina)</option>
+          <option value="john">Tom (John)</option>
+          <option value="lauren">Beth (Lauren)</option>
+          <option value="fullcast">Full Cast</option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="note-form-row">
+      <div class="note-form-group">
+        <label for="zac-act">Act</label>
+        <select id="zac-act">
+          <option value="">— Act —</option>
+          <option>Act 1</option><option>Act 2</option><option>Full Play</option><option>General</option>
+        </select>
+      </div>
+      <div class="note-form-group">
+        <label for="zac-scene">Scene</label>
+        <select id="zac-scene">
+          <option value="">— Scene —</option>
+          <option>Scene 1</option><option>Scene 2</option><option>Scene 3</option><option>Scene 4</option><option>All Scenes</option>
+        </select>
+      </div>
+    </div>
+    <textarea class="note-textarea" id="zac-text" placeholder="Director's note, blocking note, production note..."></textarea>
+    <div class="note-form-actions">
+      <button class="btn-cancel" onclick="closeForm('zac')">Cancel</button>
+      <button class="btn-save" onclick="saveNote('zac')">Save Note</button>
+    </div>
+  </div>
+  <div class="notes-count" id="count-zac"></div>
+  <div class="notes-list" id="notes-zac"></div>
+</div>
+</div>
+</div><!-- /screen-director-notes -->
+
+<!-- ══════════════════════════════════════
+     PRODUCTION NOTES SCREEN
+══════════════════════════════════════ -->
+<div class="screen" id="screen-production-notes">
+  <button class="back-btn" onclick="showHome()">← Back</button>
+  <div class="sub-nav-bar">
+    <button class="sub-nav-btn active" onclick="switchSubTab('production-notes','nancy',this)">Nancy</button>
+    <button class="sub-nav-btn" onclick="switchSubTab('production-notes','theo',this)">Theo</button>
+    <button class="sub-nav-btn" onclick="switchSubTab('production-notes','tommy',this)">Tommy</button>
+  </div>
+
+<div id="panel-notes-nancy" class="tab-panel">
+<div class="notes-wrap">
+  <div class="notes-header">
+    <h2>Nancy — Production Manager</h2>
+    <p>Production notes. Saved in this browser.</p>
+  </div>
+  <button class="add-note-btn nancy-btn" onclick="openForm('nancy')"><span class="plus">+</span> Add New Note</button>
+  <div class="note-form" id="form-nancy">
+    <div class="note-form-row">
+      <div class="note-form-group">
+        <label for="nancy-production">Area</label>
+        <select id="nancy-production">
+          <option value="">— Area —</option>
+          <option>Rehearsal</option><option>Performance</option><option>Stage Management</option>
+          <option>Front of House</option><option>Volunteers</option><option>Lighting</option>
+          <option>Sound</option><option>Wardrobe</option><option>Props</option><option>Set</option>
+        </select>
+      </div>
+    </div>
+    <div class="note-form-row">
+      <div class="note-form-group">
+        <label for="nancy-act">Act</label>
+        <select id="nancy-act">
+          <option value="">— Act —</option>
+          <option>Act 1</option><option>Act 2</option><option>Full Play</option><option>General</option>
+        </select>
+      </div>
+      <div class="note-form-group">
+        <label for="nancy-scene">Scene</label>
+        <select id="nancy-scene">
+          <option value="">— Scene —</option>
+          <option>Scene 1</option><option>Scene 2</option><option>Scene 3</option><option>Scene 4</option><option>All Scenes</option>
+        </select>
+      </div>
+    </div>
+    <textarea class="note-textarea" id="nancy-text" placeholder="Production note..."></textarea>
+    <div class="note-form-actions">
+      <button class="btn-cancel" onclick="closeForm('nancy')">Cancel</button>
+      <button class="btn-save" onclick="saveNote('nancy')">Save Note</button>
+    </div>
+  </div>
+  <div class="notes-count" id="count-nancy"></div>
+  <div class="notes-list" id="notes-nancy"></div>
+</div>
+</div>
+<div id="panel-notes-theo" class="tab-panel">
+<div class="notes-wrap">
+  <div class="notes-header">
+    <h2>Theo — Stage Manager</h2>
+    <p>Production notes. Saved in this browser.</p>
+  </div>
+  <button class="add-note-btn theo-btn" onclick="openForm('theo')"><span class="plus">+</span> Add New Note</button>
+  <div class="note-form" id="form-theo">
+    <div class="note-form-row">
+      <div class="note-form-group">
+        <label for="theo-production">Area</label>
+        <select id="theo-production">
+          <option value="">— Area —</option>
+          <option>Rehearsal</option><option>Performance</option><option>Stage Management</option>
+          <option>Front of House</option><option>Volunteers</option><option>Lighting</option>
+          <option>Sound</option><option>Wardrobe</option><option>Props</option><option>Set</option>
+        </select>
+      </div>
+    </div>
+    <div class="note-form-row">
+      <div class="note-form-group">
+        <label for="theo-act">Act</label>
+        <select id="theo-act">
+          <option value="">— Act —</option>
+          <option>Act 1</option><option>Act 2</option><option>Full Play</option><option>General</option>
+        </select>
+      </div>
+      <div class="note-form-group">
+        <label for="theo-scene">Scene</label>
+        <select id="theo-scene">
+          <option value="">— Scene —</option>
+          <option>Scene 1</option><option>Scene 2</option><option>Scene 3</option><option>Scene 4</option><option>All Scenes</option>
+        </select>
+      </div>
+    </div>
+    <textarea class="note-textarea" id="theo-text" placeholder="Production note..."></textarea>
+    <div class="note-form-actions">
+      <button class="btn-cancel" onclick="closeForm('theo')">Cancel</button>
+      <button class="btn-save" onclick="saveNote('theo')">Save Note</button>
+    </div>
+  </div>
+  <div class="notes-count" id="count-theo"></div>
+  <div class="notes-list" id="notes-theo"></div>
+</div>
+</div>
+<div id="panel-notes-tommy" class="tab-panel">
+<div class="notes-wrap">
+  <div class="notes-header">
+    <h2>Tommy — Sound Designer</h2>
+    <p>Production notes. Saved in this browser.</p>
+  </div>
+  <button class="add-note-btn tommy-btn" onclick="openForm('tommy')"><span class="plus">+</span> Add New Note</button>
+  <div class="note-form" id="form-tommy">
+    <div class="note-form-row">
+      <div class="note-form-group">
+        <label for="tommy-production">Area</label>
+        <select id="tommy-production">
+          <option value="">— Area —</option>
+          <option>Rehearsal</option><option>Performance</option><option>Stage Management</option>
+          <option>Front of House</option><option>Volunteers</option><option>Lighting</option>
+          <option>Sound</option><option>Wardrobe</option><option>Props</option><option>Set</option>
+        </select>
+      </div>
+    </div>
+    <div class="note-form-row">
+      <div class="note-form-group">
+        <label for="tommy-act">Act</label>
+        <select id="tommy-act">
+          <option value="">— Act —</option>
+          <option>Act 1</option><option>Act 2</option><option>Full Play</option><option>General</option>
+        </select>
+      </div>
+      <div class="note-form-group">
+        <label for="tommy-scene">Scene</label>
+        <select id="tommy-scene">
+          <option value="">— Scene —</option>
+          <option>Scene 1</option><option>Scene 2</option><option>Scene 3</option><option>Scene 4</option><option>All Scenes</option>
+        </select>
+      </div>
+    </div>
+    <textarea class="note-textarea" id="tommy-text" placeholder="Production note..."></textarea>
+    <div class="note-form-actions">
+      <button class="btn-cancel" onclick="closeForm('tommy')">Cancel</button>
+      <button class="btn-save" onclick="saveNote('tommy')">Save Note</button>
+    </div>
+  </div>
+  <div class="notes-count" id="count-tommy"></div>
+  <div class="notes-list" id="notes-tommy"></div>
+</div>
+</div>
+</div><!-- /screen-production-notes -->
 
 
 <div class="toast-container" id="toast-container"></div>
@@ -1322,8 +1615,43 @@ footer a:hover { text-decoration: underline; }
 
 <script>
 // ══════════════════════════════════════
-// THEME
+// NAVIGATION — screens + sub-tabs
 // ══════════════════════════════════════
+function showHome() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('main-nav').style.display = '';
+  window.scrollTo(0, 0);
+}
+
+function showScreen(screen) {
+  document.getElementById('main-nav').style.display = 'none';
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('screen-' + screen);
+  if (el) el.classList.add('active');
+  window.scrollTo(0, 0);
+  // Auto-render the default sub-tab for notes screens
+  if (screen === 'actor-notes')      renderNotes('jeremy');
+  if (screen === 'director-notes')   renderNotes('jess');
+  if (screen === 'production-notes') renderNotes('nancy');
+  if (screen === 'calendar')         renderCalendar();
+}
+
+function switchSubTab(screen, person, btn) {
+  // Hide all panels within this screen
+  const screenEl = document.getElementById('screen-' + screen);
+  screenEl.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  screenEl.querySelectorAll('.sub-nav-btn').forEach(b => b.classList.remove('active'));
+  const panel = document.getElementById('panel-notes-' + person);
+  if (panel) panel.classList.add('active');
+  if (btn) btn.classList.add('active');
+  renderNotes(person);
+}
+
+// Legacy alias — calendar still calls renderCalendar on its own
+function switchTab(tab, btn) {
+  // no-op — kept for safety
+}
+
 function toggleTheme() {
   const html = document.documentElement;
   const isDark = html.getAttribute('data-theme') === 'dark';
@@ -1744,7 +2072,11 @@ function handleJessActorChange() {
 }
 
 
-const PERSON_COLORS={jeremy:'#4a7a56',christina:'#8b6650',john:'#5a6aaa',lauren:'#a05080',jess:'#1c2b1e'};
+const PERSON_COLORS={
+  jeremy:'#4a7a56', christina:'#8b6650', john:'#5a6aaa', lauren:'#a05080',
+  jess:'#1c2b1e',   zac:'#2e4a32',
+  nancy:'#7a5030',  theo:'#3a5070', tommy:'#506040'
+};
 
 // ══════════════════════════════════════
 // TOAST NOTIFICATIONS
@@ -1915,7 +2247,11 @@ function escHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace
 // ══════════════════════════════════════
 // INIT
 // ══════════════════════════════════════
-document.addEventListener('DOMContentLoaded',()=>{ initActorChips(); });
+document.addEventListener('DOMContentLoaded',()=>{
+  initActorChips();
+  // Show home screen by default (no screen active)
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+});
 </script>
 
 </body>
