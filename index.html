@@ -1587,7 +1587,7 @@ footer { background: var(--cover-bg); color: #6a8060; text-align: center; paddin
   
     <div class="helper-box" style="margin-bottom:16px;font-size:13px">
       <strong>Your notes are private to this device.</strong> Notes you save here are stored in this browser only.<br><br>
-      <strong>📤 Sending a note to an actor's tab:</strong> Select a specific actor from the Actor dropdown and a toggle will appear. Check it to send that note to their tab on any device via the cloud. Use only for notes you want them to see. The toggle resets after each save.
+      <strong>📤 Sending a note to someone's tab:</strong> Select a person from the "For / About" dropdown and a toggle will appear. Check it to send that note to their tab on any device via the cloud. Use only for notes you want them to see. The toggle resets after each save.
     </div>
   <button class="add-note-btn jess-btn" onclick="openForm('jess')"><span class="plus">+</span> Add New Note</button>
   <div class="note-form" id="form-jess">
@@ -1603,14 +1603,35 @@ footer { background: var(--cover-bg); color: #6a8060; text-align: center; paddin
         </select>
       </div>
       <div class="note-form-group">
-        <label for="jess-actor">Actor</label>
+        <label for="jess-actor">For / About</label>
         <select id="jess-actor" onchange="handleJessActorChange()">
-          <option value="">— Actor —</option>
-          <option value="jeremy">Gabe (Jeremy)</option>
-          <option value="christina">Karen (Christina)</option>
-          <option value="john">Tom (John)</option>
-          <option value="lauren">Beth (Lauren)</option>
-          <option value="fullcast">Full Cast</option>
+          <option value="">— Select Person —</option>
+          <optgroup label="Cast">
+            <option value="jeremy">Gabe — Jeremy</option>
+            <option value="christina">Karen — Christina</option>
+            <option value="john">Tom — John</option>
+            <option value="lauren">Beth — Lauren</option>
+            <option value="fullcast">Full Cast</option>
+          </optgroup>
+          <optgroup label="Direction">
+            <option value="jess">Director — Jess</option>
+            <option value="zac">Asst. Director — Zac</option>
+          </optgroup>
+          <optgroup label="Production Management">
+            <option value="nancy">Production Manager — Nancy</option>
+            <option value="theo">Stage Manager — Theo</option>
+          </optgroup>
+          <optgroup label="Design &amp; Technical">
+            <option value="tommy">Sound — Tommy</option>
+            <option value="lighting">Lighting Dept.</option>
+            <option value="wardrobe">Wardrobe Dept.</option>
+            <option value="props">Props Dept.</option>
+            <option value="set">Set Dept.</option>
+          </optgroup>
+          <optgroup label="House">
+            <option value="">Front of House</option>
+            <option value="">Volunteers</option>
+          </optgroup>
         </select>
       </div>
     </div>
@@ -1619,9 +1640,9 @@ footer { background: var(--cover-bg); color: #6a8060; text-align: center; paddin
       <div class="copy-toggle-box">
         <label class="copy-toggle-label">
           <input type="checkbox" id="jess-copy-check">
-          <span class="copy-toggle-text">Also copy this note to <strong id="jess-copy-actor-name"></strong>'s tab on any device</span>
+          <span class="copy-toggle-text">Also send this note to <strong id="jess-copy-actor-name"></strong>'s tab on any device</span>
         </label>
-        <div class="copy-toggle-hint">Only use this toggle for notes you want that actor to see. Resets after each save.</div>
+        <div class="copy-toggle-hint">Only use this for notes you want that person to see in their tab. Resets after each save.</div>
       </div>
     </div>
     <div class="note-form-row">
@@ -1671,14 +1692,35 @@ footer { background: var(--cover-bg); color: #6a8060; text-align: center; paddin
         </select>
       </div>
       <div class="note-form-group">
-        <label for="zac-actor">Actor</label>
+        <label for="zac-actor">For / About</label>
         <select id="zac-actor">
-          <option value="">— Actor —</option>
-          <option value="jeremy">Gabe (Jeremy)</option>
-          <option value="christina">Karen (Christina)</option>
-          <option value="john">Tom (John)</option>
-          <option value="lauren">Beth (Lauren)</option>
-          <option value="fullcast">Full Cast</option>
+          <option value="">— Select Person —</option>
+          <optgroup label="Cast">
+            <option value="jeremy">Gabe — Jeremy</option>
+            <option value="christina">Karen — Christina</option>
+            <option value="john">Tom — John</option>
+            <option value="lauren">Beth — Lauren</option>
+            <option value="fullcast">Full Cast</option>
+          </optgroup>
+          <optgroup label="Direction">
+            <option value="jess">Director — Jess</option>
+            <option value="zac">Asst. Director — Zac</option>
+          </optgroup>
+          <optgroup label="Production Management">
+            <option value="nancy">Production Manager — Nancy</option>
+            <option value="theo">Stage Manager — Theo</option>
+          </optgroup>
+          <optgroup label="Design &amp; Technical">
+            <option value="tommy">Sound — Tommy</option>
+            <option value="lighting">Lighting Dept.</option>
+            <option value="wardrobe">Wardrobe Dept.</option>
+            <option value="props">Props Dept.</option>
+            <option value="set">Set Dept.</option>
+          </optgroup>
+          <optgroup label="House">
+            <option value="">Front of House</option>
+            <option value="">Volunteers</option>
+          </optgroup>
         </select>
       </div>
     </div>
@@ -2445,10 +2487,19 @@ function renderFilterPills() {
 // JESS ACTOR COPY TOGGLE
 // ══════════════════════════════════════
 const ACTOR_DISPLAY_NAMES = {
-  jeremy: 'Jeremy (Gabe)',
+  jeremy:    'Jeremy (Gabe)',
   christina: 'Christina (Karen)',
-  john: 'John (Tom)',
-  lauren: 'Lauren (Beth)'
+  john:      'John (Tom)',
+  lauren:    'Lauren (Beth)',
+  jess:      'Jess (Director)',
+  zac:       'Zac (Asst. Director)',
+  nancy:     'Nancy (Production Mgr)',
+  theo:      'Theo (Stage Mgr)',
+  tommy:     'Tommy (Sound)',
+  lighting:  'Lighting Dept.',
+  wardrobe:  'Wardrobe Dept.',
+  props:     'Props Dept.',
+  set:       'Set Dept.',
 };
 
 function handleJessActorChange() {
