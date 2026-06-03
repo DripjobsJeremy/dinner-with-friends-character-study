@@ -218,40 +218,55 @@ body {
 .theme-icon { font-size: 14px; }
 
 /* ── TAB BAR ── */
-/* ── MAIN NAV BUTTONS ── */
-.main-nav {
-  background: var(--cover-bg);
-  padding: 32px 20px 36px;
+/* ── NAV SECTION ── */
+.nav-section {
+  background: var(--bg);
+  border-top: 4px solid var(--green);
+  padding: 36px 20px 44px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 20px;
+}
+.nav-section-label {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+.nav-btn-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
 }
 .nav-btn {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 400;
-  letter-spacing: 0.03em;
-  padding: 16px 40px;
+  letter-spacing: 0.02em;
+  padding: 15px 36px;
   border: none;
   border-radius: 20px;
   cursor: pointer;
   width: 100%;
-  max-width: 340px;
+  max-width: 320px;
   text-align: center;
-  transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
-  position: relative;
-  z-index: 1;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.12);
 }
-.nav-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.28); }
-.nav-btn:active { transform: translateY(0); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-.nav-btn-study    { background: #f0e8d8; color: #1c2b1e; }
-.nav-btn-actor    { background: #4a7a56; color: #fff; }
-.nav-btn-director { background: #1c2b1e; color: #e8e0d0; }
+.nav-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.2); }
+.nav-btn:active { transform: translateY(0); }
+.nav-btn-study      { background: #f0e8d8; color: #1c2b1e; border: 2px solid #c8b898; }
+.nav-btn-actor      { background: #4a7a56; color: #fff; }
+.nav-btn-director   { background: #2e5c38; color: #fff; border: 2px solid #4a8a56; }
 .nav-btn-production { background: #5a6aaa; color: #fff; }
-.nav-btn-calendar { background: #8b6650; color: #fff; }
-[data-theme="dark"] .nav-btn-study { background: #2e3e2e; color: #e8e0d0; }
+.nav-btn-calendar   { background: #8b6650; color: #fff; }
+[data-theme="dark"] .nav-btn-study    { background: #2e3e2e; color: #e8e0d0; border-color: #4a5a3a; }
+[data-theme="dark"] .nav-btn-director { background: #3a7048; color: #fff; border-color: #5a9060; }
 
 /* ── SUB-NAV (tab row inside a section) ── */
 .sub-nav-bar {
@@ -582,10 +597,15 @@ p { margin-bottom: 14px; color: var(--text2); }
 .nancy-btn  { background: #7a5030 !important; }
 .theo-btn   { background: #3a5070 !important; }
 .tommy-btn  { background: #506040 !important; }
+.lighting-btn { background: #7a6010 !important; }
+.wardrobe-btn { background: #7a3050 !important; }
+.props-btn    { background: #406050 !important; }
+.set-btn      { background: #504020 !important; }
 
 @media (min-width: 600px) {
-  .main-nav { flex-direction: row; flex-wrap: wrap; justify-content: center; padding: 40px 32px 44px; gap: 16px; }
-  .nav-btn { width: auto; min-width: 160px; max-width: none; flex: 0 1 auto; }
+  .nav-btn-grid { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+  .nav-btn { width: auto; min-width: 150px; max-width: none; flex: 0 1 auto; }
+  .nav-section { padding: 40px 32px 48px; }
 }
 
 .note-form { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 18px; margin-bottom: 20px; display: none; }
@@ -703,6 +723,28 @@ p { margin-bottom: 14px; color: var(--text2); }
 @keyframes toast-in  { from { opacity:0; transform:translateX(-50%) translateY(12px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
 @keyframes toast-out { from { opacity:1; transform:translateX(-50%) translateY(0); } to { opacity:0; transform:translateX(-50%) translateY(12px); } }
 
+/* ── STUDY JUMP NAV ── */
+.jump-nav { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 14px 16px; position: sticky; top: 0; z-index: 40; }
+.jump-nav-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--text-muted); margin-bottom: 8px; }
+.jump-nav-links { display: flex; flex-wrap: wrap; gap: 6px; }
+.jump-link { font-family: 'Source Serif 4', Georgia, serif; font-size: 12px; text-decoration: none; padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border); color: var(--text2); background: var(--bg); transition: all 0.15s; white-space: nowrap; }
+.jump-link:hover { border-color: var(--green); color: var(--green); background: var(--green-light); }
+.jump-link-gabe   { border-color: #4a7a5655; color: #4a7a56; background: #eef3ec; }
+.jump-link-gabe:hover { background: #d4ecd8; border-color: #4a7a56; }
+.jump-link-karen  { border-color: #8b665055; color: #8b6650; background: #f3ede8; }
+.jump-link-karen:hover { background: #e8d4c8; border-color: #8b6650; }
+.jump-link-tom    { border-color: #5a6aaa55; color: #5a6aaa; background: #eceef8; }
+.jump-link-tom:hover { background: #d4d8f0; border-color: #5a6aaa; }
+.jump-link-beth   { border-color: #a0508055; color: #a05080; background: #f5eaf2; }
+.jump-link-beth:hover { background: #e8d0e0; border-color: #a05080; }
+.jump-link-couple { border-color: #1c2b1e55; color: #1c2b1e; background: #eef3ec; }
+.jump-link-couple:hover { background: #d4e8d8; border-color: #1c2b1e; }
+[data-theme="dark"] .jump-link-gabe   { background: #1a2e1c; color: #7ac890; border-color: #3a6040; }
+[data-theme="dark"] .jump-link-karen  { background: #2a1e18; color: #c09070; border-color: #6a4030; }
+[data-theme="dark"] .jump-link-tom    { background: #1a1e30; color: #8090c0; border-color: #3a4070; }
+[data-theme="dark"] .jump-link-beth   { background: #28182a; color: #c070a0; border-color: #703060; }
+[data-theme="dark"] .jump-link-couple { background: #1a2a1a; color: #a0c090; border-color: #3a5030; }
+
 footer { background: var(--cover-bg); color: #6a8060; text-align: center; padding: 24px 16px; font-size: 11px; letter-spacing: 0.06em; line-height: 1.7; }
 footer a { color: #8fa880; text-decoration: none; }
 footer a:hover { text-decoration: underline; }
@@ -761,22 +803,41 @@ footer a:hover { text-decoration: underline; }
 </div>
 
 <!-- MAIN NAV -->
-<div class="main-nav" id="main-nav">
-  <button class="nav-btn nav-btn-study"      onclick="showScreen('study')">Study</button>
-  <button class="nav-btn nav-btn-actor"      onclick="showScreen('actor-notes')">Actor Notes</button>
-  <button class="nav-btn nav-btn-director"   onclick="showScreen('director-notes')">Director Notes</button>
-  <button class="nav-btn nav-btn-production" onclick="showScreen('production-notes')">Production Notes</button>
-  <button class="nav-btn nav-btn-calendar"   onclick="showScreen('calendar')">Calendar</button>
+<div class="nav-section" id="main-nav">
+  <div class="nav-section-label">The Green Room</div>
+  <div class="nav-btn-grid">
+    <button class="nav-btn nav-btn-study"      onclick="showScreen('study')">📖 Study</button>
+    <button class="nav-btn nav-btn-actor"      onclick="showScreen('actor-notes')">🎭 Actor Notes</button>
+    <button class="nav-btn nav-btn-director"   onclick="showScreen('director-notes')">🎬 Director Notes</button>
+    <button class="nav-btn nav-btn-production" onclick="showScreen('production-notes')">🔧 Production Notes</button>
+    <button class="nav-btn nav-btn-calendar"   onclick="showScreen('calendar')">📅 Calendar</button>
+  </div>
 </div>
 <!-- STUDY SCREEN -->
 <div class="screen" id="screen-study">
 <button class="back-btn" onclick="showHome()">← Back</button>
+
+<!-- STUDY JUMP NAV -->
+<div class="jump-nav" id="study-jump-nav">
+  <div class="jump-nav-label">Jump to</div>
+  <div class="jump-nav-links">
+    <a class="jump-link" href="#section-world">The Play</a>
+    <a class="jump-link jump-link-gabe"  href="#section-gabe">Gabe</a>
+    <a class="jump-link jump-link-karen" href="#section-karen">Karen</a>
+    <a class="jump-link jump-link-tom"   href="#section-tom">Tom</a>
+    <a class="jump-link jump-link-beth"  href="#section-beth">Beth</a>
+    <a class="jump-link jump-link-couple" href="#section-couples">The Couples</a>
+    <a class="jump-link" href="#section-craft">Craft</a>
+    <a class="jump-link" href="#section-reference">Reference</a>
+  </div>
+</div>
+
 <div id="panel-guide" class="tab-panel active">
 <div class="main">
 
   <!-- WORLD OF THE PLAY -->
   <div class="section">
-    <div class="section-label">The World of the Play</div>
+    <div id="section-world" class="section-label">The World of the Play</div>
     <h2>What Margulies Is Actually Writing About</h2>
     <p>On the surface, <em>Dinner With Friends</em> is about a divorce — Tom is leaving Beth, and the shockwave travels through their closest friends, Gabe and Karen. But that's the plot. The <em>play</em> is about something quieter and more unsettling: what happens to a couple when the couple right next to them falls apart, and every assumption they've been living on suddenly feels provisional.</p>
     <p>Margulies is scrupulously fair. He gives no character the moral high ground for long. Each of them gets their moment of justification and their moment of ugliness — and the audience is left to sit with the discomfort of understanding all four simultaneously. That balance is the engine of the play. The moment you decide Tom is simply the villain, or Beth simply the victim, you've lost the thread.</p>
@@ -790,7 +851,7 @@ footer a:hover { text-decoration: underline; }
 
   <!-- GABE -->
   <div class="section">
-    <div class="section-label">Character Study — Gabe</div>
+    <div id="section-gabe" class="section-label">Character Study — Gabe</div>
     <div class="character-card gabe">
       <div class="character-card-header">
         <div class="character-name">Gabe</div>
@@ -835,7 +896,7 @@ footer a:hover { text-decoration: underline; }
 
   <!-- KAREN -->
   <div class="section">
-    <div class="section-label">Character Study — Karen</div>
+    <div id="section-karen" class="section-label">Character Study — Karen</div>
     <div class="character-card karen">
       <div class="character-card-header">
         <div class="character-name">Karen</div>
@@ -879,7 +940,7 @@ footer a:hover { text-decoration: underline; }
 
   <!-- TOM -->
   <div class="section">
-    <div class="section-label">Character Study — Tom</div>
+    <div id="section-tom" class="section-label">Character Study — Tom</div>
     <div class="character-card" style="border:1px solid var(--border);border-left:4px solid #5a6aaa;border-radius:6px;padding:20px 18px;margin:24px 0;background:var(--bg2)">
       <div class="character-card-header">
         <div class="character-name" style="font-family:'Playfair Display',Georgia,serif;font-size:26px;font-weight:600;color:var(--text)">Tom</div>
@@ -923,7 +984,7 @@ footer a:hover { text-decoration: underline; }
 
   <!-- BETH -->
   <div class="section">
-    <div class="section-label">Character Study — Beth</div>
+    <div id="section-beth" class="section-label">Character Study — Beth</div>
     <div class="character-card" style="border:1px solid var(--border);border-left:4px solid #a05080;border-radius:6px;padding:20px 18px;margin:24px 0;background:var(--bg2)">
       <div class="character-card-header">
         <div class="character-name" style="font-family:'Playfair Display',Georgia,serif;font-size:26px;font-weight:600;color:var(--text)">Beth</div>
@@ -987,7 +1048,7 @@ footer a:hover { text-decoration: underline; }
 
   <!-- TOM AND BETH TOGETHER -->
   <div class="section">
-    <div class="section-label">The Other Couple</div>
+    <div id="section-couples" class="section-label">The Other Couple</div>
     <h2>Tom & Beth — What Went Wrong</h2>
     <p>The marriage of Tom and Beth is the wound at the center of the play — and Margulies refuses to assign blame cleanly. Both characters contributed to the failure. Both are right about some things. Both are wrong about others. The production that takes sides loses the play.</p>
     <p>The Act 1 Scene 2 scene between Tom and Beth alone is the most volatile in the play — two people who know exactly how to wound each other, and then, without warning, the kiss. John and Lauren need to find the genuine history between these two people: the thing that drew them together in the first place, still alive underneath all the wreckage. Without that, the scene is just a fight. With it, it's heartbreaking.</p>
@@ -998,7 +1059,7 @@ footer a:hover { text-decoration: underline; }
 
   <!-- CRAFT -->
   <div class="section">
-    <div class="section-label">Craft & Approach</div>
+    <div id="section-craft" class="section-label">Craft & Approach</div>
     <h2>Tools for the Room</h2>
     <p>This is a naturalistic play with classical structure. The work is interior — objectives, obstacles, and subtext doing more heavy lifting than physical or vocal stylization.</p>
     <div class="methodology-grid">
@@ -1013,7 +1074,7 @@ footer a:hover { text-decoration: underline; }
 
   <!-- STRUCTURE -->
   <div class="section">
-    <div class="section-label">Quick Reference</div>
+    <div id="section-reference" class="section-label">Quick Reference</div>
     <h2>Play Structure at a Glance</h2>
     <div class="two-column">
       <div class="column-block">
@@ -1466,6 +1527,10 @@ footer a:hover { text-decoration: underline; }
     <button class="sub-nav-btn active" onclick="switchSubTab('production-notes','nancy',this)">Nancy</button>
     <button class="sub-nav-btn" onclick="switchSubTab('production-notes','theo',this)">Theo</button>
     <button class="sub-nav-btn" onclick="switchSubTab('production-notes','tommy',this)">Tommy</button>
+    <button class="sub-nav-btn" onclick="switchSubTab('production-notes','lighting',this)">Lighting</button>
+    <button class="sub-nav-btn" onclick="switchSubTab('production-notes','wardrobe',this)">Wardrobe</button>
+    <button class="sub-nav-btn" onclick="switchSubTab('production-notes','props',this)">Props</button>
+    <button class="sub-nav-btn" onclick="switchSubTab('production-notes','set',this)">Set</button>
   </div>
 
 <div id="panel-notes-nancy" class="tab-panel">
@@ -1601,6 +1666,143 @@ footer a:hover { text-decoration: underline; }
   </div>
   <div class="notes-count" id="count-tommy"></div>
   <div class="notes-list" id="notes-tommy"></div>
+</div>
+</div>
+
+<div id="panel-notes-lighting" class="tab-panel">
+<div class="notes-wrap">
+  <div class="notes-header">
+    <h2>Lighting Notes</h2>
+    <p>Production notes. Saved in this browser.</p>
+  </div>
+  <button class="add-note-btn lighting-btn" onclick="openForm('lighting')"><span class="plus">+</span> Add New Note</button>
+  <div class="note-form" id="form-lighting">
+    <div class="note-form-row">
+      <div class="note-form-group">
+        <label for="lighting-act">Act</label>
+        <select id="lighting-act">
+          <option value="">— Act —</option>
+          <option>Act 1</option><option>Act 2</option><option>Full Play</option><option>General</option>
+        </select>
+      </div>
+      <div class="note-form-group">
+        <label for="lighting-scene">Scene</label>
+        <select id="lighting-scene">
+          <option value="">— Scene —</option>
+          <option>Scene 1</option><option>Scene 2</option><option>Scene 3</option><option>Scene 4</option><option>All Scenes</option>
+        </select>
+      </div>
+    </div>
+    <textarea class="note-textarea" id="lighting-text" placeholder="Notes..."></textarea>
+    <div class="note-form-actions">
+      <button class="btn-cancel" onclick="closeForm('lighting')">Cancel</button>
+      <button class="btn-save" onclick="saveNote('lighting')">Save Note</button>
+    </div>
+  </div>
+  <div class="notes-count" id="count-lighting"></div>
+  <div class="notes-list" id="notes-lighting"></div>
+</div>
+</div>
+<div id="panel-notes-wardrobe" class="tab-panel">
+<div class="notes-wrap">
+  <div class="notes-header">
+    <h2>Wardrobe Notes</h2>
+    <p>Production notes. Saved in this browser.</p>
+  </div>
+  <button class="add-note-btn wardrobe-btn" onclick="openForm('wardrobe')"><span class="plus">+</span> Add New Note</button>
+  <div class="note-form" id="form-wardrobe">
+    <div class="note-form-row">
+      <div class="note-form-group">
+        <label for="wardrobe-act">Act</label>
+        <select id="wardrobe-act">
+          <option value="">— Act —</option>
+          <option>Act 1</option><option>Act 2</option><option>Full Play</option><option>General</option>
+        </select>
+      </div>
+      <div class="note-form-group">
+        <label for="wardrobe-scene">Scene</label>
+        <select id="wardrobe-scene">
+          <option value="">— Scene —</option>
+          <option>Scene 1</option><option>Scene 2</option><option>Scene 3</option><option>Scene 4</option><option>All Scenes</option>
+        </select>
+      </div>
+    </div>
+    <textarea class="note-textarea" id="wardrobe-text" placeholder="Notes..."></textarea>
+    <div class="note-form-actions">
+      <button class="btn-cancel" onclick="closeForm('wardrobe')">Cancel</button>
+      <button class="btn-save" onclick="saveNote('wardrobe')">Save Note</button>
+    </div>
+  </div>
+  <div class="notes-count" id="count-wardrobe"></div>
+  <div class="notes-list" id="notes-wardrobe"></div>
+</div>
+</div>
+<div id="panel-notes-props" class="tab-panel">
+<div class="notes-wrap">
+  <div class="notes-header">
+    <h2>Props Notes</h2>
+    <p>Production notes. Saved in this browser.</p>
+  </div>
+  <button class="add-note-btn props-btn" onclick="openForm('props')"><span class="plus">+</span> Add New Note</button>
+  <div class="note-form" id="form-props">
+    <div class="note-form-row">
+      <div class="note-form-group">
+        <label for="props-act">Act</label>
+        <select id="props-act">
+          <option value="">— Act —</option>
+          <option>Act 1</option><option>Act 2</option><option>Full Play</option><option>General</option>
+        </select>
+      </div>
+      <div class="note-form-group">
+        <label for="props-scene">Scene</label>
+        <select id="props-scene">
+          <option value="">— Scene —</option>
+          <option>Scene 1</option><option>Scene 2</option><option>Scene 3</option><option>Scene 4</option><option>All Scenes</option>
+        </select>
+      </div>
+    </div>
+    <textarea class="note-textarea" id="props-text" placeholder="Notes..."></textarea>
+    <div class="note-form-actions">
+      <button class="btn-cancel" onclick="closeForm('props')">Cancel</button>
+      <button class="btn-save" onclick="saveNote('props')">Save Note</button>
+    </div>
+  </div>
+  <div class="notes-count" id="count-props"></div>
+  <div class="notes-list" id="notes-props"></div>
+</div>
+</div>
+<div id="panel-notes-set" class="tab-panel">
+<div class="notes-wrap">
+  <div class="notes-header">
+    <h2>Set Notes</h2>
+    <p>Production notes. Saved in this browser.</p>
+  </div>
+  <button class="add-note-btn set-btn" onclick="openForm('set')"><span class="plus">+</span> Add New Note</button>
+  <div class="note-form" id="form-set">
+    <div class="note-form-row">
+      <div class="note-form-group">
+        <label for="set-act">Act</label>
+        <select id="set-act">
+          <option value="">— Act —</option>
+          <option>Act 1</option><option>Act 2</option><option>Full Play</option><option>General</option>
+        </select>
+      </div>
+      <div class="note-form-group">
+        <label for="set-scene">Scene</label>
+        <select id="set-scene">
+          <option value="">— Scene —</option>
+          <option>Scene 1</option><option>Scene 2</option><option>Scene 3</option><option>Scene 4</option><option>All Scenes</option>
+        </select>
+      </div>
+    </div>
+    <textarea class="note-textarea" id="set-text" placeholder="Notes..."></textarea>
+    <div class="note-form-actions">
+      <button class="btn-cancel" onclick="closeForm('set')">Cancel</button>
+      <button class="btn-save" onclick="saveNote('set')">Save Note</button>
+    </div>
+  </div>
+  <div class="notes-count" id="count-set"></div>
+  <div class="notes-list" id="notes-set"></div>
 </div>
 </div>
 </div><!-- /screen-production-notes -->
@@ -2075,7 +2277,8 @@ function handleJessActorChange() {
 const PERSON_COLORS={
   jeremy:'#4a7a56', christina:'#8b6650', john:'#5a6aaa', lauren:'#a05080',
   jess:'#1c2b1e',   zac:'#2e4a32',
-  nancy:'#7a5030',  theo:'#3a5070', tommy:'#506040'
+  nancy:'#7a5030',  theo:'#3a5070',  tommy:'#506040',
+  lighting:'#7a6010', wardrobe:'#7a3050', props:'#406050', set:'#504020'
 };
 
 // ══════════════════════════════════════
