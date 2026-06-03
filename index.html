@@ -625,6 +625,132 @@
   }
 
   /* ══════════════════════════════════════
+     VIEW TOGGLES & NAVIGATION
+  ══════════════════════════════════════ */
+  .view-toggles {
+    display: flex; gap: 4px; margin-bottom: 16px;
+  }
+  .view-btn {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em;
+    background: #fff; border: 1px solid #ddd6cc; border-radius: 4px;
+    padding: 7px 14px; cursor: pointer; color: #9a8a7a;
+    transition: all 0.15s;
+  }
+  .view-btn:hover { border-color: #8fa880; color: #3a6040; }
+  .view-btn.active { background: #1c2b1e; color: #e8e0d0; border-color: #1c2b1e; }
+
+  /* Navigation row */
+  .cal-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .cal-nav-btn {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 12px; background: none; border: 1px solid #ddd6cc;
+    border-radius: 4px; padding: 6px 12px; cursor: pointer; color: #6a6050;
+    transition: border-color 0.15s;
+  }
+  .cal-nav-btn:hover { border-color: #8fa880; color: #3a6040; }
+  .cal-nav-label { font-size: 14px; font-weight: 500; color: #1c2b1e; }
+
+  /* Legend */
+  .avail-legend {
+    display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;
+    padding: 10px 14px; background: #fff; border: 1px solid #ddd6cc; border-radius: 4px;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #3a3228; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── WEEK GRID ── */
+  .week-grid {
+    border: 1px solid #ddd6cc; border-radius: 6px; overflow: hidden;
+    margin-bottom: 20px; overflow-x: auto;
+  }
+  .week-header-row, .week-actor-row {
+    display: grid;
+    grid-template-columns: 90px repeat(7, 1fr);
+    min-width: 560px;
+  }
+  .week-header-row { background: #f2efe8; border-bottom: 1px solid #ddd6cc; }
+  .week-actor-row { border-bottom: 1px solid #ece6de; }
+  .week-actor-row:last-child { border-bottom: none; }
+  .week-day-header {
+    text-align: center; padding: 8px 4px; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.1em; color: #7a6a58;
+    border-left: 1px solid #ddd6cc;
+  }
+  .week-day-header span { display: block; font-size: 16px; font-weight: 600; color: #1c2b1e; letter-spacing: 0; text-transform: none; }
+  .week-day-header.today { background: #eef3ec; }
+  .week-day-header.today span { color: #4a7a56; }
+  .week-actor-col { background: #f2efe8; border-bottom: 1px solid #ddd6cc; }
+  .week-actor-label {
+    padding: 10px 8px; font-size: 11px; font-weight: 500; color: #3a3228;
+    background: #faf8f4; border-left: 3px solid #ddd;
+    display: flex; align-items: center;
+  }
+  .week-cell {
+    border-left: 1px solid #ece6de; min-height: 52px; padding: 6px 4px;
+    position: relative; transition: background 0.1s;
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+  }
+  .cell-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 4px; }
+  .status-unavail .cell-dot { background: #ccc !important; }
+  .status-remote .cell-dot { background: #f0a840 !important; }
+  .status-tbd .cell-dot { background: #b0b0b0 !important; }
+  .status-partial .cell-dot { background: #e0c080 !important; }
+  .status-unavail { background: #faf8f8 !important; }
+  .status-remote { background: #fffbf0 !important; }
+  .status-tbd { background: #f8f8f8 !important; }
+  .cell-event-pill {
+    font-size: 9px; color: #fff; padding: 1px 5px; border-radius: 3px;
+    white-space: nowrap; overflow: hidden; max-width: 100%; text-overflow: ellipsis;
+  }
+
+  /* ── MONTH GRID ── */
+  .month-block { margin-bottom: 28px; }
+  .month-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 18px; color: #1c2b1e; margin-bottom: 8px; padding-left: 2px;
+  }
+  .month-grid {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    border: 1px solid #ddd6cc; border-radius: 6px; overflow: hidden;
+  }
+  .month-dow {
+    text-align: center; padding: 6px 2px; font-size: 10px;
+    text-transform: uppercase; letter-spacing: 0.1em; color: #9a8a7a;
+    background: #f2efe8; border-bottom: 1px solid #ddd6cc;
+    border-right: 1px solid #ece6de;
+  }
+  .month-dow:last-child { border-right: none; }
+  .month-day {
+    min-height: 56px; padding: 4px; background: #fff;
+    border-bottom: 1px solid #ece6de; border-right: 1px solid #ece6de;
+    position: relative;
+  }
+  .month-day:nth-child(7n) { border-right: none; }
+  .month-day.empty { background: #faf8f4; }
+  .month-day.today { background: #eef3ec; }
+  .month-day-num { font-size: 11px; color: #6a6050; margin-bottom: 2px; text-align: right; }
+  .today .month-day-num { color: #4a7a56; font-weight: 700; }
+  .month-day-dots { display: flex; flex-wrap: wrap; gap: 2px; margin-bottom: 2px; }
+  .month-dot { width: 7px; height: 7px; border-radius: 50%; }
+  .month-event-pill {
+    font-size: 8px; color: #fff; padding: 1px 4px; border-radius: 2px;
+    white-space: nowrap; overflow: hidden; max-width: 100%; text-overflow: ellipsis;
+    display: block; margin-bottom: 1px;
+  }
+
+  /* Actor note button colours */
+  .gabe-btn   { background: #4a7a56 !important; }
+  .karen-btn  { background: #8b6650 !important; }
+  .john-btn   { background: #5a6aaa !important; }
+  .lauren-btn { background: #a05080 !important; }
+  .jess-btn   { background: #1c2b1e !important; }
+
+
+  /* ══════════════════════════════════════
      NOTES PANELS
   ══════════════════════════════════════ */
   .notes-wrap { padding: 28px 16px 64px; }
@@ -855,6 +981,9 @@
     <button class="tab-btn" onclick="switchTab('calendar', this)">📅 Calendar</button>
     <button class="tab-btn" onclick="switchTab('notes-jeremy', this)">🎭 Jeremy</button>
     <button class="tab-btn" onclick="switchTab('notes-christina', this)">🎭 Christina</button>
+    <button class="tab-btn" onclick="switchTab('notes-john', this)">🎭 John</button>
+    <button class="tab-btn" onclick="switchTab('notes-lauren', this)">🎭 Lauren</button>
+    <button class="tab-btn" onclick="switchTab('notes-jess', this)">🎬 Jess</button>
   </div>
 </div>
 
@@ -1109,12 +1238,30 @@
 <!-- ══════════════════════════════════════
      TAB: CALENDAR
 ══════════════════════════════════════ -->
+<!-- ══════════════════════════════════════
+     TAB: CALENDAR
+══════════════════════════════════════ -->
 <div id="panel-calendar" class="tab-panel">
 <div class="cal-wrap">
 
   <div class="cal-header">
-    <h2>Rehearsal &amp; Show Calendar</h2>
+    <h2>Rehearsal &amp; Availability Calendar</h2>
     <p>Blue Ridge Community Theatre · <em>Dinner With Friends</em></p>
+  </div>
+
+  <!-- VIEW TOGGLES -->
+  <div class="view-toggles">
+    <button class="view-btn active" onclick="setView('week', this)">Week</button>
+    <button class="view-btn" onclick="setView('month', this)">Month</button>
+    <button class="view-btn" onclick="setView('3month', this)">3 Month</button>
+  </div>
+
+  <!-- AVAILABILITY LEGEND -->
+  <div class="avail-legend">
+    <span class="legend-item"><span class="legend-dot" style="background:#4a7a56"></span>Jeremy (Gabe)</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#8b6650"></span>Christina (Karen)</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#5a6aaa"></span>John (Tom)</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#a05080"></span>Lauren (Beth)</span>
   </div>
 
   <!-- FILTERS -->
@@ -1158,128 +1305,233 @@
         <option value="Scene 4">Scene 4</option>
       </select>
     </div>
-    <div class="filter-group">
-      <label for="f-from">From</label>
-      <input type="date" id="f-from" onchange="applyFilters()">
-    </div>
-    <div class="filter-group">
-      <label for="f-to">To</label>
-      <input type="date" id="f-to" onchange="applyFilters()">
-    </div>
     <button class="filter-reset" onclick="resetFilters()">Clear</button>
   </div>
 
-  <!-- ACTIVE FILTER PILLS -->
   <div class="filter-pills" id="filter-pills"></div>
-
-  <!-- RESULTS META -->
   <div class="results-meta" id="results-meta"></div>
 
-  <!-- EVENT LIST -->
+  <!-- CALENDAR GRID -->
+  <div id="cal-grid"></div>
+
+  <!-- EVENT LIST (week view) -->
   <div class="event-list" id="event-list"></div>
 
 </div>
 </div><!-- /panel-calendar -->
 
-<!-- ══════════════════════════════════════
-     TAB: JEREMY (GABE) NOTES
-══════════════════════════════════════ -->
+
+<!-- NOTES PANELS MACRO: person, character, color hint -->
+
+<!-- Jeremy -->
 <div id="panel-notes-jeremy" class="tab-panel">
 <div class="notes-wrap">
   <div class="notes-header">
     <h2>Jeremy's Notes — Gabe</h2>
-    <p>Your personal rehearsal notes. Saved in this browser.</p>
+    <p>Personal rehearsal notes. Saved in this browser.</p>
   </div>
-
-  <button class="add-note-btn" onclick="openForm('jeremy')">
-    <span class="plus">+</span> Add New Note
-  </button>
-
+  <button class="add-note-btn gabe-btn" onclick="openForm('jeremy')"><span class="plus">+</span> Add New Note</button>
   <div class="note-form" id="form-jeremy">
     <div class="note-form-row">
       <div class="note-form-group">
         <label for="jeremy-act">Act</label>
         <select id="jeremy-act">
-          <option value="">— Select Act —</option>
-          <option value="Act 1">Act 1</option>
-          <option value="Act 2">Act 2</option>
-          <option value="Full Play">Full Play</option>
-          <option value="General">General</option>
+          <option value="">— Act —</option>
+          <option>Act 1</option><option>Act 2</option><option>Full Play</option><option>General</option>
         </select>
       </div>
       <div class="note-form-group">
         <label for="jeremy-scene">Scene</label>
         <select id="jeremy-scene">
-          <option value="">— Select Scene —</option>
-          <option value="Scene 1">Scene 1</option>
-          <option value="Scene 2">Scene 2</option>
-          <option value="Scene 3">Scene 3</option>
-          <option value="Scene 4">Scene 4</option>
-          <option value="All Scenes">All Scenes</option>
+          <option value="">— Scene —</option>
+          <option>Scene 1</option><option>Scene 2</option><option>Scene 3</option><option>Scene 4</option><option>All Scenes</option>
         </select>
       </div>
     </div>
-    <textarea class="note-textarea" id="jeremy-text" placeholder="Write your note here — a direction you received, something you discovered, a question to bring back to the room..."></textarea>
+    <textarea class="note-textarea" id="jeremy-text" placeholder="A direction you received, something you discovered, a question for the room..."></textarea>
     <div class="note-form-actions">
       <button class="btn-cancel" onclick="closeForm('jeremy')">Cancel</button>
       <button class="btn-save" onclick="saveNote('jeremy')">Save Note</button>
     </div>
   </div>
-
   <div class="notes-count" id="count-jeremy"></div>
   <div class="notes-list" id="notes-jeremy"></div>
 </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     TAB: CHRISTINA (KAREN) NOTES
-══════════════════════════════════════ -->
+<!-- Christina -->
 <div id="panel-notes-christina" class="tab-panel">
 <div class="notes-wrap">
   <div class="notes-header">
     <h2>Christina's Notes — Karen</h2>
-    <p>Your personal rehearsal notes. Saved in this browser.</p>
+    <p>Personal rehearsal notes. Saved in this browser.</p>
   </div>
-
-  <button class="add-note-btn" onclick="openForm('christina')">
-    <span class="plus">+</span> Add New Note
-  </button>
-
+  <button class="add-note-btn karen-btn" onclick="openForm('christina')"><span class="plus">+</span> Add New Note</button>
   <div class="note-form" id="form-christina">
     <div class="note-form-row">
       <div class="note-form-group">
         <label for="christina-act">Act</label>
         <select id="christina-act">
-          <option value="">— Select Act —</option>
-          <option value="Act 1">Act 1</option>
-          <option value="Act 2">Act 2</option>
-          <option value="Full Play">Full Play</option>
-          <option value="General">General</option>
+          <option value="">— Act —</option>
+          <option>Act 1</option><option>Act 2</option><option>Full Play</option><option>General</option>
         </select>
       </div>
       <div class="note-form-group">
         <label for="christina-scene">Scene</label>
         <select id="christina-scene">
-          <option value="">— Select Scene —</option>
-          <option value="Scene 1">Scene 1</option>
-          <option value="Scene 2">Scene 2</option>
-          <option value="Scene 3">Scene 3</option>
-          <option value="Scene 4">Scene 4</option>
-          <option value="All Scenes">All Scenes</option>
+          <option value="">— Scene —</option>
+          <option>Scene 1</option><option>Scene 2</option><option>Scene 3</option><option>Scene 4</option><option>All Scenes</option>
         </select>
       </div>
     </div>
-    <textarea class="note-textarea" id="christina-text" placeholder="Write your note here — a direction you received, something you discovered, a question to bring back to the room..."></textarea>
+    <textarea class="note-textarea" id="christina-text" placeholder="A direction you received, something you discovered, a question for the room..."></textarea>
     <div class="note-form-actions">
       <button class="btn-cancel" onclick="closeForm('christina')">Cancel</button>
       <button class="btn-save" onclick="saveNote('christina')">Save Note</button>
     </div>
   </div>
-
   <div class="notes-count" id="count-christina"></div>
   <div class="notes-list" id="notes-christina"></div>
 </div>
 </div>
+
+<!-- John -->
+<div id="panel-notes-john" class="tab-panel">
+<div class="notes-wrap">
+  <div class="notes-header">
+    <h2>John's Notes — Tom</h2>
+    <p>Personal rehearsal notes. Saved in this browser.</p>
+  </div>
+  <button class="add-note-btn john-btn" onclick="openForm('john')"><span class="plus">+</span> Add New Note</button>
+  <div class="note-form" id="form-john">
+    <div class="note-form-row">
+      <div class="note-form-group">
+        <label for="john-act">Act</label>
+        <select id="john-act">
+          <option value="">— Act —</option>
+          <option>Act 1</option><option>Act 2</option><option>Full Play</option><option>General</option>
+        </select>
+      </div>
+      <div class="note-form-group">
+        <label for="john-scene">Scene</label>
+        <select id="john-scene">
+          <option value="">— Scene —</option>
+          <option>Scene 1</option><option>Scene 2</option><option>Scene 3</option><option>Scene 4</option><option>All Scenes</option>
+        </select>
+      </div>
+    </div>
+    <textarea class="note-textarea" id="john-text" placeholder="A direction you received, something you discovered, a question for the room..."></textarea>
+    <div class="note-form-actions">
+      <button class="btn-cancel" onclick="closeForm('john')">Cancel</button>
+      <button class="btn-save" onclick="saveNote('john')">Save Note</button>
+    </div>
+  </div>
+  <div class="notes-count" id="count-john"></div>
+  <div class="notes-list" id="notes-john"></div>
+</div>
+</div>
+
+<!-- Lauren -->
+<div id="panel-notes-lauren" class="tab-panel">
+<div class="notes-wrap">
+  <div class="notes-header">
+    <h2>Lauren's Notes — Beth</h2>
+    <p>Personal rehearsal notes. Saved in this browser.</p>
+  </div>
+  <button class="add-note-btn lauren-btn" onclick="openForm('lauren')"><span class="plus">+</span> Add New Note</button>
+  <div class="note-form" id="form-lauren">
+    <div class="note-form-row">
+      <div class="note-form-group">
+        <label for="lauren-act">Act</label>
+        <select id="lauren-act">
+          <option value="">— Act —</option>
+          <option>Act 1</option><option>Act 2</option><option>Full Play</option><option>General</option>
+        </select>
+      </div>
+      <div class="note-form-group">
+        <label for="lauren-scene">Scene</label>
+        <select id="lauren-scene">
+          <option value="">— Scene —</option>
+          <option>Scene 1</option><option>Scene 2</option><option>Scene 3</option><option>Scene 4</option><option>All Scenes</option>
+        </select>
+      </div>
+    </div>
+    <textarea class="note-textarea" id="lauren-text" placeholder="A direction you received, something you discovered, a question for the room..."></textarea>
+    <div class="note-form-actions">
+      <button class="btn-cancel" onclick="closeForm('lauren')">Cancel</button>
+      <button class="btn-save" onclick="saveNote('lauren')">Save Note</button>
+    </div>
+  </div>
+  <div class="notes-count" id="count-lauren"></div>
+  <div class="notes-list" id="notes-lauren"></div>
+</div>
+</div>
+
+<!-- Jess — Director's Notes -->
+<div id="panel-notes-jess" class="tab-panel">
+<div class="notes-wrap">
+  <div class="notes-header">
+    <h2>Jess — Director's Notes</h2>
+    <p>Production notes. Saved in this browser.</p>
+  </div>
+  <button class="add-note-btn jess-btn" onclick="openForm('jess')"><span class="plus">+</span> Add New Note</button>
+  <div class="note-form" id="form-jess">
+    <div class="note-form-row">
+      <div class="note-form-group">
+        <label for="jess-production">Production Area</label>
+        <select id="jess-production">
+          <option value="">— Production Area —</option>
+          <option>Rehearsal</option>
+          <option>Performance</option>
+          <option>Stage Management</option>
+          <option>Front of House</option>
+          <option>Volunteers</option>
+          <option>Lighting</option>
+          <option>Sound</option>
+          <option>Wardrobe</option>
+          <option>Props</option>
+          <option>Set</option>
+        </select>
+      </div>
+      <div class="note-form-group">
+        <label for="jess-actor">Actor</label>
+        <select id="jess-actor">
+          <option value="">— Actor —</option>
+          <option>Beth (Lauren)</option>
+          <option>Gabe (Jeremy)</option>
+          <option>Karen (Christina)</option>
+          <option>Tom (John)</option>
+          <option>Full Cast</option>
+        </select>
+      </div>
+    </div>
+    <div class="note-form-row">
+      <div class="note-form-group">
+        <label for="jess-act">Act</label>
+        <select id="jess-act">
+          <option value="">— Act —</option>
+          <option>Act 1</option><option>Act 2</option><option>Full Play</option><option>General</option>
+        </select>
+      </div>
+      <div class="note-form-group">
+        <label for="jess-scene">Scene</label>
+        <select id="jess-scene">
+          <option value="">— Scene —</option>
+          <option>Scene 1</option><option>Scene 2</option><option>Scene 3</option><option>Scene 4</option><option>All Scenes</option>
+        </select>
+      </div>
+    </div>
+    <textarea class="note-textarea" id="jess-text" placeholder="Director's note, blocking note, production note..."></textarea>
+    <div class="note-form-actions">
+      <button class="btn-cancel" onclick="closeForm('jess')">Cancel</button>
+      <button class="btn-save" onclick="saveNote('jess')">Save Note</button>
+    </div>
+  </div>
+  <div class="notes-count" id="count-jess"></div>
+  <div class="notes-list" id="notes-jess"></div>
+</div>
+</div>
+
 
 <footer>
   Dinner With Friends · Blue Ridge Community Theatre<br>
@@ -1288,127 +1540,351 @@
 
 <script>
 // ══════════════════════════════════════
-// CALENDAR DATA
-// Add, edit, or remove events here.
-// Date format: "YYYY-MM-DD"
-// type: "tableread" | "rehearsal" | "fitting" | "techdress" | "performance"
-// characters: array — "gabe", "karen", "both" (use "both" for full cast)
-// act: "Act 1" | "Act 2" | "Full Play" | ""
-// scenes: array of "Scene 1", "Scene 2", etc. — or empty []
+// CONFIRMED EVENTS
 // ══════════════════════════════════════
 const EVENTS = [
-  {
-    id: 1,
-    title: "First Table Read",
-    date: "2026-06-03",
-    time: "7:00 PM",
-    type: "tableread",
-    characters: ["both"],
-    act: "Full Play",
-    scenes: [],
-    location: "Blue Ridge Community Theatre",
-    notes: "Full cast. Bring pencils, not pens."
-  },
-  {
-    id: 2,
-    title: "Rehearsal",
-    date: "2026-06-08",
-    time: "6:00 PM",
-    type: "rehearsal",
-    characters: ["both"],
-    act: "",
-    scenes: [],
-    location: "Blue Ridge Community Theatre",
-    notes: ""
-  }
+  { id:1, title:"First Table Read", date:"2026-06-03", time:"7:00 PM", type:"tableread", characters:["both"], act:"Full Play", scenes:[], location:"Blue Ridge Community Theatre", notes:"Full cast. Bring pencils, not pens." },
+  { id:2, title:"Rehearsal", date:"2026-06-08", time:"6:00 PM", type:"rehearsal", characters:["both"], act:"", scenes:[], location:"Blue Ridge Community Theatre", notes:"" }
 ];
 
-// ── TAB SWITCHING ──
+// ══════════════════════════════════════
+// ACTOR AVAILABILITY
+// status: "avail" | "unavail" | "remote" | "tbd" | "partial"
+// actors that have data: jeremy(gabe), christina(karen), john(tom)
+// ══════════════════════════════════════
+const AVAILABILITY = {};
+
+function avail(actor, date, status, note) {
+  if (!AVAILABILITY[date]) AVAILABILITY[date] = {};
+  AVAILABILITY[date][actor] = { status, note: note || '' };
+}
+
+// ── JEREMY (Gabe) ──
+// June — available most days; weekdays 6pm+, weekends 9am+
+const jeremyJune = {
+  '06-08':'avail','06-09':'avail','06-10':'avail','06-11':'avail','06-12':'avail',
+  '06-13':'avail','06-14':'avail','06-15':'avail','06-16':'avail',
+  '06-17':'remote','06-18':'remote',
+  '06-19':'unavail',
+  '06-20':'avail','06-21':'avail','06-22':'avail','06-23':'avail','06-24':'avail',
+  '06-25':'avail','06-26':'avail','06-27':'avail','06-28':'avail','06-29':'avail','06-30':'avail'
+};
+Object.entries(jeremyJune).forEach(([d,s]) => avail('jeremy', `2026-${d}`, s, s==='remote'?'Remote – Florida':''));
+
+// July
+const jeremyJuly = {
+  '07-01':'avail','07-02':'avail','07-03':'unavail','07-04':'unavail','07-05':'unavail',
+  '07-06':'avail','07-07':'avail','07-08':'avail','07-09':'avail','07-10':'avail',
+  '07-11':'unavail','07-12':'unavail','07-13':'unavail',
+  '07-14':'tbd','07-15':'remote','07-16':'tbd','07-17':'tbd',
+  '07-18':'avail',
+  '07-19':'tbd','07-20':'tbd','07-21':'tbd','07-22':'tbd','07-23':'tbd',
+  '07-24':'avail','07-25':'avail',
+  '07-26':'tbd','07-27':'tbd','07-28':'tbd','07-29':'tbd','07-30':'tbd','07-31':'tbd'
+};
+const rentNotes = {
+  '07-11':'RENT workshop','07-12':'RENT workshop','07-13':'RENT audition',
+  '07-15':'Remote','07-16':'RENT callbacks','07-17':'RENT Table Read',
+  '07-19':'RENT Rehearsal','07-20':'RENT Rehearsal','07-21':'RENT Rehearsal',
+  '07-22':'RENT Rehearsal','07-23':'RENT Rehearsal','07-26':'RENT Rehearsal',
+  '07-27':'RENT Rehearsal','07-28':'RENT Rehearsal','07-29':'RENT Rehearsal',
+  '07-30':'RENT Rehearsal','07-31':'RENT Rehearsal'
+};
+Object.entries(jeremyJuly).forEach(([d,s]) => avail('jeremy', `2026-${d}`, s, rentNotes[d]||''));
+
+// ── CHRISTINA (Karen) ──
+// June — weekdays 6pm+, weekends 9am+ (earlier preferred)
+const christinaJune = {
+  '06-08':'avail','06-09':'avail','06-10':'avail','06-11':'avail','06-12':'avail',
+  '06-13':'avail','06-14':'partial',
+  '06-15':'avail','06-16':'avail',
+  '06-17':'remote','06-18':'remote',
+  '06-19':'unavail',
+  '06-20':'avail','06-21':'avail','06-22':'avail','06-23':'avail','06-24':'avail',
+  '06-25':'avail','06-26':'avail','06-27':'avail','06-28':'avail','06-29':'avail','06-30':'avail'
+};
+const christinaJuneNotes = {
+  '06-14':'Available 2pm onward','06-16':'Will travel to FL if no conflict',
+  '06-17':'Remote – Florida','06-18':'Remote – Florida','06-20':'Travel back from FL'
+};
+Object.entries(christinaJune).forEach(([d,s]) => avail('christina', `2026-${d}`, s, christinaJuneNotes[d]||''));
+
+// July
+const christinaJuly = {
+  '07-01':'avail','07-02':'avail','07-03':'unavail','07-04':'unavail','07-05':'unavail',
+  '07-06':'avail','07-07':'avail','07-08':'avail','07-09':'avail','07-10':'avail',
+  '07-11':'avail','07-12':'avail','07-13':'avail','07-14':'avail','07-15':'avail',
+  '07-16':'avail','07-17':'avail','07-18':'avail','07-19':'avail','07-20':'avail',
+  '07-21':'avail','07-22':'avail','07-23':'avail','07-24':'avail','07-25':'avail',
+  '07-26':'avail','07-27':'avail','07-28':'avail','07-29':'avail','07-30':'avail','07-31':'avail'
+};
+Object.entries(christinaJuly).forEach(([d,s]) => avail('christina', `2026-${d}`, s, ''));
+
+// ── JOHN (Tom) ──
+// Weekday availability 11am+, weekends 11am+
+const johnJune = {
+  '06-08':'avail','06-09':'unavail','06-10':'avail','06-11':'avail','06-12':'avail',
+  '06-13':'unavail','06-14':'avail','06-15':'avail','06-16':'avail','06-17':'avail',
+  '06-18':'avail','06-19':'unavail','06-20':'unavail','06-21':'unavail','06-22':'unavail',
+  '06-23':'avail','06-24':'avail','06-25':'avail','06-26':'unavail','06-27':'unavail',
+  '06-28':'unavail','06-29':'unavail','06-30':'avail'
+};
+Object.entries(johnJune).forEach(([d,s]) => avail('john', `2026-${d}`, s, ''));
+
+const johnJuly = {
+  '07-01':'unavail','07-02':'unavail','07-03':'unavail','07-04':'unavail','07-05':'unavail',
+  '07-06':'avail','07-07':'avail','07-08':'avail','07-09':'avail','07-10':'avail',
+  '07-11':'avail','07-12':'avail','07-13':'avail','07-14':'avail','07-15':'avail',
+  '07-16':'avail','07-17':'unavail','07-18':'unavail','07-19':'unavail',
+  '07-20':'avail','07-21':'avail','07-22':'avail','07-23':'avail','07-24':'avail',
+  '07-25':'avail','07-26':'avail','07-27':'avail','07-28':'avail','07-29':'avail',
+  '07-30':'avail','07-31':'avail'
+};
+Object.entries(johnJuly).forEach(([d,s]) => avail('john', `2026-${d}`, s, ''));
+
+// August — John totally available
+for (let d = 1; d <= 31; d++) {
+  const dd = String(d).padStart(2,'0');
+  avail('john', `2026-08-${dd}`, 'avail', '');
+}
+
+// ══════════════════════════════════════
+// ACTOR CONFIG
+// ══════════════════════════════════════
+const ACTORS = [
+  { key:'jeremy',   label:'Jeremy (Gabe)',    color:'#4a7a56', light:'#eef3ec' },
+  { key:'christina',label:'Christina (Karen)', color:'#8b6650', light:'#f3ede8' },
+  { key:'john',     label:'John (Tom)',        color:'#5a6aaa', light:'#eceef8' },
+  { key:'lauren',   label:'Lauren (Beth)',     color:'#a05080', light:'#f5eaf2' }
+];
+
+const STATUS_LABELS = {
+  avail:'Available', unavail:'Unavailable', remote:'Remote', tbd:'TBD', partial:'Partial'
+};
+
+// ══════════════════════════════════════
+// VIEW STATE
+// ══════════════════════════════════════
+let currentView = 'week';
+let viewAnchor = new Date('2026-06-08'); // start of first rehearsal week
+
+function setView(view, btn) {
+  currentView = view;
+  document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCalendar();
+}
+
+// ══════════════════════════════════════
+// TAB SWITCHING
+// ══════════════════════════════════════
 function switchTab(tab, btn) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('panel-' + tab).classList.add('active');
   if (btn) btn.classList.add('active');
   if (tab === 'calendar') renderCalendar();
-  if (tab === 'notes-jeremy') renderNotes('jeremy');
-  if (tab === 'notes-christina') renderNotes('christina');
+  const notesTabs = ['jeremy','christina','john','lauren','jess'];
+  notesTabs.forEach(p => { if (tab === 'notes-' + p) renderNotes(p); });
 }
 
-// ── FILTER STATE ──
+// ══════════════════════════════════════
+// FILTER STATE
+// ══════════════════════════════════════
 function getFilters() {
   return {
     type: document.getElementById('f-type').value,
     character: document.getElementById('f-character').value,
     act: document.getElementById('f-act').value,
     scene: document.getElementById('f-scene').value,
-    from: document.getElementById('f-from').value,
-    to: document.getElementById('f-to').value,
   };
 }
 
 function resetFilters() {
-  ['f-type','f-character','f-act','f-scene','f-from','f-to'].forEach(id => {
-    const el = document.getElementById(id);
-    el.value = '';
-  });
+  ['f-type','f-character','f-act','f-scene'].forEach(id => document.getElementById(id).value = '');
   applyFilters();
 }
 
 function applyFilters() { renderCalendar(); }
 
-// ── RENDER ──
-function renderCalendar() {
-  const f = getFilters();
-  let events = [...EVENTS];
+// ══════════════════════════════════════
+// DATE HELPERS
+// ══════════════════════════════════════
+function dateStr(d) {
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
 
+function addDays(d, n) { const r = new Date(d); r.setDate(r.getDate()+n); return r; }
+
+function startOfWeek(d) {
+  const r = new Date(d);
+  const day = r.getDay(); // 0=Sun
+  r.setDate(r.getDate() - day);
+  return r;
+}
+
+function startOfMonth(d) { return new Date(d.getFullYear(), d.getMonth(), 1); }
+
+const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DAY_SHORT = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+function formatShort(d) {
+  return MONTH_NAMES[d.getMonth()].slice(0,3) + ' ' + d.getDate();
+}
+
+// ══════════════════════════════════════
+// RENDER CALENDAR
+// ══════════════════════════════════════
+function renderCalendar() {
+  const grid = document.getElementById('cal-grid');
+  const list = document.getElementById('event-list');
+
+  if (currentView === 'week') {
+    grid.innerHTML = renderWeekGrid();
+    list.innerHTML = renderEventList();
+    renderFilterPills();
+  } else if (currentView === 'month') {
+    grid.innerHTML = renderMonthGrid(viewAnchor, 1);
+    list.innerHTML = '';
+    renderFilterPills();
+  } else {
+    grid.innerHTML = renderMonthGrid(viewAnchor, 3);
+    list.innerHTML = '';
+    renderFilterPills();
+  }
+  document.getElementById('results-meta').textContent = '';
+}
+
+// ── WEEK GRID ──
+function renderWeekGrid() {
+  const weekStart = startOfWeek(viewAnchor);
+  const days = Array.from({length:7}, (_,i) => addDays(weekStart, i));
+  const today = dateStr(new Date());
+
+  let html = `
+  <div class="cal-nav">
+    <button class="cal-nav-btn" onclick="navWeek(-1)">&#8592; Prev</button>
+    <span class="cal-nav-label">${formatShort(days[0])} – ${formatShort(days[6])}, ${days[0].getFullYear()}</span>
+    <button class="cal-nav-btn" onclick="navWeek(1)">Next &#8594;</button>
+  </div>
+  <div class="week-grid">
+    <div class="week-header-row">
+      <div class="week-actor-col"></div>`;
+
+  days.forEach(d => {
+    const ds = dateStr(d);
+    const isToday = ds === today;
+    html += `<div class="week-day-header ${isToday?'today':''}">${DAY_SHORT[d.getDay()]}<br><span>${d.getDate()}</span></div>`;
+  });
+  html += `</div>`;
+
+  ACTORS.forEach(actor => {
+    html += `<div class="week-actor-row">
+      <div class="week-actor-label" style="border-left:3px solid ${actor.color}">${actor.label.split(' ')[0]}</div>`;
+    days.forEach(d => {
+      const ds = dateStr(d);
+      const av = AVAILABILITY[ds] && AVAILABILITY[ds][actor.key];
+      const status = av ? av.status : '';
+      const note = av ? av.note : '';
+      const eventsOnDay = EVENTS.filter(e => e.date === ds);
+      let cell = `<div class="week-cell status-${status}" title="${note||STATUS_LABELS[status]||''}" style="${status==='avail'?'background:'+actor.light+';border-color:'+actor.color+'22':''}" >`;
+      if (status) cell += `<span class="cell-dot status-dot-${status}" style="${status==='avail'?'background:'+actor.color:''}"></span>`;
+      eventsOnDay.forEach(ev => { cell += `<div class="cell-event-pill" style="background:${eventColor(ev.type)}">${ev.title.length>12?ev.title.slice(0,12)+'…':ev.title}</div>`; });
+      cell += `</div>`;
+      html += cell;
+    });
+    html += `</div>`;
+  });
+
+  html += `</div>`;
+  return html;
+}
+
+function navWeek(dir) {
+  viewAnchor = addDays(viewAnchor, dir * 7);
+  renderCalendar();
+}
+
+// ── MONTH GRID ──
+function renderMonthGrid(anchor, numMonths) {
+  let html = `<div class="cal-nav">
+    <button class="cal-nav-btn" onclick="navMonth(-${numMonths})">&#8592; Prev</button>
+    <span class="cal-nav-label">${MONTH_NAMES[anchor.getMonth()]} ${anchor.getFullYear()}${numMonths>1?' – '+MONTH_NAMES[new Date(anchor.getFullYear(), anchor.getMonth()+numMonths-1).getMonth()]+' '+new Date(anchor.getFullYear(), anchor.getMonth()+numMonths-1).getFullYear():''}</span>
+    <button class="cal-nav-btn" onclick="navMonth(${numMonths})">Next &#8594;</button>
+  </div>`;
+
+  for (let m = 0; m < numMonths; m++) {
+    const monthDate = new Date(anchor.getFullYear(), anchor.getMonth() + m, 1);
+    html += renderSingleMonth(monthDate);
+  }
+  return html;
+}
+
+function renderSingleMonth(monthDate) {
+  const year = monthDate.getFullYear();
+  const month = monthDate.getMonth();
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  const today = dateStr(new Date());
+
+  let html = `<div class="month-block">
+    <div class="month-title">${MONTH_NAMES[month]} ${year}</div>
+    <div class="month-grid">
+      ${DAY_SHORT.map(d=>`<div class="month-dow">${d}</div>`).join('')}`;
+
+  for (let i = 0; i < firstDay; i++) html += `<div class="month-day empty"></div>`;
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const ds = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    const isToday = ds === today;
+    const eventsOnDay = EVENTS.filter(e => e.date === ds);
+    const dayAvail = AVAILABILITY[ds] || {};
+
+    let dots = ACTORS.map(a => {
+      const av = dayAvail[a.key];
+      if (!av) return '';
+      return `<span class="month-dot" style="background:${av.status==='avail'?a.color:av.status==='unavail'?'#ccc':av.status==='remote'?'#f0a840':av.status==='tbd'?'#aaa':'#e0c080'}" title="${a.label}: ${STATUS_LABELS[av.status]}${av.note?' ('+av.note+')':''}"></span>`;
+    }).join('');
+
+    let eventPills = eventsOnDay.map(ev =>
+      `<div class="month-event-pill" style="background:${eventColor(ev.type)}">${ev.title.length>10?ev.title.slice(0,10)+'…':ev.title}</div>`
+    ).join('');
+
+    html += `<div class="month-day ${isToday?'today':''}">
+      <div class="month-day-num">${day}</div>
+      <div class="month-day-dots">${dots}</div>
+      ${eventPills}
+    </div>`;
+  }
+
+  html += `</div></div>`;
+  return html;
+}
+
+function navMonth(dir) {
+  viewAnchor = new Date(viewAnchor.getFullYear(), viewAnchor.getMonth() + dir, 1);
+  renderCalendar();
+}
+
+// ── EVENT LIST (week view only) ──
+function renderEventList() {
+  const f = getFilters();
+  const weekStart = startOfWeek(viewAnchor);
+  const weekDates = new Set(Array.from({length:7}, (_,i) => dateStr(addDays(weekStart, i))));
+
+  let events = EVENTS.filter(e => weekDates.has(e.date));
   if (f.type) events = events.filter(e => e.type === f.type);
   if (f.character) events = events.filter(e => e.characters.includes(f.character));
   if (f.act) events = events.filter(e => e.act === f.act);
   if (f.scene) events = events.filter(e => e.scenes.includes(f.scene));
-  if (f.from) events = events.filter(e => e.date >= f.from);
-  if (f.to) events = events.filter(e => e.date <= f.to);
 
-  // Sort by date
-  events.sort((a,b) => a.date.localeCompare(b.date));
+  if (!events.length) return '<div style="color:#9a8a7a;font-size:13px;font-style:italic;margin-top:8px;">No scheduled events this week.</div>';
 
-  // Pills
-  const pillsEl = document.getElementById('filter-pills');
-  const pills = [];
-  if (f.type) pills.push({label: typeLabel(f.type), key: 'type'});
-  if (f.character) pills.push({label: charLabel(f.character), key: 'character'});
-  if (f.act) pills.push({label: f.act, key: 'act'});
-  if (f.scene) pills.push({label: f.scene, key: 'scene'});
-  if (f.from) pills.push({label: 'From ' + formatDate(f.from), key: 'from'});
-  if (f.to) pills.push({label: 'To ' + formatDate(f.to), key: 'to'});
-
-  pillsEl.innerHTML = pills.map(p =>
-    `<span class="pill">${p.label}<span class="pill-x" onclick="clearFilter('${p.key}')">×</span></span>`
-  ).join('');
-
-  // Meta
-  document.getElementById('results-meta').textContent =
-    events.length === 0 ? '' :
-    events.length === 1 ? '1 event' :
-    `${events.length} events`;
-
-  // Events
-  const listEl = document.getElementById('event-list');
-  if (events.length === 0) {
-    listEl.innerHTML = '<div class="no-events">No events match the current filters.</div>';
-    return;
-  }
-
-  listEl.innerHTML = events.map(e => {
-    const charTags = e.characters.map(c =>
-      `<span class="event-tag ${c}">${charLabel(c)}</span>`
-    ).join('');
-    const sceneTags = e.scenes.map(s =>
-      `<span class="event-tag">${s}</span>`
-    ).join('');
+  return events.sort((a,b)=>a.date.localeCompare(b.date)).map(e => {
+    const charTags = e.characters.map(c=>`<span class="event-tag ${c}">${charLabel(c)}</span>`).join('');
     const actTag = e.act ? `<span class="event-tag">${e.act}</span>` : '';
-
-    return `
-    <div class="event-card">
+    const sceneTags = e.scenes.map(s=>`<span class="event-tag">${s}</span>`).join('');
+    return `<div class="event-card">
       <div class="event-stripe ${e.type}"></div>
       <div class="event-body">
         <div class="event-top">
@@ -1416,27 +1892,27 @@ function renderCalendar() {
           <span class="event-type-badge badge-${e.type}">${typeLabel(e.type)}</span>
         </div>
         <div class="event-meta-row">
-          <span class="event-meta-item">
-            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>
-            ${formatDate(e.date)}
-          </span>
-          <span class="event-meta-item">
-            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3.5l2.5 1.5"/></svg>
-            ${e.time}
-          </span>
-          ${e.location ? `<span class="event-meta-item">
-            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6c0 3.5 4.5 8.5 4.5 8.5S12.5 9.5 12.5 6c0-2.5-2-4.5-4.5-4.5z"/><circle cx="8" cy="6" r="1.5"/></svg>
-            ${e.location}
-          </span>` : ''}
+          <span class="event-meta-item">📅 ${formatDate(e.date)}</span>
+          <span class="event-meta-item">🕐 ${e.time}</span>
+          ${e.location?`<span class="event-meta-item">📍 ${e.location}</span>`:''}
         </div>
-        ${(e.characters.length || e.act || e.scenes.length) ? `
-        <div class="event-tags">
-          ${charTags}${actTag}${sceneTags}
-        </div>` : ''}
-        ${e.notes ? `<div style="margin-top:10px;font-size:13px;color:#6a6050;font-style:italic;">${e.notes}</div>` : ''}
+        ${(e.characters.length||e.act||e.scenes.length)?`<div class="event-tags">${charTags}${actTag}${sceneTags}</div>`:''}
+        ${e.notes?`<div style="margin-top:8px;font-size:13px;color:#6a6050;font-style:italic;">${e.notes}</div>`:''}
       </div>
     </div>`;
   }).join('');
+}
+
+function renderFilterPills() {
+  const f = getFilters();
+  const pills = [];
+  if (f.type) pills.push({label:typeLabel(f.type), key:'type'});
+  if (f.character) pills.push({label:charLabel(f.character), key:'character'});
+  if (f.act) pills.push({label:f.act, key:'act'});
+  if (f.scene) pills.push({label:f.scene, key:'scene'});
+  document.getElementById('filter-pills').innerHTML = pills.map(p =>
+    `<span class="pill">${p.label}<span class="pill-x" onclick="clearFilter('${p.key}')">×</span></span>`
+  ).join('');
 }
 
 function clearFilter(key) {
@@ -1444,34 +1920,35 @@ function clearFilter(key) {
   applyFilters();
 }
 
+function eventColor(type) {
+  return {tableread:'#b08050',rehearsal:'#4a7a56',fitting:'#6a7aaa',techdress:'#7a5080',performance:'#8b6650'}[type]||'#888';
+}
+
 function typeLabel(t) {
-  return {tableread:'Table Read', rehearsal:'Rehearsal', fitting:'Fitting', techdress:'Tech / Dress', performance:'Performance'}[t] || t;
+  return {tableread:'Table Read',rehearsal:'Rehearsal',fitting:'Fitting',techdress:'Tech/Dress',performance:'Performance'}[t]||t;
 }
 
 function charLabel(c) {
-  return {gabe:'Gabe', karen:'Karen', both:'Full Cast'}[c] || c;
+  return {gabe:'Gabe',karen:'Karen',both:'Full Cast'}[c]||c;
 }
 
 function formatDate(d) {
   if (!d) return '';
   const [y,m,day] = d.split('-');
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  return `${months[parseInt(m)-1]} ${parseInt(day)}, ${y}`;
+  return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(m)-1]+' '+parseInt(day)+', '+y;
 }
+
 // ══════════════════════════════════════
 // NOTES SYSTEM
-// Notes are saved to localStorage per person.
 // ══════════════════════════════════════
-
 function notesKey(person) { return 'dwf-notes-' + person; }
 
 function loadNotes(person) {
-  try {
-    return JSON.parse(localStorage.getItem(notesKey(person))) || [];
-  } catch(e) { return []; }
+  try { return JSON.parse(localStorage.getItem(notesKey(person))) || []; }
+  catch(e) { return []; }
 }
 
-function saveNotes(person, notes) {
+function persistNotes(person, notes) {
   localStorage.setItem(notesKey(person), JSON.stringify(notes));
 }
 
@@ -1483,80 +1960,80 @@ function openForm(person) {
 function closeForm(person) {
   const form = document.getElementById('form-' + person);
   form.classList.remove('open');
-  document.getElementById(person + '-act').value = '';
-  document.getElementById(person + '-scene').value = '';
-  document.getElementById(person + '-text').value = '';
+  ['act','scene','text','production','actor'].forEach(f => {
+    const el = document.getElementById(person+'-'+f);
+    if (el) el.value = '';
+  });
 }
 
 function saveNote(person) {
   const text = document.getElementById(person + '-text').value.trim();
-  if (!text) {
-    document.getElementById(person + '-text').focus();
-    return;
-  }
-  const act   = document.getElementById(person + '-act').value;
-  const scene = document.getElementById(person + '-scene').value;
+  if (!text) { document.getElementById(person + '-text').focus(); return; }
+  const act   = (document.getElementById(person+'-act')   ||{}).value || '';
+  const scene = (document.getElementById(person+'-scene') ||{}).value || '';
+  const production = (document.getElementById(person+'-production')||{}).value || '';
+  const actor = (document.getElementById(person+'-actor')||{}).value || '';
   const notes = loadNotes(person);
-  notes.unshift({
-    id: Date.now(),
-    text,
-    act,
-    scene,
-    ts: new Date().toISOString()
-  });
-  saveNotes(person, notes);
+  notes.unshift({ id:Date.now(), text, act, scene, production, actor, ts:new Date().toISOString() });
+  persistNotes(person, notes);
   closeForm(person);
   renderNotes(person);
 }
 
 function deleteNote(person, id) {
   if (!confirm('Delete this note?')) return;
-  const notes = loadNotes(person).filter(n => n.id !== id);
-  saveNotes(person, notes);
+  persistNotes(person, loadNotes(person).filter(n=>n.id!==id));
   renderNotes(person);
 }
 
 function editNote(person, id) {
   const notes = loadNotes(person);
-  const note = notes.find(n => n.id === id);
+  const note = notes.find(n=>n.id===id);
   if (!note) return;
-  // Populate form
-  document.getElementById(person + '-act').value = note.act || '';
-  document.getElementById(person + '-scene').value = note.scene || '';
-  document.getElementById(person + '-text').value = note.text;
+  const actEl   = document.getElementById(person+'-act');
+  const sceneEl = document.getElementById(person+'-scene');
+  const prodEl  = document.getElementById(person+'-production');
+  const actorEl = document.getElementById(person+'-actor');
+  const textEl  = document.getElementById(person+'-text');
+  if (actEl) actEl.value = note.act||'';
+  if (sceneEl) sceneEl.value = note.scene||'';
+  if (prodEl) prodEl.value = note.production||'';
+  if (actorEl) actorEl.value = note.actor||'';
+  if (textEl) textEl.value = note.text;
   openForm(person);
-  // Remove old note and re-save on next save
-  const remaining = notes.filter(n => n.id !== id);
-  saveNotes(person, remaining);
+  persistNotes(person, notes.filter(n=>n.id!==id));
   renderNotes(person);
 }
 
+const PERSON_COLORS = {
+  jeremy:'#4a7a56', christina:'#8b6650', john:'#5a6aaa', lauren:'#a05080', jess:'#1c2b1e'
+};
+
 function renderNotes(person) {
   const notes = loadNotes(person);
-  const isKaren = person === 'christina';
   const listEl  = document.getElementById('notes-' + person);
   const countEl = document.getElementById('count-' + person);
+  const color   = PERSON_COLORS[person] || '#888';
 
-  countEl.textContent = notes.length === 0 ? '' :
-    notes.length === 1 ? '1 note' : notes.length + ' notes';
+  countEl.textContent = notes.length === 0 ? '' : notes.length === 1 ? '1 note' : notes.length + ' notes';
 
-  if (notes.length === 0) {
+  if (!notes.length) {
     listEl.innerHTML = '<div class="no-notes">No notes yet. Hit "+ Add New Note" to get started.</div>';
     return;
   }
 
   listEl.innerHTML = notes.map(n => {
-    const cardClass = isKaren ? 'karen-note' : 'gabe-note';
-    const badgeClass = isKaren ? 'karen-badge' : '';
-    const actBadge  = n.act   ? `<span class="note-badge ${badgeClass}">${n.act}</span>` : '';
-    const sceneBadge = n.scene ? `<span class="note-badge scene-badge">${n.scene}</span>` : '';
+    const badges = [
+      n.production ? `<span class="note-badge" style="background:${color}18;border-color:${color}44;color:${color}">${n.production}</span>` : '',
+      n.actor ? `<span class="note-badge scene-badge">${n.actor}</span>` : '',
+      n.act   ? `<span class="note-badge" style="background:${color}18;border-color:${color}44;color:${color}">${n.act}</span>` : '',
+      n.scene ? `<span class="note-badge scene-badge">${n.scene}</span>` : ''
+    ].filter(Boolean).join('');
     const ts = new Date(n.ts);
-    const tsStr = ts.toLocaleDateString('en-US', {month:'short', day:'numeric'}) +
-                  ' · ' + ts.toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit'});
-    return `
-    <div class="note-card ${cardClass}" id="note-${n.id}">
+    const tsStr = ts.toLocaleDateString('en-US',{month:'short',day:'numeric'}) + ' · ' + ts.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+    return `<div class="note-card" style="border-left:4px solid ${color}">
       <div class="note-card-top">
-        <div class="note-card-meta">${actBadge}${sceneBadge}</div>
+        <div class="note-card-meta">${badges}</div>
         <span class="note-timestamp">${tsStr}</span>
       </div>
       <div class="note-text">${escHtml(n.text)}</div>
@@ -1572,6 +2049,7 @@ function escHtml(str) {
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 </script>
+
 
 </body>
 </html>
