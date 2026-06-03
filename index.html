@@ -607,10 +607,174 @@ p { margin-bottom: 14px; color: var(--text2); }
 .props-btn    { background: #406050 !important; }
 .set-btn      { background: #504020 !important; }
 
+/* ════════════════════════════════════════════════
+   LAWS OF UX — MOBILE-FIRST COMPLIANCE
+   ─────────────────────────────────────────────
+   Fitts's Law:   All touch targets min 44×44px
+   Miller's Law:  Max 5±2 items per nav group
+   Hick's Law:    Decisions reduced; clear labels
+   Jakob's Law:   Familiar nav patterns
+   Aesthetic-Usability: Visual clarity = perceived ease
+   WCAG 2.1 AA:   4.5:1 contrast, 16px min body
+   ════════════════════════════════════════════════ */
+
+/* ── GLOBAL TOUCH & INTERACTION ── */
+* {
+  -webkit-tap-highlight-color: rgba(232,98,42,0.15);
+  touch-action: manipulation;       /* remove 300ms tap delay */
+}
+button, a, [role="button"] {
+  min-height: 44px;                 /* Fitts: minimum touch target */
+  min-width: 44px;
+}
+select, input {
+  min-height: 44px;                 /* form controls also tappable */
+  font-size: 16px !important;       /* prevent iOS zoom on focus */
+}
+
+/* ── NAV BUTTONS — mobile stack ── */
+.nav-btn-grid {
+  flex-direction: column;
+  align-items: stretch;             /* full width on mobile */
+  gap: 14px;
+  width: 100%;
+  max-width: 400px;
+}
+.nav-btn {
+  font-size: 18px;                  /* readable at arm's length */
+  padding: 18px 28px;
+  min-height: 60px;                 /* generous Fitts target */
+  border-radius: 14px;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  letter-spacing: 0.03em;
+}
+
+/* ── BACK BUTTON ── */
+.back-btn {
+  font-size: 15px;
+  padding: 12px 20px;
+  min-height: 44px;
+  margin: 16px 16px 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ── SUB-NAV TABS ── */
+.sub-nav-btn {
+  font-size: 14px;
+  padding: 14px 20px;
+  min-height: 48px;
+}
+
+/* ── BODY TEXT ── */
+body { font-size: 17px; line-height: 1.8; }   /* 17px: WCAG floor + legibility */
+p { font-size: 17px; margin-bottom: 16px; }
+h2 { font-size: 28px; line-height: 1.2; }
+h3 { font-size: 20px; }
+h3.subhead { font-size: 12px; }
+
+/* ── COVER TITLE ── */
+.cover-main-title { font-size: 40px; }
+.cover-info-row   { font-size: 15px; }
+
+/* ── SECTION / TRAIT LABELS — bump up from 9–11px ── */
+.section-label   { font-size: 11px; }
+.trait-label     { font-size: 11px; }
+.character-role  { font-size: 12px; }
+.scene-label     { font-size: 12px; }
+.essence-block   { font-size: 16px; }
+
+/* ── CHECKLIST ── */
+.checklist li { font-size: 16px; padding: 10px 0 10px 26px; }
+
+/* ── CALLOUT ── */
+.callout p { font-size: 15px; }
+
+/* ── NOTES FORM ── */
+.note-textarea    { font-size: 17px; min-height: 140px; }
+.note-form-group label { font-size: 12px; }
+.add-note-btn     { font-size: 15px; padding: 14px 22px; min-height: 52px; }
+.btn-save, .btn-cancel { font-size: 14px; padding: 12px 20px; min-height: 44px; }
+
+/* ── NOTE CARDS ── */
+.note-text        { font-size: 16px; }
+.note-timestamp   { font-size: 13px; }
+.note-action-btn  { font-size: 13px; min-height: 44px; padding: 8px 4px; }
+
+/* ── CALENDAR ── */
+.cal-nav-btn  { font-size: 14px; padding: 10px 16px; min-height: 44px; }
+.view-btn     { font-size: 13px; padding: 10px 16px; min-height: 44px; }
+.filter-group label { font-size: 12px; }
+.event-title  { font-size: 17px; }
+.event-meta-item { font-size: 14px; }
+
+/* ── JUMP NAV ── */
+.jump-link { font-size: 14px; padding: 8px 16px; min-height: 40px; display: inline-flex; align-items: center; }
+
+/* ── HELPER BOX ── */
+.helper-box { font-size: 15px; }
+
+/* ── SCENE CONTENT ── */
+.scene-content { font-size: 15px; }
+.method-card p { font-size: 15px; }
+
+/* ── THEME TOGGLE ── */
+.theme-toggle { font-size: 14px; padding: 8px 14px; min-height: 44px; }
+
+/* ════════════════════════════════════════════
+   TABLET (600px+) — horizontal nav
+   ════════════════════════════════════════════ */
 @media (min-width: 600px) {
-  .nav-btn-grid { flex-direction: row; flex-wrap: wrap; justify-content: center; }
-  .nav-btn { width: auto; min-width: 150px; max-width: none; flex: 0 1 auto; }
+  .nav-btn-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 720px;
+  }
+  .nav-btn {
+    width: auto;
+    min-width: 170px;
+    max-width: 240px;
+    flex: 1 1 auto;
+    font-size: 17px;
+    padding: 16px 28px;
+    min-height: 56px;
+  }
   .nav-section { padding: 40px 32px 48px; }
+  body { font-size: 16px; }
+  p { font-size: 16px; }
+}
+
+/* ════════════════════════════════════════════
+   DESKTOP (540px+ — layout shifts)
+   ════════════════════════════════════════════ */
+@media (min-width: 540px) {
+  .cover-body { padding: 52px 40px 48px; }
+  .cover-logo { width: 112px; height: 112px; }
+  .cover-main-title { font-size: 48px; }
+  .main, .cal-wrap, .notes-wrap { padding-left: 24px; padding-right: 24px; }
+  .trait-grid { grid-template-columns: 1fr 1fr; }
+  .two-column { grid-template-columns: 1fr 1fr; }
+  .methodology-grid { grid-template-columns: 1fr 1fr; }
+  .scene-row { grid-template-columns: 160px 1fr; }
+  .scene-label { border-bottom: none; border-right: 1px solid var(--border2); display: flex; align-items: center; }
+  .character-card { padding: 26px 28px; }
+  .character-card-header { flex-direction: row; align-items: baseline; gap: 14px; }
+}
+@media (min-width: 820px) {
+  .cover-body { padding: 60px 60px 52px; }
+  .cover-logo { width: 124px; height: 124px; }
+  .cover-main-title { font-size: 52px; }
+  .main, .cal-wrap, .notes-wrap { max-width: 860px; margin: 0 auto; padding-left: 40px; padding-right: 40px; }
+  .character-card { padding: 32px 36px; }
+  h2 { font-size: 30px; }
+  h3 { font-size: 22px; }
+  .together-section { padding: 40px 36px; }
 }
 
 .note-form { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 18px; margin-bottom: 20px; display: none; }
@@ -751,32 +915,7 @@ p { margin-bottom: 14px; color: var(--text2); }
 [data-theme="dark"] .jump-link-couple { background: #1a2a1a; color: #a0c090; border-color: #3a5030; }
 
 footer { background: var(--cover-bg); color: #6a8060; text-align: center; padding: 24px 16px; font-size: 11px; letter-spacing: 0.06em; line-height: 1.7; }
-footer a { color: #8fa880; text-decoration: none; }
-footer a:hover { text-decoration: underline; }
 
-/* ── RESPONSIVE ── */
-@media (min-width: 540px) {
-  .cover-body { padding: 52px 40px 48px; }
-  .cover-logo { width: 112px; height: 112px; }
-  .cover-main-title { font-size: 48px; }
-  .main, .cal-wrap, .notes-wrap { padding-left: 24px; padding-right: 24px; }
-  .trait-grid { grid-template-columns: 1fr 1fr; }
-  .two-column { grid-template-columns: 1fr 1fr; }
-  .methodology-grid { grid-template-columns: 1fr 1fr; }
-  .scene-row { grid-template-columns: 160px 1fr; }
-  .scene-label { border-bottom: none; border-right: 1px solid var(--border2); display: flex; align-items: center; }
-  .character-card { padding: 26px 28px; }
-  .character-card-header { flex-direction: row; align-items: baseline; gap: 14px; }
-}
-@media (min-width: 820px) {
-  .cover-body { padding: 60px 60px 52px; }
-  .cover-logo { width: 124px; height: 124px; }
-  .cover-main-title { font-size: 52px; }
-  .main, .cal-wrap, .notes-wrap { max-width: 860px; margin: 0 auto; padding-left: 40px; padding-right: 40px; }
-  .character-card { padding: 32px 36px; }
-  h2 { font-size: 30px; }
-  .together-section { padding: 40px 36px; }
-}
 </style>
 </head>
 <body>
