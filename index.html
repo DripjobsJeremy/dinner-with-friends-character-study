@@ -851,37 +851,65 @@ h3.subhead { font-size: 12px; }
   background: color-mix(in srgb, var(--bg2) 92%, #1c2b1e 8%);
 }
 
-/* Copy-to-actor toggle */
+/* ── COPY PILL TOGGLE ── */
 .copy-toggle-box {
   background: var(--helper-bg);
   border: 1px solid var(--helper-border);
-  border-radius: 6px;
-  padding: 12px 16px;
+  border-radius: 10px;
+  padding: 14px 16px;
 }
-.copy-toggle-label {
+.pill-toggle-row {
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  cursor: pointer;
-  font-size: 14px;
-  color: var(--helper-text);
-  line-height: 1.5;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
-.copy-toggle-label input[type="checkbox"] {
-  margin-top: 3px;
-  width: 16px;
-  height: 16px;
+.copy-toggle-text {
+  font-size: 15px;
+  color: var(--helper-text);
+  line-height: 1.4;
+  flex: 1;
+}
+.copy-toggle-text strong { color: var(--accent); }
+
+/* The pill itself */
+.pill-toggle {
   flex-shrink: 0;
-  accent-color: var(--green);
+  width: 54px;
+  height: 30px;
+  border-radius: 15px;
+  border: none;
+  background: var(--border);
   cursor: pointer;
+  padding: 3px;
+  position: relative;
+  transition: background 0.25s ease;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+  min-height: unset; /* override global 44px for this specific element */
 }
-.copy-toggle-text { flex: 1; }
+.pill-toggle[aria-checked="true"] {
+  background: var(--accent);
+}
+.pill-toggle-knob {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  transition: transform 0.25s ease;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+}
+.pill-toggle[aria-checked="true"] .pill-toggle-knob {
+  transform: translateX(24px);
+}
 .copy-toggle-hint {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--helper-text);
-  opacity: 0.8;
-  margin-top: 8px;
-  padding-left: 26px;
+  opacity: 0.85;
+  margin-top: 10px;
   font-style: italic;
   line-height: 1.5;
 }
@@ -1330,7 +1358,7 @@ footer { background: var(--cover-bg); color: #6a8060; text-align: center; paddin
 
   <!-- HELPER -->
   <div class="helper-box">
-    <strong>How to read availability:</strong> Colour-coded dots on each day show actor availability at a glance.
+    <strong>💡 How to read availability:</strong> Colour-coded dots on each day show actor availability at a glance.
     <div class="helper-legend">
       <span class="helper-dot-row"><span class="hdot" style="background:#4a7a56"></span> Jeremy (Gabe)</span>
       <span class="helper-dot-row"><span class="hdot" style="background:#8b6650"></span> Christina (Karen)</span>
@@ -1586,8 +1614,8 @@ footer { background: var(--cover-bg); color: #6a8060; text-align: center; paddin
   </div>
   
     <div class="helper-box" style="margin-bottom:16px;font-size:13px">
-      <strong>Your notes are private to this device.</strong> Notes you save here are stored in this browser only.<br><br>
-      <strong>📤 Sending a note to someone's tab:</strong> Select a person from the "For / About" dropdown and a toggle will appear. Check it to send that note to their tab on any device via the cloud. Use only for notes you want them to see. The toggle resets after each save.
+      <strong>💡 Your notes are private to this device.</strong> Notes you save here are stored in this browser only.<br><br>
+      <strong>💡 Sending a note to someone's tab:</strong> Select a person from the "For / About" dropdown and a toggle will appear. Check it to send that note to their tab on any device via the cloud. Use only for notes you want them to see. The toggle resets after each save.
     </div>
   <button class="add-note-btn jess-btn" onclick="openForm('jess')"><span class="plus">+</span> Add New Note</button>
   <div class="note-form" id="form-jess">
@@ -1638,11 +1666,22 @@ footer { background: var(--cover-bg); color: #6a8060; text-align: center; paddin
     
     <div id="jess-copy-toggle" style="display:none; margin-bottom:14px;">
       <div class="copy-toggle-box">
-        <label class="copy-toggle-label">
-          <input type="checkbox" id="jess-copy-check">
-          <span class="copy-toggle-text">Also send this note to <strong id="jess-copy-actor-name"></strong>'s tab on any device</span>
-        </label>
-        <div class="copy-toggle-hint">Only use this for notes you want that person to see in their tab. Resets after each save.</div>
+        <div class="pill-toggle-row">
+          <span class="copy-toggle-text">Send to <strong id="jess-copy-actor-name"></strong>'s tab</span>
+          <button
+            type="button"
+            class="pill-toggle"
+            id="jess-copy-pill"
+            role="switch"
+            aria-checked="false"
+            onclick="toggleCopyPill()"
+          >
+            <span class="pill-toggle-knob"></span>
+          </button>
+        </div>
+        <div class="copy-toggle-hint">💡 Tap to send this note to their tab on any device. Resets after each save.</div>
+        <!-- Hidden checkbox keeps existing JS working -->
+        <input type="checkbox" id="jess-copy-check" style="display:none">
       </div>
     </div>
     <div class="note-form-row">
@@ -2502,6 +2541,14 @@ const ACTOR_DISPLAY_NAMES = {
   set:       'Set Dept.',
 };
 
+function toggleCopyPill() {
+  const pill  = document.getElementById('jess-copy-pill');
+  const check = document.getElementById('jess-copy-check');
+  const isOn  = pill.getAttribute('aria-checked') === 'true';
+  pill.setAttribute('aria-checked', isOn ? 'false' : 'true');
+  check.checked = !isOn;
+}
+
 function handleJessActorChange() {
   const val = document.getElementById('jess-actor').value;
   const toggle = document.getElementById('jess-copy-toggle');
@@ -2510,7 +2557,9 @@ function handleJessActorChange() {
   const isSpecific = val && val !== 'fullcast';
   toggle.style.display = isSpecific ? 'block' : 'none';
   if (isSpecific) nameEl.textContent = ACTOR_DISPLAY_NAMES[val] || val;
-  check.checked = false; // always reset on actor change
+  check.checked = false;
+  const pill = document.getElementById('jess-copy-pill');
+  if(pill) pill.setAttribute('aria-checked','false'); // reset on actor change
 }
 
 
@@ -2595,8 +2644,12 @@ function closeForm(p){
   document.getElementById('form-'+p).classList.remove('open');
   ['act','scene','text','production','actor'].forEach(f=>{const el=document.getElementById(p+'-'+f);if(el)el.value='';});
   if(p==='jess'){
-    const t=document.getElementById('jess-copy-toggle'), c=document.getElementById('jess-copy-check');
-    if(t) t.style.display='none'; if(c) c.checked=false;
+    const t=document.getElementById('jess-copy-toggle');
+    const c=document.getElementById('jess-copy-check');
+    const pill=document.getElementById('jess-copy-pill');
+    if(t) t.style.display='none';
+    if(c) c.checked=false;
+    if(pill) pill.setAttribute('aria-checked','false');
   }
 }
 
