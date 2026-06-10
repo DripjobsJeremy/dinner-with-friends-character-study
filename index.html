@@ -556,7 +556,16 @@ p { margin-bottom: 14px; color: var(--text2); }
 .event-meta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
 .event-meta-item { font-size: 13px; color: var(--text3); }
 .event-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
-.event-tag { font-size: 10px; padding: 2px 8px; border-radius: 3px; border: 1px solid var(--border); color: var(--text3); background: var(--bg); }
+.event-tag { font-size: 11px; padding: 3px 9px; border-radius: 3px; border: 1px solid var(--border); color: var(--text3); background: var(--bg); }
+.event-tag-char-gabe     { border-color: #E8622A66; color: #E8622A; background: rgba(232,98,42,0.08); }
+.event-tag-char-karen    { border-color: #2E5F8A66; color: #2E5F8A; background: rgba(46,95,138,0.08); }
+.event-tag-char-beth     { border-color: #a0508066; color: #a05080; background: rgba(160,80,128,0.08); }
+.event-tag-char-tom      { border-color: #5a6aaa66; color: #5a6aaa; background: rgba(90,106,170,0.08); }
+.event-tag-char-both     { border-color: #5B8DB866; color: #5B8DB8; background: rgba(91,141,184,0.08); }
+[data-theme="dark"] .event-tag-char-gabe  { color: #F5905A; background: rgba(232,98,42,0.15); }
+[data-theme="dark"] .event-tag-char-karen { color: #8AAFD4; background: rgba(91,141,184,0.15); }
+[data-theme="dark"] .event-tag-char-beth  { color: #c080a0; background: rgba(160,80,128,0.15); }
+[data-theme="dark"] .event-tag-char-tom   { color: #8090c0; background: rgba(90,106,170,0.15); }
 .event-tag.both { border-color: #c4bcd0; color: #5a5090; background: #f4f2f8; }
 [data-theme="dark"] .event-tag.both { background: #1e1a28; color: #9080b0; }
 
@@ -1407,6 +1416,17 @@ footer { background: var(--cover-bg); color: #6a8060; text-align: center; paddin
       </select>
     </div>
     <div class="filter-group">
+      <label for="f-character">Character</label>
+      <select id="f-character" onchange="applyFilters()">
+        <option value="">All Characters</option>
+        <option value="gabe">Gabe (Jeremy)</option>
+        <option value="karen">Karen (Christina)</option>
+        <option value="beth">Beth (Lauren)</option>
+        <option value="tom">Tom (John)</option>
+        <option value="both">Full Cast</option>
+      </select>
+    </div>
+    <div class="filter-group">
       <label for="f-act">Act</label>
       <select id="f-act" onchange="applyFilters()">
         <option value="">All Acts</option>
@@ -2149,8 +2169,117 @@ function toggleTheme() {
 // EVENTS
 // ══════════════════════════════════════
 const EVENTS = [
-  { id:1, title:"First Table Read", date:"2026-06-03", time:"7:00 PM", type:"tableread", characters:["both"], act:"Full Play", scenes:[], location:"Blue Ridge Community Theatre", notes:"Full cast. Bring pencils, not pens." },
-  { id:2, title:"Rehearsal", date:"2026-06-08", time:"6:00 PM", type:"rehearsal", characters:["both"], act:"", scenes:[], location:"Blue Ridge Community Theatre", notes:"" }
+
+  // ── WEEK 1 ──
+  { id:1,  title:"Table Read",
+    date:"2026-06-03", time:"7:00 PM", type:"tableread",
+    characters:["both"], act:"Full Play", scenes:[],
+    location:"Blue Ridge Community Theatre",
+    notes:"Full cast. Bring pencils, not pens." },
+
+  // ── WEEK 2 ──
+  { id:2,  title:"Rehearsal — Act II Sc. 1",
+    date:"2026-06-08", time:"6:00–9:00 PM", type:"rehearsal",
+    characters:["gabe","karen","beth","tom"],
+    act:"Act 2", scenes:["Scene 1"],
+    location:"Frame Shop",
+    notes:"Full cast called." },
+
+  { id:3,  title:"Rehearsal — Act II Sc. 2 & 3",
+    date:"2026-06-12", time:"6:00–9:00 PM", type:"rehearsal",
+    characters:["gabe","karen","beth","tom"],
+    act:"Act 2", scenes:["Scene 2","Scene 3"],
+    location:"Frame Shop",
+    notes:"Full cast called." },
+
+  // ── WEEK 3 ──
+  { id:4,  title:"Rehearsal — Act II Sc. 1, 2 & 3",
+    date:"2026-06-15", time:"6:00–9:00 PM", type:"rehearsal",
+    characters:["gabe","karen","beth","tom"],
+    act:"Act 2", scenes:["Scene 1","Scene 2","Scene 3"],
+    location:"Frame Shop",
+    notes:"Full cast called." },
+
+  { id:5,  title:"Rehearsal — Act I Sc. 2",
+    date:"2026-06-17", time:"5:30–8:00 PM", type:"rehearsal",
+    characters:["beth","tom"],
+    act:"Act 1", scenes:["Scene 2"],
+    location:"Frame Shop",
+    notes:"Beth & Tom only. Gabe & Karen: work on lines." },
+
+  { id:6,  title:"Rehearsal — Act I Sc. 2",
+    date:"2026-06-18", time:"5:30–8:00 PM", type:"rehearsal",
+    characters:["beth","tom"],
+    act:"Act 1", scenes:["Scene 2"],
+    location:"Frame Shop",
+    notes:"Beth & Tom only." },
+
+  // ── WEEK 4 ──
+  { id:7,  title:"Rehearsal — Act I Sc. 1",
+    date:"2026-06-22", time:"6:00–9:00 PM", type:"rehearsal",
+    characters:["gabe","karen","beth"],
+    act:"Act 1", scenes:["Scene 1"],
+    location:"BRCT: Black Box",
+    notes:"Gabe, Karen & Beth called." },
+
+  { id:8,  title:"Rehearsal — Act I Sc. 3",
+    date:"2026-06-24", time:"6:00–9:00 PM", type:"rehearsal",
+    characters:["gabe","karen","tom"],
+    act:"Act 1", scenes:["Scene 3"],
+    location:"BRCT: Black Box",
+    notes:"Gabe, Karen & Tom called." },
+
+  { id:9,  title:"Rehearsal — Act I Sc. 3a & Act II Sc. 4",
+    date:"2026-06-28", time:"12:00–2:00 PM", type:"rehearsal",
+    characters:["gabe","karen"],
+    act:"Full Play", scenes:["Scene 3","Scene 4"],
+    location:"BRCT: Black Box",
+    notes:"Gabe & Karen only." },
+
+  { id:10, title:"Rehearsal — Act I Sc. 1 & Act II Sc. 2",
+    date:"2026-06-28", time:"2:00–4:00 PM", type:"rehearsal",
+    characters:["gabe","karen","beth"],
+    act:"Full Play", scenes:["Scene 1","Scene 2"],
+    location:"BRCT: Black Box",
+    notes:"Gabe, Karen & Beth called. Continues from morning session." },
+
+  // ── WEEK 5 ──
+  { id:11, title:"Rehearsal — Act II Sc. 1",
+    date:"2026-06-30", time:"6:00–9:00 PM", type:"rehearsal",
+    characters:["gabe","karen","beth","tom"],
+    act:"Act 2", scenes:["Scene 1"],
+    location:"BRCT: Black Box",
+    notes:"Full cast called." },
+
+  { id:12, title:"Rehearsal — Act I Sc. 1 & Act II Sc. 2",
+    date:"2026-07-01", time:"6:00–9:00 PM", type:"rehearsal",
+    characters:["gabe","karen","beth"],
+    act:"Full Play", scenes:["Scene 1","Scene 2"],
+    location:"BRCT: Black Box",
+    notes:"Gabe, Karen & Beth called." },
+
+  // ── WEEK 6 ──
+  { id:13, title:"Rehearsal — Act I Sc. 3 & Act II Sc. 3",
+    date:"2026-07-06", time:"6:00–9:00 PM", type:"rehearsal",
+    characters:["gabe","karen","tom"],
+    act:"Full Play", scenes:["Scene 3"],
+    location:"BRCT: Black Box",
+    notes:"Gabe, Karen & Tom called." },
+
+  { id:14, title:"Rehearsal — Act I Sc. 3a & Act II Sc. 4",
+    date:"2026-07-08", time:"6:00–9:00 PM", type:"rehearsal",
+    characters:["gabe","karen"],
+    act:"Full Play", scenes:["Scene 3","Scene 4"],
+    location:"BRCT: Black Box",
+    notes:"Gabe & Karen only." },
+
+  { id:15, title:"Rehearsal — TBD",
+    date:"2026-07-12", time:"TBD", type:"rehearsal",
+    characters:["both"],
+    act:"", scenes:[],
+    location:"TBD",
+    notes:"Schedule TBD." },
+
 ];
 
 // ══════════════════════════════════════
@@ -2261,14 +2390,15 @@ function setSort(field, btn) {
 // ══════════════════════════════════════
 function getFilters() {
   return {
-    type: document.getElementById('f-type').value,
-    act:  document.getElementById('f-act').value,
-    from: document.getElementById('f-from').value,
-    to:   document.getElementById('f-to').value,
+    type:      document.getElementById('f-type').value,
+    character: document.getElementById('f-character') ? document.getElementById('f-character').value : '',
+    act:       document.getElementById('f-act').value,
+    from:      document.getElementById('f-from').value,
+    to:        document.getElementById('f-to').value,
   };
 }
 function resetFilters() {
-  ['f-type','f-act','f-from','f-to'].forEach(id=>document.getElementById(id).value='');
+  ['f-type','f-character','f-act','f-from','f-to'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
   applyFilters();
 }
 function applyFilters() { renderCalendar(); }
@@ -2314,6 +2444,7 @@ function eventColor(t) {
   return {tableread:'#b08050',rehearsal:'#4a7a56',fitting:'#6a7aaa',techdress:'#7a5080',performance:'#8b6650'}[t]||'#888';
 }
 function typeLabel(t) { return {tableread:'Table Read',rehearsal:'Rehearsal',fitting:'Fitting',techdress:'Tech/Dress',performance:'Performance'}[t]||t; }
+function charFullLabel(c) { return {gabe:'Gabe (Jeremy)',karen:'Karen (Christina)',beth:'Beth (Lauren)',tom:'Tom (John)',both:'Full Cast'}[c]||c; }
 
 // ══════════════════════════════════════
 // MAIN RENDER
@@ -2425,56 +2556,69 @@ const STATUS_LABELS={avail:'Available',unavail:'Unavailable',remote:'Remote',tbd
 function renderListView() {
   const f = getFilters();
   const visActors = ACTORS.filter(a=>activeActors.has(a.key));
-
-  // Build rows: one row per (actor, date) in range
-  let rows = [];
-  const allDates = new Set([...Object.keys(AVAILABILITY)]);
-
-  // Filter by date range
   const from = f.from || '2026-06-01';
   const to   = f.to   || '2026-09-30';
 
+  // ── SCHEDULED EVENTS at top of list view ──
+  let evs = EVENTS.filter(e => e.date >= from && e.date <= to);
+  if (f.type)      evs = evs.filter(e=>e.type===f.type);
+  if (f.act)       evs = evs.filter(e=>e.act===f.act);
+  if (f.character) evs = evs.filter(e=>e.characters.includes(f.character)||e.characters.includes('both'));
+  evs.sort((a,b)=>a.date.localeCompare(b.date));
+
+  let h = '';
+  if (evs.length) {
+    h += `<div style="margin-bottom:24px">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:var(--text-muted);margin-bottom:10px">Scheduled Rehearsals</div>
+      <div class="event-list">${evs.map(e=>renderEventCard(e)).join('')}</div>
+    </div>`;
+  }
+
+  // ── AVAILABILITY TABLE ──
+  let rows = [];
+  const allDates = new Set([...Object.keys(AVAILABILITY)]);
   allDates.forEach(ds => {
     if (ds < from || ds > to) return;
     const dayAv = AVAILABILITY[ds]||{};
     visActors.forEach(actor => {
       const av = dayAv[actor.key];
       if (!av) return;
+      if (f.character && actor.key !== f.character) return;
       rows.push({ date:ds, actor, status:av.status, note:av.note, events: EVENTS.filter(e=>e.date===ds) });
     });
   });
 
-  // Sort
   rows.sort((a,b) => {
     let va, vb;
-    if (sortField==='date') { va=a.date; vb=b.date; }
-    else if (sortField==='actor') { va=a.actor.label; vb=b.actor.label; }
+    if (sortField==='date')  { va=a.date; vb=b.date; }
+    else if (sortField==='actor')  { va=a.actor.label; vb=b.actor.label; }
     else { va=a.status; vb=b.status; }
     return va<vb?-sortDir:va>vb?sortDir:0;
   });
 
-  if (!rows.length) return '<div class="list-no-data">No availability data in this range.</div>';
+  if (!rows.length) return h + '<div class="list-no-data">No availability data in this range.</div>';
 
   const arrow = sortDir===1?'↑':'↓';
-  const sa = f => sortField===f?' sorted':'';
+  const sa = field => sortField===field?' sorted':'';
 
-  let h = `<div style="overflow-x:auto"><table class="list-view-table">
+  h += `<div style="font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:var(--text-muted);margin-bottom:10px">Actor Availability</div>
+  <div style="overflow-x:auto"><table class="list-view-table">
   <thead><tr>
     <th onclick="setSort('date', this)" class="${sa('date')}">Date <span class="sort-arrow">${sortField==='date'?arrow:'↕'}</span></th>
     <th onclick="setSort('actor', this)" class="${sa('actor')}">Actor <span class="sort-arrow">${sortField==='actor'?arrow:'↕'}</span></th>
     <th onclick="setSort('status', this)" class="${sa('status')}">Availability <span class="sort-arrow">${sortField==='status'?arrow:'↕'}</span></th>
     <th>Note</th>
-    <th>Events</th>
+    <th>Rehearsal</th>
   </tr></thead><tbody>`;
 
   rows.forEach(r => {
     const c = statusColor(r.status, r.actor.color);
-    const evPills = r.events.map(ev=>`<span style="display:inline-block;font-size:10px;background:${eventColor(ev.type)};color:#fff;padding:1px 6px;border-radius:3px;margin:1px">${ev.title}</span>`).join('');
+    const evPills = r.events.map(ev=>`<span style="display:inline-block;font-size:11px;background:${eventColor(ev.type)};color:#fff;padding:2px 8px;border-radius:3px;margin:1px">${ev.title}</span>`).join('');
     h += `<tr>
       <td>${fmtFull(r.date)}</td>
-      <td><span style="display:inline-flex;align-items:center;gap:6px"><span style="width:9px;height:9px;border-radius:50%;background:${r.actor.color};flex-shrink:0;display:inline-block"></span>${r.actor.label}</span></td>
-      <td><span style="display:inline-flex;align-items:center;gap:5px"><span style="width:9px;height:9px;border-radius:50%;background:${c};flex-shrink:0;display:inline-block"></span>${STATUS_LABELS[r.status]}</span></td>
-      <td style="color:var(--text-muted);font-style:italic;font-size:12px">${r.note||'—'}</td>
+      <td><span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:${r.actor.color};flex-shrink:0;display:inline-block"></span>${r.actor.label}</span></td>
+      <td><span style="display:inline-flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:50%;background:${c};flex-shrink:0;display:inline-block"></span>${STATUS_LABELS[r.status]}</span></td>
+      <td style="color:var(--text-muted);font-style:italic;font-size:13px">${r.note||'—'}</td>
       <td>${evPills||'—'}</td>
     </tr>`;
   });
@@ -2482,16 +2626,26 @@ function renderListView() {
   return h;
 }
 
+
 // ── EVENT CARDS (week view below grid) ──
 function renderEventCards() {
   const f = getFilters();
   const ws = startOfWeek(viewAnchor);
   const weekDates = new Set(Array.from({length:7},(_,i)=>dateStr(addDays(ws,i))));
   let evs = EVENTS.filter(e=>weekDates.has(e.date));
-  if (f.type) evs=evs.filter(e=>e.type===f.type);
-  if (f.act)  evs=evs.filter(e=>e.act===f.act);
-  if (!evs.length) return '<div style="color:var(--text-muted);font-size:13px;font-style:italic;margin-top:8px">No scheduled events this week.</div>';
-  return evs.sort((a,b)=>a.date.localeCompare(b.date)).map(e=>`
+  if (f.type)      evs=evs.filter(e=>e.type===f.type);
+  if (f.act)       evs=evs.filter(e=>e.act===f.act);
+  if (f.character) evs=evs.filter(e=>e.characters.includes(f.character)||e.characters.includes('both'));
+  if (!evs.length) return '<div style="color:var(--text-muted);font-size:14px;font-style:italic;margin-top:8px">No scheduled events this week.</div>';
+  return evs.sort((a,b)=>a.date.localeCompare(b.date)).map(e=>renderEventCard(e)).join('');
+}
+
+function renderEventCard(e) {
+  const charTags = e.characters.map(c=>
+    `<span class="event-tag event-tag-char-${c}">${charLabel(c)}</span>`
+  ).join('');
+  const sceneTags = e.scenes.map(s=>`<span class="event-tag">${s}</span>`).join('');
+  return `
   <div class="event-card">
     <div class="event-stripe ${e.type}"></div>
     <div class="event-body">
@@ -2502,19 +2656,23 @@ function renderEventCards() {
       <div class="event-meta-row">
         <span class="event-meta-item">📅 ${fmtFull(e.date)}</span>
         <span class="event-meta-item">🕐 ${e.time}</span>
-        ${e.location?`<span class="event-meta-item">📍 ${e.location}</span>`:''}
+        ${e.location&&e.location!=='TBD'?`<span class="event-meta-item">📍 ${e.location}</span>`:''}
       </div>
-      ${e.notes?`<div style="margin-top:8px;font-size:13px;color:var(--text3);font-style:italic">${e.notes}</div>`:''}
+      ${(e.characters.length||e.scenes.length)?`<div class="event-tags" style="margin-top:8px">${charTags}${sceneTags}</div>`:''}
+      ${e.notes?`<div style="margin-top:8px;font-size:14px;color:var(--text3);font-style:italic">${e.notes}</div>`:''}
     </div>
-  </div>`).join('');
+  </div>`;
 }
+
+
 
 // ── FILTER PILLS ──
 function renderFilterPills() {
   const f=getFilters();
   const pills=[];
-  if(f.type) pills.push({label:typeLabel(f.type),key:'type'});
-  if(f.act)  pills.push({label:f.act,key:'act'});
+  if(f.type)      pills.push({label:typeLabel(f.type),key:'type'});
+  if(f.character) pills.push({label:charLabel(f.character),key:'character'});
+  if(f.act)       pills.push({label:f.act,key:'act'});
   if(f.from) pills.push({label:'From '+fmtFull(f.from),key:'from'});
   if(f.to)   pills.push({label:'To '+fmtFull(f.to),key:'to'});
   document.getElementById('filter-pills').innerHTML=pills.map(p=>
