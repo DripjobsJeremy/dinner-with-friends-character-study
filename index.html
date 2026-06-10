@@ -2563,7 +2563,6 @@ function charFullLabel(c) { return {gabe:'Gabe (Jeremy)',karen:'Karen (Christina
 // ══════════════════════════════════════
 // MAIN RENDER
 // ══════════════════════════════════════
-// Track expanded event
 let expandedEventId = null;
 function toggleEvent(id) {
   expandedEventId = expandedEventId === id ? null : id;
@@ -2584,7 +2583,23 @@ function renderCalendar() {
   } else {
     const months = currentView==='3month' ? 3 : 1;
     grid.innerHTML = renderMonthsGrid(months);
-    list.innerHTML = '';
+    // Render expanded card below grid in month views
+    if (expandedEventId !== null) {
+      const ev = EVENTS.find(e=>e.id===expandedEventId);
+      list.innerHTML = ev
+        ? '<div style="font-size:12px;color:var(--text-muted);text-align:center;padding:8px 0 4px;letter-spacing:0.08em;text-transform:uppercase">Selected Rehearsal</div><div class=\"event-list\">' + renderEventCard(ev) + '</div>'
+        : '';
+    } else {
+      list.innerHTML = '<div style="font-size:13px;color:var(--text-muted);text-align:center;padding:16px;font-style:italic">Tap a rehearsal to see details</div>';
+    }
+  }
+
+  // Auto-scroll to expanded card
+  if (expandedEventId !== null) {
+    requestAnimationFrame(() => {
+      const listEl = document.getElementById('event-list');
+      if (listEl) listEl.scrollIntoView({ behavior:'smooth', block:'nearest' });
+    });
   }
 }
 
