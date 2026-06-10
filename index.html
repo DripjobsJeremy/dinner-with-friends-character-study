@@ -657,12 +657,32 @@ p { margin-bottom: 14px; color: var(--text2); }
 .week-day-header.today span { color: var(--accent); }
 .week-actor-col { background: var(--bg3); }
 .week-actor-label { padding: 10px 8px; font-size: 11px; font-weight: 500; color: var(--text2); background: var(--bg3); display: flex; align-items: center; }
-.week-cell { border-left: 1px solid var(--border2); min-height: 52px; padding: 6px 4px; display: flex; flex-direction: column; align-items: center; gap: 3px; background: var(--bg2); }
+.week-cell { border-left: 1px solid var(--border2); min-height: 52px; padding: 6px 4px; display: flex; flex-direction: column; align-items: center; gap: 3px; background: var(--bg2); transition: background 0.1s; }
 .week-cell.status-unavail { background: var(--bg) !important; }
-.week-cell.status-remote { background: color-mix(in srgb, #f0a840 8%, var(--bg2)) !important; }
+.week-cell.status-remote { background: color-mix(in srgb, #F0A840 8%, var(--bg2)) !important; }
 .week-cell.status-tbd { background: var(--bg3) !important; }
-.cell-dot { width: 20px; height: 12px; border-radius: 3px; margin-top: 4px; flex-shrink: 0; }
-.cell-event-pill { font-size: 9px; color: #fff; padding: 1px 5px; border-radius: 3px; white-space: nowrap; overflow: hidden; max-width: 100%; text-overflow: ellipsis; }
+.cell-dot {
+  width: 22px; height: 12px; border-radius: 3px; margin: 3px auto 1px; flex-shrink: 0; display: block;
+}
+.cell-dot-unavail {
+  width: 22px; height: 12px; border-radius: 3px; margin: 3px auto 1px; flex-shrink: 0; display: block;
+  background: repeating-linear-gradient(45deg,#ccc,#ccc 2px,transparent 2px,transparent 6px);
+  border: 1px solid #bbb;
+}
+[data-theme="dark"] .cell-dot-unavail {
+  background: repeating-linear-gradient(45deg,#444,#444 2px,transparent 2px,transparent 6px);
+  border-color: #555;
+}
+.cell-event-pill {
+  font-size: 11px; font-weight: 600; color: #fff;
+  padding: 3px 5px; border-radius: 4px; display: block;
+  white-space: nowrap; overflow: hidden; max-width: 100%; text-overflow: ellipsis;
+  cursor: pointer; margin: 1px 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  transition: opacity 0.1s, transform 0.1s;
+  line-height: 1.3;
+}
+.cell-event-pill:hover { opacity: 0.85; transform: scale(1.04); }
 
 /* ── MONTH GRID ── */
 .month-block { margin-bottom: 28px; }
@@ -678,6 +698,15 @@ p { margin-bottom: 14px; color: var(--text2); }
 .today .month-day-num { color: var(--accent); font-weight: 700; }
 .month-day-dots { display: flex; flex-wrap: wrap; gap: 2px; margin-bottom: 2px; }
 .month-dot { width: 14px; height: 8px; border-radius: 2px; cursor: default; }
+.month-dot-unavail {
+  width: 14px; height: 8px; border-radius: 2px; cursor: default;
+  background: repeating-linear-gradient(45deg,#ccc,#ccc 1px,transparent 1px,transparent 4px);
+  border: 1px solid #bbb;
+}
+[data-theme="dark"] .month-dot-unavail {
+  background: repeating-linear-gradient(45deg,#444,#444 1px,transparent 1px,transparent 4px);
+  border-color: #555;
+}
 .month-event-pill { font-size: 8px; color: #fff; padding: 1px 4px; border-radius: 2px; white-space: nowrap; overflow: hidden; max-width: 100%; text-overflow: ellipsis; display: block; margin-bottom: 1px; }
 
 /* ── LIST VIEW ── */
@@ -1448,9 +1477,9 @@ footer { background: var(--cover-bg); color: #6a8060; text-align: center; paddin
       <div class="avail-key-section">
         <div class="avail-key-title">Actors</div>
         <div class="avail-key-row"><span class="avail-swatch" style="background:#E8622A"></span> Jeremy (Gabe)</div>
-        <div class="avail-key-row"><span class="avail-swatch" style="background:#2E5F8A"></span> Christina (Karen)</div>
-        <div class="avail-key-row"><span class="avail-swatch" style="background:#5a6aaa"></span> John (Tom)</div>
-        <div class="avail-key-row"><span class="avail-swatch" style="background:#a05080"></span> Lauren (Beth)</div>
+        <div class="avail-key-row"><span class="avail-swatch" style="background:#0E8A7C"></span> Christina (Karen)</div>
+        <div class="avail-key-row"><span class="avail-swatch" style="background:#4A5FCF"></span> John (Tom)</div>
+        <div class="avail-key-row"><span class="avail-swatch" style="background:#C0394B"></span> Lauren (Beth)</div>
       </div>
       <div class="avail-key-section">
         <div class="avail-key-title">Status</div>
@@ -2397,10 +2426,13 @@ for (let d=1;d<=31;d++) avail('john',`2026-08-${String(d).padStart(2,'0')}`,'ava
 // ACTOR CONFIG
 // ══════════════════════════════════════
 const ACTORS = [
-  { key:'jeremy',    label:'Jeremy (Gabe)',     color:'#4a7a56', light:'#eef3ec' },
-  { key:'christina', label:'Christina (Karen)',  color:'#8b6650', light:'#f3ede8' },
-  { key:'john',      label:'John (Tom)',         color:'#5a6aaa', light:'#eceef8' },
-  { key:'lauren',    label:'Lauren (Beth)',      color:'#a05080', light:'#f5eaf2' }
+  // Colors chosen to be DISTINCT from each other AND from status colors:
+  // Status palette: grey(unavail), amber(remote), tan(partial), mid-grey(tbd)
+  // Actor palette: orange, teal, indigo, rose — all vivid, none grey/amber
+  { key:'jeremy',    label:'Jeremy (Gabe)',     color:'#E8622A', light:'rgba(232,98,42,0.12)'  },  // orange
+  { key:'christina', label:'Christina (Karen)',  color:'#0E8A7C', light:'rgba(14,138,124,0.12)' },  // teal
+  { key:'john',      label:'John (Tom)',         color:'#4A5FCF', light:'rgba(74,95,207,0.12)'  },  // indigo
+  { key:'lauren',    label:'Lauren (Beth)',      color:'#C0394B', light:'rgba(192,57,75,0.12)'  }   // rose
 ];
 
 // ══════════════════════════════════════
@@ -2514,11 +2546,11 @@ function fmtFull(ds) {
 }
 
 function statusColor(s, actorColor) {
-  if (s==='avail')   return actorColor;
-  if (s==='unavail') return '#cccccc';
-  if (s==='remote')  return '#f0a840';
-  if (s==='tbd')     return '#b0b0b0';
-  if (s==='partial') return '#e0c080';
+  if (s==='avail')   return actorColor;        // actor's vivid color
+  if (s==='unavail') return 'transparent';     // empty = crossed out via CSS
+  if (s==='remote')  return '#F0A840';         // amber
+  if (s==='tbd')     return '#9090A0';         // cool grey
+  if (s==='partial') return '#D4B84A';         // gold
   return '';
 }
 function eventColor(t) {
@@ -2587,9 +2619,23 @@ function renderWeekGrid() {
       const note = av?.note||'';
       const evs = EVENTS.filter(e=>e.date===ds);
       const dotColor = statusColor(st, actor.color);
-      let cell = `<div class="week-cell status-${st}" title="${note||(st?STATUS_LABELS[st]:'')}">`;
-      if (dotColor) cell += `<span class="cell-dot" style="background:${dotColor}"></span>`;
-      evs.forEach(ev => { cell += `<div class="cell-event-pill" style="background:${eventColor(ev.type)}">${ev.title.length>10?ev.title.slice(0,10)+'…':ev.title}</div>`; });
+      const statusClass = st ? `status-${st}` : '';
+      const statusTitle = note||(st?STATUS_LABELS[st]:'');
+      let cell = `<div class="week-cell ${statusClass}" title="${statusTitle}">`;
+      // Availability indicator
+      if (st === 'unavail') {
+        cell += `<span class="cell-dot cell-dot-unavail" title="${statusTitle}"></span>`;
+      } else if (dotColor) {
+        cell += `<span class="cell-dot" style="background:${dotColor}" title="${statusTitle}"></span>`;
+      }
+      // Event pills — show time, make clickable
+      evs.forEach(ev => {
+        // Only show pill if this actor is called
+        const called = ev.characters.includes(actor.key) || ev.characters.includes('both');
+        if (!called) return;
+        const shortTime = ev.time.replace(':00','').replace(' PM','p').replace(' AM','a');
+        cell += `<div class="cell-event-pill" style="background:${eventColor(ev.type)}" onclick="toggleEvent(${ev.id})" title="${ev.title} · ${ev.time} · ${ev.location||''}">${shortTime}</div>`;
+      });
       cell += '</div>';
       h += cell;
     });
@@ -2628,10 +2674,16 @@ function renderOneMonth(md) {
     let dots=visActors.map(a=>{
       const av=dayAv[a.key];
       if(!av) return '';
+      if(av.status==='unavail') {
+        return `<span class="month-dot month-dot-unavail" title="${a.label}: Unavailable"></span>`;
+      }
       const c=statusColor(av.status,a.color);
       return c?`<span class="month-dot" style="background:${c}" title="${a.label}: ${STATUS_LABELS[av.status]}${av.note?' ('+av.note+')':''}"></span>`:'';
     }).join('');
-    let pills=evs.map(ev=>`<div class="month-event-pill" style="background:${eventColor(ev.type)}">${ev.title.length>9?ev.title.slice(0,9)+'…':ev.title}</div>`).join('');
+    let pills=evs.map(ev=>{
+      const shortTime = ev.time.replace(':00','').replace(' PM','p').replace(' AM','a');
+      return `<div class="month-event-pill" style="background:${eventColor(ev.type)};cursor:pointer" onclick="toggleEvent(${ev.id})" title="${ev.title} · ${ev.time}">${shortTime} ${ev.title.length>8?ev.title.slice(0,8)+'…':ev.title}</div>`;
+    }).join('');
     h+=`<div class="month-day${isToday?' today':''}"><div class="month-day-num">${day}</div><div class="month-day-dots">${dots}</div>${pills}</div>`;
   }
   h+=`</div></div>`;
@@ -2732,8 +2784,10 @@ function renderEventCards() {
   if (f.type)      evs=evs.filter(e=>e.type===f.type);
   if (f.act)       evs=evs.filter(e=>e.act===f.act);
   if (f.character) evs=evs.filter(e=>e.characters.includes(f.character)||e.characters.includes('both'));
-  if (!evs.length) return '<div style="color:var(--text-muted);font-size:14px;font-style:italic;margin-top:8px">No scheduled events this week.</div>';
-  return evs.sort((a,b)=>a.date.localeCompare(b.date)).map(e=>renderEventCard(e)).join('');
+  if (!evs.length) return '<div style="color:var(--text-muted);font-size:14px;font-style:italic;margin-top:8px">No scheduled rehearsals this week.</div>';
+  // Add tap-to-expand hint on first render
+  const hint = '<div style="font-size:12px;color:var(--text-muted);text-align:center;padding:6px 0 2px;letter-spacing:0.08em;text-transform:uppercase">Tap a rehearsal to expand details</div>';
+  return hint + evs.sort((a,b)=>a.date.localeCompare(b.date)).map(e=>renderEventCard(e)).join('');
 }
 
 function renderEventCard(e) {
