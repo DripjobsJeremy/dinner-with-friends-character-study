@@ -302,8 +302,95 @@ body {
 .nav-btn-director   { background: #2E5F8A; color: #fff; }
 .nav-btn-production { background: #5B8DB8; color: #fff; }
 .nav-btn-calendar   { background: #1A2E42; color: #F5F0DC; border: 2px solid #5B8DB8; }
+.nav-btn-wizard     { background: linear-gradient(135deg, #E8622A, #2E5F8A); color: #fff; }
 [data-theme="dark"] .nav-btn-study    { background: #1E3048; color: #C8DFF0; border-color: #5B8DB8; }
 [data-theme="dark"] .nav-btn-calendar { background: #0A1622; color: #C8DFF0; border-color: #5B8DB8; }
+[data-theme="dark"] .nav-btn-wizard   { background: linear-gradient(135deg, #C04E1A, #1A4A72); }
+
+/* ══ INTENTION WIZARD ══ */
+.wiz-wrap { padding: 0 16px 64px; max-width: 680px; margin: 0 auto; }
+.wiz-step { display: none; animation: wiz-in 0.3s ease; }
+.wiz-step.active { display: block; }
+@keyframes wiz-in { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+.wiz-progress { display: flex; gap: 6px; margin-bottom: 32px; }
+.wiz-pd { height: 4px; border-radius: 2px; background: var(--border); transition: background 0.3s; flex: 1; }
+.wiz-pd.done { background: var(--accent); }
+
+.wiz-step-label { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+.wiz-headline { font-family: 'Playfair Display', Georgia, serif; font-size: 30px; font-weight: 400; line-height: 1.25; color: var(--text); margin: 0 0 16px; }
+.wiz-sub { font-size: 17px; color: var(--text2); line-height: 1.75; margin: 0 0 20px; }
+.wiz-big-q { font-size: 20px; font-weight: 500; color: var(--text); line-height: 1.4; margin: 0 0 24px; font-family: 'Playfair Display', Georgia, serif; }
+
+.wiz-ilu { font-family: 'Playfair Display', Georgia, serif; font-size: 28px; font-style: italic; font-weight: 400; color: var(--text); text-align: center; padding: 24px; background: var(--bg3); border-radius: 12px; margin: 0 0 20px; border: 1px solid var(--border); }
+
+.wiz-pre-list { list-style: none; padding: 0; margin: 0 0 24px; }
+.wiz-pre-list li { font-size: 17px; color: var(--text2); padding: 10px 0; border-bottom: 1px solid var(--border2); display: flex; align-items: center; gap: 12px; }
+.wiz-pre-list li:last-child { border-bottom: none; }
+.wiz-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+/* Intention cards */
+.wiz-intent-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin: 0 0 20px; }
+.wiz-ic { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 16px; cursor: pointer; transition: border-color 0.15s, background 0.15s; text-align: center; min-height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+.wiz-ic:hover { border-color: var(--accent); }
+.wiz-ic.sel { border: 2px solid var(--accent); background: rgba(232,98,42,0.06); }
+.wiz-ic-icon { font-size: 24px; }
+.wiz-ic-label { font-size: 14px; font-weight: 500; color: var(--text); margin: 0; }
+
+.wiz-result-box { border-left: 4px solid var(--accent); padding: 16px 20px; background: var(--bg3); border-radius: 0 10px 10px 0; margin: 0 0 20px; }
+.wiz-rl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); margin: 0 0 4px; }
+.wiz-rv { font-size: 18px; font-weight: 600; color: var(--text); margin: 0 0 4px; }
+.wiz-rd { font-size: 15px; color: var(--text2); margin: 0; line-height: 1.6; }
+
+/* Tactics */
+.wiz-tactic-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin: 0 0 20px; }
+.wiz-tcard { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 14px; cursor: pointer; transition: border-color 0.15s; }
+.wiz-tcard:hover { border-color: var(--accent); }
+.wiz-tcard.tsel { border: 2px solid var(--accent); background: rgba(232,98,42,0.06); }
+.wiz-tcard-label { font-size: 14px; font-weight: 600; color: var(--text); margin: 0 0 4px; }
+.wiz-tcard-sub { font-size: 13px; color: var(--text2); line-height: 1.4; margin: 0; }
+
+/* Step grid */
+.wiz-step-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: 10px; margin: 0 0 20px; }
+.wiz-sg-item { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+.wiz-sg-num { font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 6px; }
+.wiz-sg-text { font-size: 14px; color: var(--text2); line-height: 1.6; margin: 0; }
+
+/* Checklist */
+.wiz-checklist { display: flex; flex-direction: column; gap: 10px; margin: 0 0 24px; }
+.wiz-qi { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 14px; display: flex; align-items: flex-start; gap: 12px; }
+.wiz-qn { width: 28px; height: 28px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: #fff; flex-shrink: 0; margin-top: 1px; }
+.wiz-qt { font-size: 15px; color: var(--text2); line-height: 1.6; }
+
+/* As-if */
+.wiz-asif-row { display: flex; flex-direction: column; gap: 14px; margin: 0 0 20px; }
+.wiz-asif-label { font-size: 14px; color: var(--text2); margin: 0 0 6px; }
+.wiz-asif-input { width: 100%; padding: 12px 14px; font-size: 16px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg); color: var(--text); box-sizing: border-box; font-family: 'Source Serif 4', Georgia, serif; min-height: 44px; }
+.wiz-asif-input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.wiz-asif-result { background: var(--bg3); border-radius: 12px; padding: 20px; border: 1px solid var(--border); margin: 0 0 20px; display: none; }
+.wiz-asif-pill { display: inline-block; font-size: 11px; font-weight: 600; background: rgba(232,98,42,0.15); color: var(--accent); border-radius: 99px; padding: 3px 12px; margin-bottom: 10px; letter-spacing: 0.06em; }
+.wiz-asif-result p { margin: 0; font-size: 16px; color: var(--text); line-height: 1.7; font-style: italic; }
+
+/* Callout */
+.wiz-callout { background: var(--bg3); border-radius: 12px; padding: 18px 20px; margin: 0 0 20px; border: 1px solid var(--border); }
+.wiz-callout p { margin: 0; font-size: 15px; color: var(--text2); line-height: 1.7; }
+.wiz-callout p + p { margin-top: 10px; }
+
+/* Buttons */
+.wiz-btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+.wiz-btn-primary { background: var(--accent); border: none; color: #fff; padding: 14px 24px; border-radius: 12px; font-size: 16px; font-weight: 500; cursor: pointer; min-height: 52px; transition: opacity 0.15s; font-family: 'Source Serif 4', Georgia, serif; }
+.wiz-btn-primary:hover { opacity: 0.88; }
+.wiz-btn-back { background: var(--bg2); border: 1px solid var(--border); color: var(--text); padding: 14px 20px; border-radius: 12px; font-size: 16px; cursor: pointer; min-height: 52px; transition: background 0.15s; font-family: 'Source Serif 4', Georgia, serif; }
+.wiz-btn-back:hover { background: var(--bg3); }
+.wiz-btn-restart { background: var(--bg3); border: 1px solid var(--accent); color: var(--accent); padding: 14px 24px; border-radius: 12px; font-size: 16px; font-weight: 500; cursor: pointer; min-height: 52px; transition: background 0.15s; font-family: 'Source Serif 4', Georgia, serif; }
+.wiz-btn-restart:hover { background: rgba(232,98,42,0.1); }
+
+/* Links to study guide */
+.wiz-study-links { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0; }
+.wiz-study-link { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 14px; cursor: pointer; transition: all 0.15s; text-align: center; }
+.wiz-study-link:hover { border-color: var(--accent); background: rgba(232,98,42,0.05); }
+.wiz-study-link-char { font-size: 13px; font-weight: 600; color: var(--accent); margin: 0 0 3px; }
+.wiz-study-link-label { font-size: 12px; color: var(--text-muted); margin: 0; }
 
 /* ── SUB-NAV (tab row inside a section) ── */
 .sub-nav-bar {
@@ -1144,6 +1231,7 @@ footer { background: var(--cover-bg); color: #6a8060; text-align: center; paddin
     <button class="nav-btn nav-btn-director"   onclick="showScreen('director-notes')">🎬 Director Notes</button>
     <button class="nav-btn nav-btn-production" onclick="showScreen('production-notes')">🔧 Production Notes</button>
     <button class="nav-btn nav-btn-calendar"   onclick="showScreen('calendar')">📅 Production Schedule</button>
+    <button class="nav-btn nav-btn-wizard"     onclick="showScreen('wizard')">✨ Intention Wizard</button>
   </div>
 </div>
 <!-- STUDY SCREEN -->
@@ -2212,6 +2300,200 @@ footer { background: var(--cover-bg); color: #6a8060; text-align: center; paddin
 </div><!-- /screen-production-notes -->
 
 
+
+<!-- ══════════════════════════════════════
+     WIZARD SCREEN
+══════════════════════════════════════ -->
+<div class="screen" id="screen-wizard">
+  <button class="back-btn" onclick="showHome()">← Back</button>
+
+  <div class="wiz-wrap">
+    <div class="wiz-progress" id="wiz-progress"></div>
+
+    <!-- STEP 1: Foundation -->
+    <div class="wiz-step active" id="wiz-step-1">
+      <div class="wiz-step-label">The foundation</div>
+      <h2 class="wiz-headline">Emotion follows intention.</h2>
+      <p class="wiz-sub">Human behavior doesn't begin with feeling. It begins somewhere else entirely.</p>
+      <ul class="wiz-pre-list">
+        <li><span class="wiz-dot"></span>Before there is emotion.</li>
+        <li><span class="wiz-dot"></span>Before there is action.</li>
+        <li><span class="wiz-dot"></span>Before there is performance.</li>
+      </ul>
+      <p class="wiz-sub">There is <strong style="color:var(--text)">imagination.</strong> There is <strong style="color:var(--text)">intention.</strong></p>
+      <div class="wiz-btn-row">
+        <button class="wiz-btn-primary" onclick="wizGo(2)">Keep going →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Same words -->
+    <div class="wiz-step" id="wiz-step-2">
+      <div class="wiz-step-label">The same words</div>
+      <div class="wiz-ilu">"I love you."</div>
+      <p class="wiz-sub">Three words. And yet — how many ways can they be performed?</p>
+      <p class="wiz-big-q">Why are there so many different ways to say the same words?</p>
+      <div class="wiz-btn-row">
+        <button class="wiz-btn-back" onclick="wizGo(1)">← Back</button>
+        <button class="wiz-btn-primary" onclick="wizGo(3)">Find out →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Discovery — choose an intention -->
+    <div class="wiz-step" id="wiz-step-3">
+      <div class="wiz-step-label">The discovery</div>
+      <p class="wiz-sub">Because <strong style="color:var(--text)">words never determine the performance.</strong> The <em>intention</em> behind them does.</p>
+      <p class="wiz-sub">You can say "I love you" to:</p>
+      <div class="wiz-intent-grid">
+        <div class="wiz-ic" onclick="wizSelInt(this,'Comfort','You want them to feel safe. To stop hurting. To know they are not alone.')"><div class="wiz-ic-icon">🫶</div><p class="wiz-ic-label">Comfort</p></div>
+        <div class="wiz-ic" onclick="wizSelInt(this,'Manipulate','You want something. The words are a lever. Emotion is the tool, not the truth.')"><div class="wiz-ic-icon">👁</div><p class="wiz-ic-label">Manipulate</p></div>
+        <div class="wiz-ic" onclick="wizSelInt(this,'Apologize','You need them to forgive you. The words carry the weight of guilt and regret.')"><div class="wiz-ic-icon">🙏</div><p class="wiz-ic-label">Apologize</p></div>
+        <div class="wiz-ic" onclick="wizSelInt(this,'Seduce','You want to draw them closer. Every syllable is a step across the distance.')"><div class="wiz-ic-icon">🔥</div><p class="wiz-ic-label">Seduce</p></div>
+        <div class="wiz-ic" onclick="wizSelInt(this,'Save','It may be the last thing you say. You need them to hold on.')"><div class="wiz-ic-icon">🛡</div><p class="wiz-ic-label">Save</p></div>
+      </div>
+      <div class="wiz-result-box" id="wiz-int-result" style="display:none">
+        <div class="wiz-rl">Your intention</div>
+        <p class="wiz-rv" id="wiz-res-title"></p>
+        <p class="wiz-rd" id="wiz-res-desc"></p>
+      </div>
+      <div class="wiz-btn-row">
+        <button class="wiz-btn-back" onclick="wizGo(2)">← Back</button>
+        <button class="wiz-btn-primary" onclick="wizGo(4)">Same words. Different performance. →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: Insight -->
+    <div class="wiz-step" id="wiz-step-4">
+      <div class="wiz-step-label">The insight</div>
+      <p class="wiz-big-q">Same words. Different intentions. Different performances.</p>
+      <div class="wiz-callout">
+        <p>Great acting doesn't begin with: <em>"How should I feel?"</em></p>
+        <p>It begins with understanding <strong style="color:var(--text)">why your character is communicating</strong> in the first place.</p>
+      </div>
+      <p class="wiz-sub">Emotions are a byproduct — the exhaust of genuine intention pursued through imagination. Chase the feeling and you perform a demonstration. Chase the intention and the feeling arrives on its own.</p>
+      <div class="wiz-btn-row">
+        <button class="wiz-btn-back" onclick="wizGo(3)">← Back</button>
+        <button class="wiz-btn-primary" onclick="wizGo(5)">How do I find the right intention? →</button>
+      </div>
+    </div>
+
+    <!-- STEP 5: Finding the intention -->
+    <div class="wiz-step" id="wiz-step-5">
+      <div class="wiz-step-label">Finding the intention</div>
+      <p class="wiz-sub" style="margin-bottom:14px">There is no single <em>right</em> intention waiting to be discovered. There's the most <strong style="color:var(--text)">useful</strong> one — the one that makes the scene live.</p>
+      <p class="wiz-sub">Start here:</p>
+      <div class="wiz-step-grid">
+        <div class="wiz-sg-item"><div class="wiz-sg-num">Step 1</div><p class="wiz-sg-text">Inhabit the given circumstances. Where are you? What just happened? What do you believe is true right now?</p></div>
+        <div class="wiz-sg-item"><div class="wiz-sg-num">Step 2</div><p class="wiz-sg-text">Ask: what does my character need the other person to <em>do, feel, or believe</em> by the end of this scene?</p></div>
+        <div class="wiz-sg-item"><div class="wiz-sg-num">Step 3</div><p class="wiz-sg-text">Make it specific. "I need him to admit he was wrong so I can stop feeling like I'm losing my mind" beats "I want him to understand."</p></div>
+        <div class="wiz-sg-item"><div class="wiz-sg-num">Step 4</div><p class="wiz-sg-text">Test it against the text. A good intention makes the scene <em>harder</em>, not easier — it should create genuine obstacles.</p></div>
+      </div>
+      <p class="wiz-sub" style="font-size:15px">Intentions are <strong style="color:var(--text)">transitive</strong> — they land on the other person. "I feel guilty" is a state. "I need her to forgive me" is an intention. States are passive. Intentions are active.</p>
+      <div class="wiz-btn-row">
+        <button class="wiz-btn-back" onclick="wizGo(4)">← Back</button>
+        <button class="wiz-btn-primary" onclick="wizGo(6)">But what if it feels abstract? →</button>
+      </div>
+    </div>
+
+    <!-- STEP 6: Tactics -->
+    <div class="wiz-step" id="wiz-step-6">
+      <div class="wiz-step-label">Tactics</div>
+      <p class="wiz-sub">Intentions don't stay static. You try something — it doesn't work — you try something else.</p>
+      <p class="wiz-sub" style="font-size:15px;margin-bottom:14px">These are called <strong style="color:var(--text)">tactics</strong>: the different ways you pursue the same underlying want.</p>
+      <p class="wiz-sub" style="font-size:15px;margin-bottom:20px">Say your intention is: <em>"I need her to trust me."</em> You might try:</p>
+      <div class="wiz-tactic-grid">
+        <div class="wiz-tcard" onclick="wizSelTac(this)"><p class="wiz-tcard-label">Charm</p><p class="wiz-tcard-sub">Make her want to trust you.</p></div>
+        <div class="wiz-tcard" onclick="wizSelTac(this)"><p class="wiz-tcard-label">Reason</p><p class="wiz-tcard-sub">Give her evidence. Logic.</p></div>
+        <div class="wiz-tcard" onclick="wizSelTac(this)"><p class="wiz-tcard-label">Plead</p><p class="wiz-tcard-sub">Appeal to her sympathy.</p></div>
+        <div class="wiz-tcard" onclick="wizSelTac(this)"><p class="wiz-tcard-label">Provoke</p><p class="wiz-tcard-sub">Shake her into responding.</p></div>
+        <div class="wiz-tcard" onclick="wizSelTac(this)"><p class="wiz-tcard-label">Confess</p><p class="wiz-tcard-sub">Disarm her with honesty.</p></div>
+        <div class="wiz-tcard" onclick="wizSelTac(this)"><p class="wiz-tcard-label">Withdraw</p><p class="wiz-tcard-sub">Make her come to you.</p></div>
+      </div>
+      <div class="wiz-callout">
+        <p>If you play the same thing at the same intensity from top to bottom, you've locked onto a <em>result</em>, not a live intention. Stay responsive. Let your partner's behavior change your tactics — not your want.</p>
+      </div>
+      <div class="wiz-btn-row">
+        <button class="wiz-btn-back" onclick="wizGo(5)">← Back</button>
+        <button class="wiz-btn-primary" onclick="wizGo(7)">The "as if" door →</button>
+      </div>
+    </div>
+
+    <!-- STEP 7: As-if door -->
+    <div class="wiz-step" id="wiz-step-7">
+      <div class="wiz-step-label">The "as if" door</div>
+      <p class="wiz-sub">If the scene's circumstances feel distant or abstract, run them through an <em>as if.</em></p>
+      <div class="wiz-callout">
+        <p>You don't need to have been betrayed by a king to play Hamlet. But you've probably known what it feels like when everyone around you is pretending something false is true. Find the bridge from your life to theirs.</p>
+      </div>
+      <p class="wiz-sub" style="font-size:15px;margin-bottom:20px">Try it now. Fill in what you know about your scene, and let the door open.</p>
+      <div class="wiz-asif-row">
+        <div>
+          <p class="wiz-asif-label">What does your character need from the other person in this scene?</p>
+          <input class="wiz-asif-input" id="wiz-ai-need" type="text" placeholder="e.g. I need her to believe I didn't betray her">
+        </div>
+        <div>
+          <p class="wiz-asif-label">When in your own life have you needed something like that?</p>
+          <input class="wiz-asif-input" id="wiz-ai-life" type="text" placeholder="e.g. When I was accused of something I didn't do…">
+        </div>
+      </div>
+      <button class="wiz-btn-primary" onclick="wizOpenDoor()" style="margin-bottom:20px">Open the door ✦</button>
+      <div class="wiz-asif-result" id="wiz-asif-out">
+        <div class="wiz-asif-pill">Your "as if"</div>
+        <p id="wiz-asif-text"></p>
+      </div>
+      <div class="wiz-btn-row" style="margin-top:16px">
+        <button class="wiz-btn-back" onclick="wizGo(6)">← Back</button>
+        <button class="wiz-btn-primary" onclick="wizGo(8)">Bring it together →</button>
+      </div>
+    </div>
+
+    <!-- STEP 8: Practice sequence + scene links -->
+    <div class="wiz-step" id="wiz-step-8">
+      <div class="wiz-step-label">Your practice</div>
+      <p class="wiz-big-q">Every time you approach a line, a scene, a role — work through this sequence.</p>
+      <div class="wiz-checklist">
+        <div class="wiz-qi"><div class="wiz-qn">1</div><div class="wiz-qt">What are my <strong style="color:var(--text)">given circumstances</strong>? What do I know to be true right now?</div></div>
+        <div class="wiz-qi"><div class="wiz-qn">2</div><div class="wiz-qt">What am I trying to <strong style="color:var(--text)">do</strong> to the other person?</div></div>
+        <div class="wiz-qi"><div class="wiz-qn">3</div><div class="wiz-qt">What <strong style="color:var(--text)">matters</strong> to me — specifically, personally, urgently?</div></div>
+        <div class="wiz-qi"><div class="wiz-qn">4</div><div class="wiz-qt">When in my life have I needed something <strong style="color:var(--text)">like this</strong>? (The "as if" door.)</div></div>
+        <div class="wiz-qi"><div class="wiz-qn">5</div><div class="wiz-qt">What <strong style="color:var(--text)">tactics</strong> am I using — and what happens when they don't work?</div></div>
+      </div>
+
+      <p class="wiz-sub" style="font-size:15px;margin-bottom:16px">Human behavior is driven by imagination and intention. So is great acting.</p>
+
+      <div class="wiz-callout" style="margin-bottom:20px">
+        <p><strong style="color:var(--text)">Take it into the room.</strong> Open the Character Study and read your scene breakdown with fresh eyes — now asking not "what do I feel?" but "what do I <em>want from</em> the other person in this moment?"</p>
+      </div>
+
+      <p class="wiz-sub" style="font-size:14px;margin-bottom:12px">Jump to a character study:</p>
+      <div class="wiz-study-links">
+        <div class="wiz-study-link" onclick="showScreen('study');setTimeout(()=>{document.getElementById('section-gabe').scrollIntoView({behavior:'smooth',block:'start'})},200)">
+          <p class="wiz-study-link-char">Gabe</p>
+          <p class="wiz-study-link-label">Scene-by-scene arc →</p>
+        </div>
+        <div class="wiz-study-link" onclick="showScreen('study');setTimeout(()=>{document.getElementById('section-karen').scrollIntoView({behavior:'smooth',block:'start'})},200)">
+          <p class="wiz-study-link-char">Karen</p>
+          <p class="wiz-study-link-label">Scene-by-scene arc →</p>
+        </div>
+        <div class="wiz-study-link" onclick="showScreen('study');setTimeout(()=>{document.getElementById('section-tom').scrollIntoView({behavior:'smooth',block:'start'})},200)">
+          <p class="wiz-study-link-char">Tom</p>
+          <p class="wiz-study-link-label">Scene-by-scene arc →</p>
+        </div>
+        <div class="wiz-study-link" onclick="showScreen('study');setTimeout(()=>{document.getElementById('section-beth').scrollIntoView({behavior:'smooth',block:'start'})},200)">
+          <p class="wiz-study-link-char">Beth</p>
+          <p class="wiz-study-link-label">Scene-by-scene arc →</p>
+        </div>
+      </div>
+
+      <div class="wiz-btn-row" style="margin-top:8px">
+        <button class="wiz-btn-back" onclick="wizGo(7)">← Back</button>
+        <button class="wiz-btn-restart" onclick="wizRestart()">↩ Start again</button>
+      </div>
+    </div>
+
+  </div>
+</div><!-- /screen-wizard -->
+
+
 <div class="toast-container" id="toast-container"></div>
 
 
@@ -2236,6 +2518,7 @@ function showScreen(screen) {
   if (screen === 'director-notes')   renderNotes('jess');
   if (screen === 'production-notes') renderNotes('nancy');
   if (screen === 'calendar')         renderCalendar();
+  if (screen === 'wizard')           initWizard();
 }
 
 function switchSubTab(screen, person, btn) {
@@ -2252,6 +2535,91 @@ function switchSubTab(screen, person, btn) {
 // Legacy alias — calendar still calls renderCalendar on its own
 function switchTab(tab, btn) {
   // no-op — kept for safety
+}
+
+// ══════════════════════════════════════
+// INTENTION WIZARD
+// ══════════════════════════════════════
+const WIZ_TOTAL = 8;
+let wizCur = 1;
+
+function wizRenderProgress(n) {
+  const p = document.getElementById('wiz-progress');
+  if (!p) return;
+  p.innerHTML = '';
+  for (let i = 1; i <= WIZ_TOTAL; i++) {
+    const d = document.createElement('div');
+    d.className = 'wiz-pd' + (i <= n ? ' done' : '');
+    p.appendChild(d);
+  }
+}
+
+function wizGo(n) {
+  const cur = document.getElementById('wiz-step-' + wizCur);
+  const next = document.getElementById('wiz-step-' + n);
+  if (cur)  cur.classList.remove('active');
+  if (next) next.classList.add('active');
+  wizCur = n;
+  wizRenderProgress(n);
+  const wrap = document.querySelector('#screen-wizard .wiz-wrap');
+  if (wrap) wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function wizSelInt(el, title, desc) {
+  document.querySelectorAll('.wiz-ic').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  const rt = document.getElementById('wiz-res-title');
+  const rd = document.getElementById('wiz-res-desc');
+  const rb = document.getElementById('wiz-int-result');
+  if (rt) rt.textContent = title;
+  if (rd) rd.textContent = desc;
+  if (rb) rb.style.display = 'block';
+}
+
+function wizSelTac(el) {
+  document.querySelectorAll('.wiz-tcard').forEach(c => c.classList.remove('tsel'));
+  el.classList.add('tsel');
+}
+
+function wizOpenDoor() {
+  const need = (document.getElementById('wiz-ai-need') || {}).value?.trim() || '';
+  const life = (document.getElementById('wiz-ai-life') || {}).value?.trim() || '';
+  const out  = document.getElementById('wiz-asif-out');
+  const txt  = document.getElementById('wiz-asif-text');
+  if (!out || !txt) return;
+  if (!need && !life) { txt.textContent = 'Fill in at least one field to open the door.'; out.style.display = 'block'; return; }
+  let result = '';
+  if (need && life) {
+    result = '"Act as if ' + need.toLowerCase().replace(/^i need /, 'you need ') + ' — the way you needed ' + life.toLowerCase().replace(/^when /, '') + '"';
+  } else if (need) {
+    result = '"Play it as if everything depends on ' + need.toLowerCase().replace(/^i need /, '') + '. Make it that urgent."';
+  } else {
+    result = '"Bring that feeling — ' + life.toLowerCase() + ' — into the room with you. That\'s the emotional truth of the scene."';
+  }
+  txt.textContent = result;
+  out.style.display = 'block';
+}
+
+function wizRestart() {
+  document.querySelectorAll('.wiz-ic').forEach(c => c.classList.remove('sel'));
+  document.querySelectorAll('.wiz-tcard').forEach(c => c.classList.remove('tsel'));
+  const intResult = document.getElementById('wiz-int-result');
+  const asifOut   = document.getElementById('wiz-asif-out');
+  const needEl    = document.getElementById('wiz-ai-need');
+  const lifeEl    = document.getElementById('wiz-ai-life');
+  if (intResult) intResult.style.display = 'none';
+  if (asifOut)   asifOut.style.display   = 'none';
+  if (needEl)    needEl.value = '';
+  if (lifeEl)    lifeEl.value = '';
+  wizGo(1);
+}
+
+function initWizard() {
+  wizCur = 1;
+  document.querySelectorAll('.wiz-step').forEach(s => s.classList.remove('active'));
+  const first = document.getElementById('wiz-step-1');
+  if (first) first.classList.add('active');
+  wizRenderProgress(1);
 }
 
 function toggleTheme() {
