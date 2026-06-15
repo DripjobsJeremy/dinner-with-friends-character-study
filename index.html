@@ -2707,8 +2707,10 @@ const STATUS_LABELS={avail:'Available',unavail:'Unavailable',remote:'Remote',tbd
 function renderListView() {
   const f = getFilters();
   const visActors = ACTORS.filter(a=>activeActors.has(a.key));
-  const from = f.from || '2026-06-01';
-  const to   = f.to   || '2026-09-30';
+  // When no date filter set, span all known event dates
+  const allDates = EVENTS.map(e=>e.date).sort();
+  const from = f.from || (allDates[0] || '2026-06-01');
+  const to   = f.to   || (allDates[allDates.length-1] || '2026-12-31');
 
   // ── SCHEDULED EVENTS — sorted by chosen field ──
   let evs = EVENTS.filter(e => e.date >= from && e.date <= to);
