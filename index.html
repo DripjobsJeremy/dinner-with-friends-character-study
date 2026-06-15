@@ -266,11 +266,19 @@ body {
   text-align: center;
   margin-bottom: 24px;
 }
-/* ── MOBILE: true vertical stack, no flex tricks ── */
+/* ── NAV GRID: two rows of three ── */
 .nav-btn-grid {
-  display: block;           /* block not flex — eliminates all flex axis confusion */
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
   width: 100%;
   box-sizing: border-box;
+}
+.nav-row {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
 }
 .nav-btn {
   display: block;           /* block not flex — fills full width guaranteed */
@@ -947,32 +955,32 @@ h3.subhead { font-size: 12px; }
 /* ════════════════════════════════════════════
    TABLET (600px+) — horizontal nav
    ════════════════════════════════════════════ */
-/* ── DESKTOP: single horizontal row ── */
+/* ── DESKTOP: two rows, three buttons each ── */
 @media (min-width: 768px) {
-  .nav-section {
-    padding: 44px 40px 52px;
-  }
   .nav-btn-grid {
-    display: flex;            /* back to flex for horizontal layout */
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: stretch;
     gap: 14px;
+    max-width: 780px;
+    margin: 0 auto;
     width: 100%;
   }
-  .nav-btn {
-    display: flex;
-    align-items: center;
+  .nav-row {
+    flex-direction: row;
     justify-content: center;
-    flex: 1 1 0;              /* equal share of available space */
-    max-width: 220px;         /* cap so they don't get too wide */
+    gap: 14px;
+  }
+  .nav-btn {
+    flex: 1 1 0;
+    max-width: 240px;
     height: 64px;
     line-height: normal;
     margin-bottom: 0;
     font-size: 16px;
     padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
+  .nav-section { padding: 44px 40px 52px; }
   body { font-size: 16px; }
   p    { font-size: 16px; }
 }
@@ -1226,12 +1234,16 @@ footer { background: var(--cover-bg); color: #6a8060; text-align: center; paddin
 <div class="nav-section" id="main-nav">
   <div class="nav-section-label">— The Green Room —</div>
   <div class="nav-btn-grid">
-    <button class="nav-btn nav-btn-study"      onclick="showScreen('study')">📖 Character Study</button>
-    <button class="nav-btn nav-btn-actor"      onclick="showScreen('actor-notes')">🎭 Actor Notes</button>
-    <button class="nav-btn nav-btn-director"   onclick="showScreen('director-notes')">🎬 Director Notes</button>
-    <button class="nav-btn nav-btn-production" onclick="showScreen('production-notes')">🔧 Production Notes</button>
-    <button class="nav-btn nav-btn-calendar"   onclick="showScreen('calendar')">📅 Production Schedule</button>
-    <button class="nav-btn nav-btn-wizard"     onclick="showScreen('wizard')">✨ Intention Wizard</button>
+    <div class="nav-row">
+      <button class="nav-btn nav-btn-study"    onclick="showScreen('study')">📖 Character Study</button>
+      <button class="nav-btn nav-btn-calendar" onclick="showScreen('calendar')">📅 Production Schedule</button>
+      <button class="nav-btn nav-btn-wizard"   onclick="showScreen('wizard')">✨ Intention Wizard</button>
+    </div>
+    <div class="nav-row">
+      <button class="nav-btn nav-btn-director"   onclick="showScreen('director-notes')">🎬 Director Notes</button>
+      <button class="nav-btn nav-btn-production" onclick="showScreen('production-notes')">🔧 Production Notes</button>
+      <button class="nav-btn nav-btn-actor"      onclick="showScreen('actor-notes')">🎭 Actor Notes</button>
+    </div>
   </div>
 </div>
 <!-- STUDY SCREEN -->
